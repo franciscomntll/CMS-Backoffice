@@ -12,7 +12,7 @@ interface propsNavigation {
 const Navigation: FC <propsNavigation> = ({set, state}) => {
   return (
     <div className="w-full h-16 bg-white shadow-md py-2">
-      <div className="max-w-screen-xl mx-auto inset-x-0 flex items-center justify-between">
+      <div className="xl:max-w-screen-xl 2xl:max-w-screen-2xl mx-auto inset-x-0 flex items-center justify-between">
         <ButtonIcon onClick={() => set(!state)}>
           <MenuIcon className="w-6 h-6 text-gray-400" />
         </ButtonIcon>

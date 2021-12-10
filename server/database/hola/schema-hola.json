@@ -1,0 +1,4 @@
+[
+  { "type": "string", "label": "Nombre", "field": "nombre" },
+  { "type": "string", "label": "Nombre2", "field": "nombre2" }
+]

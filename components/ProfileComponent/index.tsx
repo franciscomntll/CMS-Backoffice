@@ -9,20 +9,19 @@ const ProfileComponent: FC = () => {
   const [show, setShow] = useState<boolean>(false);
   return (
     <ClickAwayListener onClickAway={() => show && setShow(false)}>
-    <div  onClick={() => setShow(!show)} className="flex items-center gap-2 hover:opacity-90 transition relative cursor-pointer">
+    <div  onClick={() => setShow(!show)} className="flex items-center gap-2 transition relative cursor-pointer">
       <div className="w-12 h-12 relative rounded-full overflow-hidden border-2 border-indigo-500">
         <Image
           src={"/perfil.jpg"}
           layout={"fill"}
-          width={100}
-          height={100}
           objectFit={"cover"}
           objectPosition={"center"}
+          alt={"Imagen de perfil"}
         />
       </div>
       <div className="text-indigo-800 leading-5">
         <h3 className=" font-medium">Francisco Montilla</h3>
-        <p className="font-semibold text-sm">Autor</p>
+        <p className="font-semibold text-sm">Dev</p>
       </div>
       <MenuComponent state={show} />
     </div>

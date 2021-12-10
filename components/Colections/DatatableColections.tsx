@@ -1,4 +1,3 @@
-"use strict";
 import { useEffect, useState, useMemo } from "react";
 import {
   CellProps,
@@ -12,11 +11,9 @@ import {
 } from "react-table";
 import { fakeData } from "../../fakedata";
 import { Button } from "../Inputs";
-import ActionsComponent from "./ActionsComponent";
-import ActiveComponent from "./ActiveComponent";
-import { IndeterminateCheckbox } from "./IndeterminateCheckbox";
+import ActionsComponent from "../Datatable/ActionsComponent";
 
-const DataTable = () => {
+export const DataTableColections = () => {
   const [datos, setDatos] = useState(fakeData);
 
   const columns = useMemo(
@@ -29,19 +26,7 @@ const DataTable = () => {
         Header: "Categoria",
         accessor: "categoria",
       },
-      {
-        Header: "Precio",
-        accessor: "precio",
-      },
-      {
-        Header: "Cantidad",
-        accessor: "cantidad",
-      },
-      {
-        Header: "Activo",
-        accessor: "activo",
-        Cell: (props : CellProps<any>) => <ActiveComponent {...props} />,
-      },
+      
       {
         Header: "Acciones",
         accessor: "",
@@ -65,9 +50,6 @@ const DataTable = () => {
     headerGroups,
     rows,
     prepareRow,
-    selectedFlatRows,
-    // Filter para buscador
-    setGlobalFilter,
     // Paginación
     page,
     canPreviousPage,
@@ -87,30 +69,8 @@ const DataTable = () => {
       initialState: { pageIndex: 0 },
       HandleRemove,
     },
-    useFilters,
-    useGlobalFilter,
     useSortBy,
     usePagination,
-    useRowSelect,
-
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
-        ...columns,
-      ]);
-    }
   );
 
   const handleRemoveAll = (arrRows : any) => {
@@ -134,29 +94,7 @@ const DataTable = () => {
         </div> */}
         
       </div>
-      <table {...getTableProps()} className="w-full text-sm rounded-xl overflow-hidden bg-white ">
-        <thead className="w-full bg-gray-200  ">
-          {headerGroups.map((headerGroup, idx) => (
-            <tr
-            className="border-b py-3 grid grid-cols-7 "
-            {...headerGroup.getHeaderGroupProps()}
-            key={idx}
-            >
-              {headerGroup.headers.map((column, idx) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  key={idx}
-                >
-                  {column.render("Header")}
-
-                  <span className="text-xs">
-                    {column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ""}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+      <table {...getTableProps()} className="w-full text-sm">
         <tbody {...getTableBodyProps()} >
         <div className="w-full wrapper overflow-auto">
           {page.map((row, idx) => {
@@ -203,4 +141,3 @@ const DataTable = () => {
     </>
   );
 };
-export default DataTable;

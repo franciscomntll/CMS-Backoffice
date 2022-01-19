@@ -1,7 +1,7 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Avatar,
-  Container,
+  Box,
   Flex,
   MenuButton,
   MenuItem,
@@ -15,18 +15,17 @@ import {
 const Navigation = ({set, state}) => {
   const Options = [
     {title: "Inicio", route: "/"},
-    {title: "Configuración", route: ""},
-    {title: "Cerrar Sesión", route: ""},
+    {title: "Configuración", route: "/"},
+    {title: "Cerrar Sesión", route: "/"},
 
   ]
   return (
     <Flex bg={"white"} shadow={"sm"} w={"100%"} padding={"1rem"}>
-      <Container
-        display={"flex"}
+      <Flex
         alignItems={"center"}
         justifyContent={"space-between"}
         w={"100%"}
-        maxW={"container.xl"}
+        px={"1.5rem"}
       >
         <IconButton onClick={() => set(!state)}>
           <HamburgerIcon w={"1.5rem"} h={"1.5rem"} color={"gray.500"} />
@@ -42,14 +41,14 @@ const Navigation = ({set, state}) => {
           </MenuButton>
           <MenuList p={"0"} fontSize={"sm"}>
            {Options.map((item,idx) => (
-             <Link href={item.route}>
-              <MenuItem key={idx} color={"gray.500"}>{item.title}</MenuItem>
+             <Link  key={idx} href={item.route}>
+              <MenuItem color={"gray.500"}>{item.title}</MenuItem>
              </Link>
            ))}
            
           </MenuList>
         </Menu>
-      </Container>
+      </Flex>
     </Flex>
   );
 };

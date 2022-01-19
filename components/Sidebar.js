@@ -24,7 +24,7 @@ const Sidebar = ({state}) => {
             </Flex>
             <Flex flexDir={"column"} >
                 {List.map((item,idx) => (
-                    <Box paddingBlock={"0.5rem"}>
+                    <Box key={idx} paddingBlock={"0.5rem"}>
                     
                     <Menu>
                         <MenuGroup color={"white"} title={item.title} fontSize={"sm"}>

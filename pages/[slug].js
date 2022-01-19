@@ -2,6 +2,7 @@ import { Box, Button, Flex } from "@chakra-ui/react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable";
 import { FetchGraphQL } from "../Fetching";
+import Form from '../components/Forms/Form'
 
 class Action {
   type;
@@ -81,7 +82,7 @@ const Module = ({ slug }) => {
         {action.type === "create" && (
           <>
           <Button onClick={() => setAction({type: "VIEW", payload:{}})}>Atras</Button>
-          <p>Crear Registro Formulario</p>
+          <Form schema={slug}/>
           </>
         )}
       </Box>

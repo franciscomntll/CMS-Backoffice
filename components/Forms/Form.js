@@ -15,22 +15,22 @@ import { schemasForForms } from "../../schemas";
 //business
 const Form = ({ schema }) => {
   return (
-    <FormControl onSubmit={(props) => console.log(props)}>
+    <FormControl onSubmit={(props) => schemasForForms[schema].endpoint}>
       <SimpleGrid columns={2} gap={"2rem"}>
-        {schemasForForms[schema] && Object?.entries(schemasForForms[schema])?.map((item, idx) => {
-          if (item[1]?.type === "string") {
+        {schemasForForms[schema] && schemasForForms[schema].schema?.map((item, idx) => {
+          if (item.type === "string") {
             return (
               <Box>
-                <FormLabel>{item[0]}</FormLabel>
-                <Input name={item[1]?.fetch} type={"text"} />
+                <FormLabel>{item.title}</FormLabel>
+                <Input name={item.fetch} type={"text"} />
               </Box>
             );
           }
           
-          if (item[1]?.type === "number") {
+          if (item.type === "number") {
             return (
               <Box>
-                <FormLabel>{item[0]}</FormLabel>
+                <FormLabel>{item.title}</FormLabel>
                 <NumberInput>
                   <NumberInputField />
                   <NumberInputStepper>

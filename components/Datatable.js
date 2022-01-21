@@ -13,6 +13,7 @@ const Datatable = ({ columns, data, ...props }) => {
       useSortBy,
       
     );
+    console.log(data);
   return (
     <Table {...getTableProps()} bg={"white"} w={"100%"}>
       <Thead>

@@ -10,23 +10,43 @@ import {
   SimpleGrid,
   Box,
   Button,
+  Divider,
 } from "@chakra-ui/react";
 import { schemasForForms } from "../../schemas";
+import {Formik , Form} from 'formik';
+import  InputField from './inputs/InputField'
+
+
+
 //business
-const Form = ({ schema }) => {
+
+const FormDinamical = ({ schema }) => {
+
+/* const formik = useFormik({
+  initialValues:{
+    businessName : '',
+    businesstitle:''
+  },
+  onSubmit : values => {
+    alert(JSON.stringify(values, null ,2));
+  },
+}) */
+
+  const initialValues = {
+    businessName: '',
+    businesstitle: ''
+  }
   return (
-    <FormControl onSubmit={(props) => schemasForForms[schema].endpoint}>
+   <Formik onSubmit={value => console.log(value)} initialValues={ initialValues}>  
+   <Form>
       <SimpleGrid columns={2} gap={"2rem"}>
         {schemasForForms[schema] && schemasForForms[schema].schema?.map((item, idx) => {
+          
           if (item.type === "string") {
             return (
-              <Box>
-                <FormLabel>{item.title}</FormLabel>
-                <Input name={item.fetch} type={"text"} />
-              </Box>
+             <InputField name={item.fetch} label={item.title}/>
             );
           }
-          
           if (item.type === "number") {
             return (
               <Box>
@@ -43,9 +63,10 @@ const Form = ({ schema }) => {
           }
         })}
       </SimpleGrid>
-        <Button type={"submit"} w={"100%"} mt={"2rem"}>Enviar datos</Button>
-    </FormControl>
+        <Button type={"submit"} w={"100%"} mt={"2rem"} >Enviar datos</Button>
+    </Form> 
+
+    </Formik>
   );
 };
-
-export default Form;
+export default FormDinamical;

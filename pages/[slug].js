@@ -3,6 +3,8 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable";
 import { FetchGraphQL } from "../Fetching";
 import Form from '../components/Forms/Form'
+import dynamic from 'next/dynamic'
+const CKEditorComponent = dynamic(() => import('../components/Forms/CKEditor'), {ssr: false})
 
 class Action {
   type;
@@ -33,10 +35,10 @@ const Module = ({ slug }) => {
   const [data, setData] = useState(initialValues);
   const [action, setAction] = useReducer(reducer, new Action("view", {}));
 
-  const fetchBusiness = async () => {
+  const fetchData = async () => {
     try {
-      const result = await FetchGraphQL.getBusinessAll();
-      setData(result);
+      const result = ObjectData[slug] && await ObjectData[slug]();
+      result && setData(result);
     } catch (error) {
       console.log(error);
       return null;
@@ -44,14 +46,14 @@ const Module = ({ slug }) => {
   };
 
   const ObjectData = {
-    business: fetchBusiness,
+    business: FetchGraphQL.getBusinessAll,
     categoriesBusiness: () => console.log("categorias"),
   };
 
   useEffect(() => {
     setData(initialValues);
     setAction({ type: "VIEW", payload: {} });
-    ObjectData[slug] && ObjectData[slug]();
+    fetchData()
   }, [slug]);
 
   const columns = useMemo(
@@ -77,7 +79,8 @@ const Module = ({ slug }) => {
       >
         Añadir registro
       </Button>}
-      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"}>
+        <CKEditorComponent />
+      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} h={"30rem"} overflow={"auto"}>
         {action.type === "view" && <Datatable columns={columns} data={data.results} />}
         {action.type === "create" && (
           <>

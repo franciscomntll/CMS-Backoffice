@@ -4,13 +4,28 @@ export const schemasForForms = {
     schema : [
         {
             title: "Nombre de la empresa",
-            fetch: "businessName",
+            fetch: "title",
             type: "string"
         },
         {
-          title: "Nombre de la empresa",
-          fetch: "businesstitle",
+          title: "Imagen de miniatura",
+          fetch: "imgMiniatura",
           type: "string"
+      },
+        {
+          title: "Imagen de banner",
+          fetch: "imgBanner",
+          type: "string"
+      },
+        {
+          title: "Slug",
+          fetch: "slug",
+          type: "string"
+      },
+      {
+          title: "Descripción",
+          fetch: "description",
+          type: "textarea"
       },
     ]
   },

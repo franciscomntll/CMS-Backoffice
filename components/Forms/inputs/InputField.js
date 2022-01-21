@@ -8,8 +8,8 @@ const InputField = ({label, ...props}) => {
 
     return(
         <Box>
-            <FormLabel  >{label}</FormLabel>
-            <Input  {...field} {...props}  />
+            <FormLabel fontSize={"sm"} >{label}</FormLabel>
+            <Input fontSize={"sm"} {...field} {...props}  />
         </Box>
     )
 }

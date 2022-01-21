@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Box,
   Button,
+  useToast
 } from "@chakra-ui/react";
 import { schemasForForms } from "../../schemas";
 import { Formik, Form } from "formik";
@@ -18,6 +19,7 @@ import InputField from "./inputs/InputField";
 //business
 
 const FormDinamical = ({ schema }) => {
+  const toast = useToast()
   const initialValues = schemasForForms[schema]?.schema?.reduce(
     (acc, { fetch }) => {
       acc[fetch] = "";
@@ -26,9 +28,16 @@ const FormDinamical = ({ schema }) => {
     {}
   );
 
+  const handleSubmit = (values) => {
+    toast({
+      title: "Mis valores",
+      description: JSON.stringify(values),
+      status: "success"
+    })
+  }
   return (
     <Formik
-      onSubmit={(value) => console.log(value)}
+      onSubmit={handleSubmit}
       initialValues={initialValues ?? {}}
     >
       <Form>

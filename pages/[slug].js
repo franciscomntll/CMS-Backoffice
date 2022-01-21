@@ -40,6 +40,7 @@ const Module = ({ slug }) => {
       const result = ObjectData[slug] && await ObjectData[slug]();
       result && setData(result);
     } catch (error) {
+      
       console.log(error);
       return null;
     }

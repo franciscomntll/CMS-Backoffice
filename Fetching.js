@@ -1,8 +1,7 @@
-import { api } from "./api"
 
 export const FetchGraphQL = {
-    getBusinessAll : async () => {
-        const query = `query {
+  getBusinessAll: {
+    query: `query {
             getAllBusinesses{
                 total
               results{
@@ -10,10 +9,8 @@ export const FetchGraphQL = {
                 businessName
               }
             }
-          }`
+          }`,
 
-        const variables = {}
-        const { data : {data : { getAllBusinesses }} } = await api.GraphQL({query, variables})
-        return getAllBusinesses
-    }
-}
+    variables: {},
+  },
+};

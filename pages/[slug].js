@@ -1,12 +1,12 @@
 import { Box, Button, Flex, Text, Heading } from "@chakra-ui/react";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import Datatable from "../components/Datatable";
+import Datatable from "../components/Datatable/Datatable";
 import { FetchGraphQL } from "../Fetching";
-import dynamic from 'next/dynamic'
 import PanelEditAndCreate from "../components/PanelEditAndCreate";
-const CKEditorComponent = dynamic(() => import('../components/Forms/inputs/CKEditor'), {ssr: false})
+import ActionsCell from "../components/Datatable/ActionsCell";
+import { useFetch } from '../hooks/useFetch'
 
-class Action {
+export class Action {
   type;
   data;
   constructor(type, data) {
@@ -31,30 +31,25 @@ const reducer = (state, action) => {
 };
 
 const Module = ({ slug }) => {
-  const initialValues = { total: 0, results: [] };
-  const [data, setData] = useState(initialValues);
-  const [action, setAction] = useReducer(reducer, new Action("view", {}));
+  const [state, dispatch] = useReducer(reducer, new Action("view", {}));
+  const [{data, isLoading, isError}, setQuery] = useFetch()
 
-  const fetchData = async () => {
-    try {
-      const result = ObjectData[slug] && await ObjectData[slug]();
-      result && setData(result);
-    } catch (error) {
-      
-      console.log(error);
-      return null;
-    }
-  };
+  
 
+  
   const ObjectData = {
     business: FetchGraphQL.getBusinessAll,
-    categoriesBusiness: () => console.log("categorias"),
+    categoriesBusiness: {},
+    subcategoriesBusiness: {},
+    posts: {},
+    categoriesPosts: {},
+    subcategoriesPosts: {},
   };
 
   useEffect(() => {
-    setData(initialValues);
-    setAction({ type: "VIEW", payload: {} });
-    fetchData()
+    // setData(initialValues);
+    dispatch({ type: "VIEW", payload: {} });
+    ObjectData[slug] && setQuery(ObjectData[slug])
   }, [slug]);
 
   const columns = useMemo(
@@ -67,35 +62,40 @@ const Module = ({ slug }) => {
         Header: "ID",
         accessor: "_id",
       },
+      {
+        Header: "Acciones",
+        accessor: "",
+        Cell: (props) => <ActionsCell {...props} setAction={dispatch} />
+      },
     ],
     []
   );
 
   return (
-    <Flex as={"section"} flexDir={"column"} gap={"1rem"} >
-      {action.type === "view" && (
+    <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"}  >
+      {state.type === "view" && (
         <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
           <Box>
           <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>{slug}</Heading>
-          <Text fontSize={"sm"}>{JSON.stringify(data.total)} registros</Text>
+          <Text fontSize={"sm"}>{JSON.stringify(data?.total)} registros</Text>
           </Box>
           <Button
         w={"fit-content"}
         px={"1rem"}
-        onClick={() => setAction({ type: "CREATE", payload: {} })}
+        onClick={() => dispatch({ type: "CREATE", payload: {} })}
       >
         Añadir registro
       </Button>
 
         </Flex>
       )}
-        {action.type === "view" && (
-      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} h={"30rem"} overflow={"auto"}>
-          <Datatable columns={columns} data={data.results} />
+        {state.type === "view" && (
+      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} overflow={"auto"} mb={"5rem"} >
+          <Datatable columns={columns} data={data?.results?? []} isLoading={isLoading} />
         </Box>
         )}
-        {action.type === "create" && (
-          <PanelEditAndCreate setAction={setAction} slug={slug} />
+        {["edit", "create"].includes(state.type) && (
+          <PanelEditAndCreate setAction={dispatch} slug={slug} />
         )}
     </Flex>
   );

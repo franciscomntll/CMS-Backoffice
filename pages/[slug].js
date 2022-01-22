@@ -1,10 +1,10 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, Heading } from "@chakra-ui/react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable";
 import { FetchGraphQL } from "../Fetching";
-import Form from '../components/Forms/Form'
 import dynamic from 'next/dynamic'
-const CKEditorComponent = dynamic(() => import('../components/Forms/CKEditor'), {ssr: false})
+import PanelEditAndCreate from "../components/PanelEditAndCreate";
+const CKEditorComponent = dynamic(() => import('../components/Forms/inputs/CKEditor'), {ssr: false})
 
 class Action {
   type;
@@ -31,7 +31,7 @@ const reducer = (state, action) => {
 };
 
 const Module = ({ slug }) => {
-  const initialValues = { total: null, results: [] };
+  const initialValues = { total: 0, results: [] };
   const [data, setData] = useState(initialValues);
   const [action, setAction] = useReducer(reducer, new Action("view", {}));
 
@@ -72,24 +72,31 @@ const Module = ({ slug }) => {
   );
 
   return (
-    <Flex as={"section"} flexDir={"column"} gap={"1rem"}>
-      {action.type === "view" && <Button
+    <Flex as={"section"} flexDir={"column"} gap={"1rem"} >
+      {action.type === "view" && (
+        <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
+          <Box>
+          <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>{slug}</Heading>
+          <Text fontSize={"sm"}>{JSON.stringify(data.total)} registros</Text>
+          </Box>
+          <Button
         w={"fit-content"}
         px={"1rem"}
         onClick={() => setAction({ type: "CREATE", payload: {} })}
       >
         Añadir registro
-      </Button>}
-        <CKEditorComponent />
+      </Button>
+
+        </Flex>
+      )}
+        {action.type === "view" && (
       <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} h={"30rem"} overflow={"auto"}>
-        {action.type === "view" && <Datatable columns={columns} data={data.results} />}
-        {action.type === "create" && (
-          <>
-          <Button onClick={() => setAction({type: "VIEW", payload:{}})}>Atras</Button>
-          <Form schema={slug}/>
-          </>
+          <Datatable columns={columns} data={data.results} />
+        </Box>
         )}
-      </Box>
+        {action.type === "create" && (
+          <PanelEditAndCreate setAction={setAction} slug={slug} />
+        )}
     </Flex>
   );
 };

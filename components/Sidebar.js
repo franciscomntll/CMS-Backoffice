@@ -15,7 +15,7 @@ const Sidebar = ({state}) => {
         ]},
     ]
     return (
-        <Flex pos={"relative"} w={"16rem"} h={"100vh"} shadow={"md"} bg={"gray.500"} justifyContent={"start"} flexDir={"column"} marginLeft={`${state ? "" : "-16rem"}`} transitionProperty={"all"} transitionTimingFunction={"cubic-bezier(0.4, 0, 0.2, 1)"} transitionDuration={"150ms"}   >
+        <Flex pos={"relative"} w={"14rem"} h={"100vh"} shadow={"md"} bg={"gray.500"} justifyContent={"start"} flexDir={"column"} marginLeft={`${state ? "" : "-16rem"}`} transitionProperty={"all"} transitionTimingFunction={"cubic-bezier(0.4, 0, 0.2, 1)"} transitionDuration={"150ms"}   >
             <Flex alignItems={"center"} gap={"0.5rem"} p={"1rem"}  >
                 <Flex p={"0.8rem"} w={"fit-content"} rounded={"xl"} bg={"white"}>
                     <Heading color={"blue.500"} as={"p"} fontSize={"xl"} fontWeight={"700"}>PA</Heading>

@@ -3,15 +3,12 @@ import { Box, Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { Action } from '../../pages/[slug]';
 
-const ActionsCell = ({setAction}) => {
-    const fetchData= () => {
-        return {name: "hola" , lastname: "mundo"}
-    }
+const ActionsCell = ({setAction, ...rest}) => {
   return (
     <Flex alignItems={"center"} gap={"0.5rem"}>
-       <IconButton  icon={<ViewIcon/>}/>
-       <IconButton onClick={() => setAction({type: "EDIT", payload: {}})}  icon={<EditIcon/>}/>
-       <IconButton  icon={<DeleteIcon/>}/>
+       <IconButton size={"sm"} icon={<ViewIcon/>}/>
+       <IconButton size={"sm"}onClick={() => setAction({type: "EDIT", payload: {}})}  icon={<EditIcon/>}/>
+       <IconButton size={"sm"} icon={<DeleteIcon/>}/>
     </Flex>
   )
 };

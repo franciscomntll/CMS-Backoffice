@@ -7,6 +7,9 @@ export const FetchGraphQL = {
               results{
                 _id
                 businessName
+                slug
+                createdAt
+                updatedAt
               }
             }
           }`,

@@ -5,16 +5,12 @@ const IndeterminateCheckbox = forwardRef(
     ({ indeterminate, ...rest }, ref) => {
       const defaultRef = useRef()
       const resolvedRef = ref || defaultRef
-      const [checked, setChecked] = useState(true)
   
       useEffect(() => {
         resolvedRef.current.indeterminate = indeterminate
       }, [resolvedRef, indeterminate])
   
-      useEffect(() => {
-          console.log(rest);
-        setChecked(rest.checked)
-      }, [rest.checked]);
+
       
       return (
         <>

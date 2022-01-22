@@ -28,8 +28,8 @@ import UploadImage from "./Inputs/UploadImage";
 const FormDinamical = ({ schema }) => {
   const toast = useToast();
   const initialValues = schemasForForms[schema]?.schema?.reduce(
-    (acc, { fetch }) => {
-      acc[fetch] = "";
+    (acc, { accessor }) => {
+      acc[accessor] = "";
       return acc;
     },
     {}
@@ -55,25 +55,25 @@ const FormDinamical = ({ schema }) => {
             schemasForForms[schema].schema?.map((item, idx) => {
               switch (item.type) {
                 case "string":
-                  return <InputField key={idx} name={item.fetch} label={item.title} />;
+                  return <InputField key={idx} name={item.accessor} label={item.Header} />;
                   break;
                 case "number":
                   return (
-                    <InputNumberField key={idx} name={item.fetch} label={item.title} />
+                    <InputNumberField key={idx} name={item.accessor} label={item.Header} />
                   );
                   break;
                 case "textarea":  
-                  return <TextareaField key={idx} name={item.fetch} label={item.title} />;
+                  return <TextareaField key={idx} name={item.accessor} label={item.Header} />;
                   break;
                 case "ckeditor":
                   return (
                     <GridItem key={idx} colSpan={"2"}>
-                      <CKEditorComponent name={item.fetch} label={item.title} />
+                      <CKEditorComponent name={item.accessor} label={item.Header} />
                     </GridItem>
                   );
                   break;
                   case "image":  
-                  return <UploadImage key={idx} name={item.fetch} label={item.title} />;
+                  return <UploadImage key={idx} name={item.accessor} label={item.Header} />;
                   break;
                 default:
                   break;

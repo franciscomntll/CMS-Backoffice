@@ -3,8 +3,8 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable/Datatable";
 import { FetchGraphQL } from "../Fetching";
 import PanelEditAndCreate from "../components/PanelEditAndCreate";
-import ActionsCell from "../components/Datatable/ActionsCell";
 import { useFetch } from '../hooks/useFetch'
+import { columnsDataTable } from "../components/Datatable/Columns";
 
 export class Action {
   type;
@@ -35,8 +35,6 @@ const Module = ({ slug }) => {
   const [{data, isLoading, isError}, setQuery] = useFetch()
 
   
-
-  
   const ObjectData = {
     business: FetchGraphQL.getBusinessAll,
     categoriesBusiness: {},
@@ -52,27 +50,12 @@ const Module = ({ slug }) => {
     ObjectData[slug] && setQuery(ObjectData[slug])
   }, [slug]);
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Nombre de la empresa",
-        accessor: "businessName",
-      },
-      {
-        Header: "ID",
-        accessor: "_id",
-      },
-      {
-        Header: "Acciones",
-        accessor: "",
-        Cell: (props) => <ActionsCell {...props} setAction={dispatch} />
-      },
-    ],
-    []
-  );
+  const myColumns = columnsDataTable({slug, dispatch})
+
+  const columns = useMemo(() => myColumns?.schema, [myColumns]);
 
   return (
-    <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"}  >
+    <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"} >
       {state.type === "view" && (
         <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
           <Box>
@@ -90,9 +73,11 @@ const Module = ({ slug }) => {
         </Flex>
       )}
         {state.type === "view" && (
-      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} overflow={"auto"} mb={"5rem"} >
-          <Datatable columns={columns} data={data?.results?? []} isLoading={isLoading} />
+          <Flex w={"100%"} overflow={"hidden"}>
+      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} overflow={"auto"} mb={"5rem"} w={"100%"} >
+          <Datatable columns={columns} data={data?.results?? []} isLoading={isLoading} initialState={{hiddenColumns : myColumns?.hiddenColumns ?? {}}} />
         </Box>
+          </Flex>
         )}
         {["edit", "create"].includes(state.type) && (
           <PanelEditAndCreate setAction={dispatch} slug={slug} />

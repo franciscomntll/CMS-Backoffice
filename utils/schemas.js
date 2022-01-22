@@ -9,15 +9,16 @@ export const BodyStaticAPP = [
         route: "business",
         getData: FetchGraphQL.business.getBusinessAll,
         getByID: FetchGraphQL.business.getBusinessByID,
-        createEntry: FetchGraphQL.catBusiness.createCategoryBusiness,
-        updateEntry: {},
-        deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness,
+        createEntry: FetchGraphQL.catBusiness.createCategoryBusiness,//pendiente por cambiar 
+        updateEntry: {},//pendiente 
+        deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness,//pendiente por cambiar
         visibleColumns: ["_id", "businessName", "slug", "createdAt"],
         schema: [
           {
             Header: "Nombre de empresa",
             accessor: "businessName",
             type: "string",
+            required: true
           },
           {
             Header: "ID",
@@ -31,32 +32,38 @@ export const BodyStaticAPP = [
             Header: "Slug",
             accessor: "slug",
             type: "string",
+            required: true
           },
 
           {
             Header: "Tags",
             accessor: "tags",
             type: "string",
+            required: true
           },
           {
             Header: "Nombre de contacto",
             accessor: "contactName",
             type: "string",
+            required: true
           },
           {
             Header: "Email de contacto",
             accessor: "contactEmail",
             type: "email",
+            required: true
           },
           {
             Header: "Pagina web",
             accessor: "webPage",
             type: "url",
+            required: true
           },
           {
             Header: "Telefono fijo",
             accessor: "landline",
             type: "string",
+            required: true
           },
           {
             Header: "Telefono movil",
@@ -123,6 +130,7 @@ export const BodyStaticAPP = [
         getByID: FetchGraphQL.catBusiness.getOneCategoryBusiness,
         createEntry: FetchGraphQL.catBusiness.createCategoryBusiness,
         deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness,
+        updateEntry: FetchGraphQL.catBusiness.updateCategoryBusiness,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {
@@ -139,11 +147,13 @@ export const BodyStaticAPP = [
             Header: "Slug",
             accessor: "slug",
             type: "string",
+            required: true
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
             type: "date",
+            required: true
           },
         ],
       },
@@ -152,6 +162,9 @@ export const BodyStaticAPP = [
         route: "subcategoriesBusiness",
         getData: FetchGraphQL.subCatBusiness.getSubCategoryBusiness,
         getByID: FetchGraphQL.subCatBusiness.getOneSubCategoryBusiness,
+        createEntry: FetchGraphQL.subCatBusiness.createSubCategoryBusiness,
+        deleteEntry: FetchGraphQL.subCatBusiness.deleteSubCategoryBusiness,
+        updateEntry: FetchGraphQL.subCatBusiness.updateSubCategoryBusiness,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {
@@ -162,16 +175,19 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
+            required: true
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
             type: "date",
+            required: true
           },
         ],
       },
@@ -180,6 +196,9 @@ export const BodyStaticAPP = [
         route: "characteristics",
         getData: FetchGraphQL.characteristics.getAllCharacteristics,
         getByID: FetchGraphQL.characteristics.getOneCharacteristics,
+        createEntry: FetchGraphQL.characteristics.createCharacteristics,
+        deleteEntry: FetchGraphQL.characteristics.deleteCharacteristics,
+        updateEntry: FetchGraphQL.characteristics.updateCharacteristics,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {
@@ -190,16 +209,19 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
+            required: true
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
             type: "date",
+            required: true
           },
         ],
       },
@@ -208,6 +230,9 @@ export const BodyStaticAPP = [
         route: "questions",
         getData: FetchGraphQL.questions.getAllQuestions,
         getByID: FetchGraphQL.questions.getOneQuestion,
+        createEntry: FetchGraphQL.questions.updateQuestions,
+        deleteEntry: FetchGraphQL.questions.deleteQuestions,
+        updateEntry: FetchGraphQL.questions.updateQuestions,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {
@@ -218,16 +243,19 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
+            required: true
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
             type: "date",
+            required: true
           },
         ],
       },
@@ -246,6 +274,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "ID",
@@ -264,6 +293,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "ID",
@@ -282,6 +312,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "ID",

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable/Datatable";
 import { FetchGraphQL } from "../Fetching";
 import PanelEditAndCreate from "../components/PanelEditAndCreate";
-import { useFetch } from '../hooks/useFetch'
+import { useFetch } from "../hooks/useFetch";
 import { columnsDataTable } from "../components/Datatable/Columns";
 
 export class Action {
@@ -32,56 +32,62 @@ const reducer = (state, action) => {
 
 const Module = ({ slug }) => {
   const [state, dispatch] = useReducer(reducer, new Action("view", {}));
-  const [{data, isLoading, isError}, setQuery] = useFetch()
-
-  
-  const ObjectData = {
-    business: FetchGraphQL.getBusinessAll,
-    categoriesBusiness: {},
-    subcategoriesBusiness: {},
-    posts: {},
-    categoriesPosts: {},
-    subcategoriesPosts: {},
-  };
+  const [{ data, isLoading, isError }, setQuery] = useFetch();
+  const [selected, setSelected] = useState(columnsDataTable({ slug }));
+  const columns = useMemo(() => selected?.schema, [selected]);
 
   useEffect(() => {
-    // setData(initialValues);
+    setQuery(selected.getData);
+  }, [selected]);
+
+  useEffect(() => {
     dispatch({ type: "VIEW", payload: {} });
-    ObjectData[slug] && setQuery(ObjectData[slug])
+    setSelected(columnsDataTable({ slug }));
   }, [slug]);
 
-  const myColumns = columnsDataTable({slug, dispatch})
-
-  const columns = useMemo(() => myColumns?.schema, [myColumns]);
-
   return (
-    <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"} >
+    <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"}>
       {state.type === "view" && (
         <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
           <Box>
-          <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>{slug}</Heading>
-          <Text fontSize={"sm"}>{JSON.stringify(data?.total)} registros</Text>
+            <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
+              {slug}
+            </Heading>
+            <Text fontSize={"sm"}>{JSON.stringify(data?.total?? 0)} registros</Text>
           </Box>
           <Button
-        w={"fit-content"}
-        px={"1rem"}
-        onClick={() => dispatch({ type: "CREATE", payload: {} })}
-      >
-        Añadir registro
-      </Button>
-
+            w={"fit-content"}
+            px={"1rem"}
+            onClick={() => dispatch({ type: "CREATE", payload: {} })}
+          >
+            Añadir registro
+          </Button>
         </Flex>
       )}
-        {state.type === "view" && (
-          <Flex w={"100%"} overflow={"hidden"}>
-      <Box bg={"white"} p={"1rem"} shadow={"sm"} rounded={"xl"} overflow={"auto"} mb={"5rem"} w={"100%"} >
-          <Datatable columns={columns} data={data?.results?? []} isLoading={isLoading} initialState={{hiddenColumns : myColumns?.hiddenColumns ?? {}}} />
-        </Box>
-          </Flex>
-        )}
-        {["edit", "create"].includes(state.type) && (
-          <PanelEditAndCreate setAction={dispatch} slug={slug} />
-        )}
+      {state.type === "view" && (
+        <Flex w={"100%"} overflow={"hidden"}>
+          <Box
+            bg={"white"}
+            p={"1rem"}
+            shadow={"sm"}
+            rounded={"xl"}
+            overflow={"auto"}
+            mb={"5rem"}
+            w={"100%"}
+          >
+            <Datatable
+              columns={columns}
+              data={data?.results ?? []}
+              isLoading={isLoading}
+              initialState={{ hiddenColumns: selected?.hiddenColumns ?? {} }}
+              setAction={dispatch}
+            />
+          </Box>
+        </Flex>
+      )}
+      {["edit", "create"].includes(state.type) && (
+        <PanelEditAndCreate setAction={dispatch} slug={slug} state={state} />
+      )}
     </Flex>
   );
 };
@@ -90,6 +96,6 @@ export default Module;
 
 export async function getServerSideProps({ params }) {
   return {
-    props: params, // { slug : "business"}
+    props: params,
   };
 }

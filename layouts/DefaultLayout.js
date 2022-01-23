@@ -7,7 +7,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <Flex h={"100vh"} w={"100%"} overflow={"hidden"} >
       <Sidebar state={show} />
-      <Flex flexDir={"column"} w={"calc(100% - 14rem)"}>
+      <Flex flexDir={"column"} w={show ? "calc(100% - 14rem)" : "100%"}>
         <Navigation set={setShow} state={show} />
         <Box as={"main"} p={"2rem"} bg={"gray.50"} h={"full"} w={"100%"}>
         {children}

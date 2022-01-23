@@ -31,13 +31,10 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
+import LoadingComponent from "../LoadingComponent";
 import IndeterminateCheckbox from "./IndeterminateCheckbox";
 
-const Datatable = ({ isLoading, initialState, columns, data, ...props }) => {
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
-
+const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -61,6 +58,7 @@ const Datatable = ({ isLoading, initialState, columns, data, ...props }) => {
       columns,
       data,
       initialState,
+      setAction,
       props,
     },
     useSortBy,
@@ -275,16 +273,7 @@ const Datatable = ({ isLoading, initialState, columns, data, ...props }) => {
           </Flex>
         </>
       ) : (
-        <Flex
-          alignItems={"center"}
-          w={"100%"}
-          gap={"0.5rem"}
-          justifyContent={"center"}
-          p={"2rem"}
-        >
-          <Spinner size={"md"} />
-          <Text>Cargando</Text>
-        </Flex>
+        <LoadingComponent/>
       )}
     </>
   );

@@ -1,20 +1,4 @@
-import {
-  Input,
-  FormControl,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  FormLabel,
-  SimpleGrid,
-  Box,
-  Button,
-  useToast,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import { schemasForForms } from "../../schemas";
+import { Button, useToast, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import InputField from "./Inputs/InputField";
 import InputNumberField from "./Inputs/InputNumberField";
@@ -22,12 +6,20 @@ import TextareaField from "./Inputs/TextareaField";
 const CKEditorComponent = dynamic(() => import("./inputs/CKEditor"));
 import dynamic from "next/dynamic";
 import UploadImage from "./Inputs/UploadImage";
-
+import { useEffect, useState } from "react";
+import { FindOption } from "../Datatable/Columns";
 //business
 
-const FormDinamical = ({ schema }) => {
+const FormDinamical = ({ schema, initialData }) => {
   const toast = useToast();
-  const initialValues = schemasForForms[schema]?.schema?.reduce(
+  const [selected, useSelected] = useState();
+  
+
+  useEffect(() => {
+    useSelected(FindOption(schema))
+  }, [schema]);
+  
+  const initialValues = selected?.schema?.reduce(
     (acc, { accessor }) => {
       acc[accessor] = "";
       return acc;
@@ -36,44 +28,63 @@ const FormDinamical = ({ schema }) => {
   );
 
   const handleSubmit = async (values) => {
-    console.log(values)
-    let formData = new FormData();
-    Object.keys(values).forEach((key) => {
-      formData.append(key, values[key]);
-    });
-    // Display the values
-  for (var value of formData.values()) {
-  console.log("key",value);
-}
+    console.log(values);
     
   };
   return (
-    <Formik onSubmit={handleSubmit} initialValues={initialValues ?? {}}>
+    <>
+    {initialValues && (
+      <Formik onSubmit={handleSubmit} initialValues={{...initialValues, ...initialData}}>
       <Form>
         <Grid templateColumns="repeat(2, 1fr)" gap={"2rem"}>
-          {schemasForForms[schema] &&
-            schemasForForms[schema].schema?.map((item, idx) => {
+          {selected &&
+            selected?.schema?.map((item, idx) => {
               switch (item.type) {
                 case "string":
-                  return <InputField key={idx} name={item.accessor} label={item.Header} />;
+                  return (
+                    <InputField
+                      key={idx}
+                      name={item.accessor}
+                      label={item.Header}
+                    />
+                  );
                   break;
                 case "number":
                   return (
-                    <InputNumberField key={idx} name={item.accessor} label={item.Header} />
+                    <InputNumberField
+                      key={idx}
+                      name={item.accessor}
+                      label={item.Header}
+                    />
                   );
                   break;
-                case "textarea":  
-                  return <TextareaField key={idx} name={item.accessor} label={item.Header} />;
+                case "textarea":
+                  return (
+                    <TextareaField
+                      key={idx}
+                      name={item.accessor}
+                      label={item.Header}
+                    />
+                  );
                   break;
                 case "ckeditor":
                   return (
                     <GridItem key={idx} colSpan={"2"}>
-                      <CKEditorComponent name={item.accessor} label={item.Header} />
+                      <CKEditorComponent
+                        name={item.accessor}
+                        label={item.Header}
+                      />
                     </GridItem>
                   );
                   break;
-                  case "image":  
-                  return <UploadImage key={idx} name={item.accessor} label={item.Header} />;
+                case "image":
+                  return (
+                    <UploadImage
+                      key={idx}
+                      name={item.accessor}
+                      label={item.Header}
+                    />
+                  );
                   break;
                 default:
                   break;
@@ -85,6 +96,8 @@ const FormDinamical = ({ schema }) => {
         </Button>
       </Form>
     </Formik>
+    ) }
+    </>
   );
 };
 export default FormDinamical;

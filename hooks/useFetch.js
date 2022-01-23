@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import {api} from '../api'
 
-const initialData = {total: 0, results: []}
 export const useFetch = () => {
-    const [data, setData] = useState({total: 0, results: []})
+    const [data, setData] = useState(null)
     const [query, setQuery] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false);
 
 
     const fetchData = useCallback(async () => {
-      setData(initialData)
+        setData(null)
         setIsError(false)
         setIsLoading(true)
         try {
@@ -24,6 +23,7 @@ export const useFetch = () => {
         }
         setIsLoading(false)
     }, [query]) 
+    
     useEffect(() => {
       fetchData()
     }, [query]);

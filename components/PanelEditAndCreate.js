@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useFetch } from "../hooks/useFetch";
-import {FormDinamical} from "./Forms/Form";
-import { FindOption } from "./Datatable/Columns";
-import {LoadingComponent} from "./LoadingComponent";
+import {FormDinamical} from "components/Forms/Form";
+import { FindOption } from "components/Datatable/Columns";
+import {LoadingComponent} from "components/LoadingComponent";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [{ data, isLoading, isError }, setQuery] = useFetch();

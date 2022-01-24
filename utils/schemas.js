@@ -1,4 +1,4 @@
-import { FetchGraphQL } from "./Fetching";
+import { FetchGraphQL } from "utils/Fetching";
 
 export const BodyStaticAPP = [
   {

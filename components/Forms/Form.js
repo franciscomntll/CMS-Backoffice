@@ -1,14 +1,13 @@
 import { Button, useToast, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import {InputField} from "./Inputs/InputField";
-import {InputNumberField} from "./Inputs/InputNumberField";
-import {TextareaField} from "./Inputs/TextareaField";
-const CKEditorComponent = dynamic(() => import("./inputs/CKEditor").then(mod => mod.CKEditorComponent),{ssr: false});
+import { InputField } from "components/Forms/Inputs/InputField";
+import {InputNumberField} from "components/Forms/Inputs/InputNumberField";
+import {TextareaField} from "components/Forms/Inputs/TextareaField";
+import {UploadImage} from "components/Forms/Inputs/UploadImage";
+import { FindOption } from "components/Datatable/Columns";
+const CKEditorComponent = dynamic(() => import("components/Forms/Inputs/CKEditor").then(mod => mod.CKEditorComponent),{ssr: false});
 import dynamic from "next/dynamic";
-import {UploadImage} from "./Inputs/UploadImage";
 import { useEffect, useState } from "react";
-import { FindOption } from "../Datatable/Columns";
-//business
 
 export const FormDinamical = ({ schema, initialData }) => {
   const toast = useToast();

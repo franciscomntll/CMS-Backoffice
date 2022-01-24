@@ -1,7 +1,6 @@
 import { DeleteIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
-import { Box, Flex, IconButton } from '@chakra-ui/react';
+import { Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
-import { Action } from '../../pages/[slug]';
 
 export const ActionsCell = (props) => {
   const {setAction, row} = props

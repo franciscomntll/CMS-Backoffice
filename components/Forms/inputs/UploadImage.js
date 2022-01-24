@@ -1,9 +1,7 @@
-import { AddIcon, SunIcon, UpDownIcon } from "@chakra-ui/icons";
 import { Box, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useField } from "formik";
 import Image from "next/image";
-import React, { useState } from "react";
-import { ImageIcon } from "../../icons";
+import { ImageIcon } from "components/icons";
 
 export const UploadImage = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);

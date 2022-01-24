@@ -1,5 +1,5 @@
-import { Checkbox, Input } from "@chakra-ui/react"
-import { forwardRef, useEffect, useRef, useState } from "react"
+import { Checkbox } from "@chakra-ui/react"
+import { forwardRef, useEffect, useRef } from "react"
 
 export const IndeterminateCheckbox = forwardRef(
     ({ indeterminate, ...rest }, ref) => {

@@ -1,10 +1,10 @@
-import { getAuth } from "@firebase/auth";
 import {
   createContext,
   useState,
   useEffect,
   useContext,
 } from "react";
+import { auth } from "utils/firebase";
 
 
 const initialContext = {
@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     
-    const auth = getAuth();
+    
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);

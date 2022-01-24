@@ -10,7 +10,7 @@ import {
   Text,
   IconButton,
   } from "@chakra-ui/react";
-import {AuthContextProvider} from '../context/AuthContext';
+import {AuthContextProvider} from 'context/AuthContext';
 import Link from 'next/link';
 ;
 

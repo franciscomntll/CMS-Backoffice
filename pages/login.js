@@ -6,10 +6,10 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React from "react";
-import {InputField} from "../components/Forms/Inputs/InputField";
+import {InputField} from "components/Forms/Inputs/InputField";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {PasswordInput} from "../components/Forms/Inputs/PasswordInput";
-import { AuthContextProvider } from "../context/AuthContext";
+import {PasswordInput} from "components/Forms/Inputs/PasswordInput";
+import { AuthContextProvider } from "context/AuthContext";
 import { useRouter } from "next/router";
 const Login = () => {
   return (

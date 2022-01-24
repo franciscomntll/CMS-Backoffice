@@ -30,8 +30,8 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
-import {LoadingComponent} from "../LoadingComponent";
-import {IndeterminateCheckbox} from "./IndeterminateCheckbox";
+import {LoadingComponent} from "components/LoadingComponent";
+import {IndeterminateCheckbox} from "components/Datatable/IndeterminateCheckbox";
 
 export const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props }) => {
   const {

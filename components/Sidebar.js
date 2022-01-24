@@ -9,7 +9,7 @@ import {
   MenuGroup,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { BodyStaticAPP } from "../utils/schemas";
+import { BodyStaticAPP } from "utils/schemas";
 
 export const Sidebar = ({ state }) => {
 

@@ -1,8 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import {Navigation} from "../components/Navigation";
-import {Sidebar} from "../components/Sidebar";
-import { AuthProvider } from "../context/AuthContext";
+import {Navigation} from "components/Navigation";
+import {Sidebar} from "components/Sidebar";
+import { AuthProvider } from "context/AuthContext";
 export const DefaultLayout = ({ children }) => {
   const [show, setShow] = useState(true);
   return (

@@ -12,16 +12,23 @@ import {
   } from "@chakra-ui/react";
 import {AuthContextProvider} from 'context/AuthContext';
 import Link from 'next/link';
+import { useRouter } from "next/router";
+import { authentication } from "utils/Authentication";
 ;
 
 
 
 export const Navigation = ({set, state}) => {
   const {user} = AuthContextProvider()
+  const router = useRouter()
   const Options = [
     {title: "Inicio", route: "/"},
     {title: "Configuración", route: "/"},
-    {title: "Cerrar Sesión", route: "/"},
+    {title: "Cerrar Sesión", function : async () => {
+      authentication.SignOut()
+      localStorage.removeItem("tokenAdminBodas")
+      await router.push("/login")
+    }},
 
   ]
   return (
@@ -46,9 +53,13 @@ export const Navigation = ({set, state}) => {
           </MenuButton>
           <MenuList p={"0"} fontSize={"sm"}>
            {Options.map((item,idx) => (
-             <Link  key={idx} href={item.route}>
+             item.route ? (
+              <Link  key={idx} href={item.route}>
               <MenuItem color={"gray.500"}>{item.title}</MenuItem>
              </Link>
+             ) : (
+              <MenuItem onClick={item?.function} color={"gray.500"}>{item.title}</MenuItem>
+             )
            ))}
            
           </MenuList>

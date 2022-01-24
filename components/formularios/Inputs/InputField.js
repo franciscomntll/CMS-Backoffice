@@ -9,7 +9,7 @@ export const InputField = ({label, ...props}) => {
     return(
         <Box>
             <FormLabel fontSize={"sm"} >{label}</FormLabel>
-            <Input fontSize={"sm"} {...field} {...props}  />
+            <Input variant={"filled"} fontSize={"sm"} {...field} {...props}  />
         </Box>
     )
 }

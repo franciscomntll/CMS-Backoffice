@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
       if (user) {
         setUser(user);
         // Setear en localStorage token JWT
-        localStorage.setItem('auth', (await user?.getIdTokenResult())?.token)
+        localStorage.setItem('tokenAdminBodas', (await user?.getIdTokenResult())?.token)
       }
     });
   }, []);

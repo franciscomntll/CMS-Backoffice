@@ -4,14 +4,13 @@ import {
   Heading,
   useToast,
 } from "@chakra-ui/react";
-import { Form, Formik } from "formik";
 import React from "react";
-import {InputField} from "components/formularios/Inputs/InputField";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import {PasswordInput} from "components/formularios/Inputs/PasswordInput";
 import { AuthContextProvider } from "context/AuthContext";
 import { useRouter } from "next/router";
+import { FormDinamical } from "components/formularios/Form";
 const Login = () => {
+  
   return (
     <Flex
       h={"100vh"}
@@ -31,6 +30,13 @@ const Login = () => {
 export default Login;
 
 const FormLogin = () => {
+
+  const schemaLogin = [
+    {Header: "Correo electronico", accessor : "email", type: "email"},
+    {Header: "Contraseña", accessor : "password", type: "password"},
+
+  ]
+  
   const toast = useToast();
   const router = useRouter()
   const {setUser} = AuthContextProvider()
@@ -47,7 +53,7 @@ const FormLogin = () => {
       // Mutacion de contexto usuario
       setUser(user)
       //Guardado del token en local storage
-      localStorage.setItem("tokenAdminBodas", user.getIdTokenResult())
+      localStorage.setItem('tokenAdminBodas', (await user?.getIdTokenResult())?.token)
       toast({
         title: "Inicio de sesión con exito",
         status: "success",
@@ -84,8 +90,6 @@ const FormLogin = () => {
       flexDir={"column"}
       gap={"0.5rem"}
     >
-      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
-        <Form style={{ width: "100%" }}>
           <Heading
             fontSize={"2xl"}
             fontWeight={"900"}
@@ -95,16 +99,8 @@ const FormLogin = () => {
           >
             Iniciar sesión
           </Heading>
-          <Flex flexDir={"column"} gap={"1rem"}>
-          <InputField name={"email"} label="Correo electronico" type={"email"} />
-          <PasswordInput name={"password"} label="Contraseña" type={"password"} />
-          <Button w={"100%"} type={"submit"}>
-            Iniciar sesión
-          </Button>
-
-          </Flex>
-        </Form>
-      </Formik>
+          
+      <FormDinamical schema={schemaLogin} columns={1} onSubmit={handleSubmit} initialValues={initialValues}/>
     
     </Flex>
   );

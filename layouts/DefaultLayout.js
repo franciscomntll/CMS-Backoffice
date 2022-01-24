@@ -11,7 +11,7 @@ export const DefaultLayout = ({ children }) => {
       <Sidebar state={show} />
       <Flex flexDir={"column"} w={show ? "calc(100% - 14rem)" : "100%"}>
         <Navigation set={setShow} state={show} />
-        <Box as={"main"} p={"2rem"} bg={"gray.50"} h={"full"} w={"100%"}>
+        <Box as={"main"} p={"2rem"} bg={"gray.100"} h={"full"} w={"100%"}>
         {children}
         </Box>
       </Flex>

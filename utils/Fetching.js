@@ -279,7 +279,7 @@ export const FetchGraphQL = {
     },
 
     //@CREATE Create question
-    createQuestions: {//done
+    createQuestions: {//revisar... error por no aceptar null
       query:`mutation (
         $title: String,
         ){

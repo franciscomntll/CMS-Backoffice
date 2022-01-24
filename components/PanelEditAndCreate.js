@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useFetch } from "../hooks/useFetch";
-import {FormDinamical} from "components/Forms/Form";
+import {FormDinamical} from "components/formularios/Form";
 import { FindOption } from "components/Datatable/Columns";
 import {LoadingComponent} from "components/LoadingComponent";
 

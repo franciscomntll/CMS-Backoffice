@@ -1,5 +1,5 @@
 import { Button, Flex, SimpleGrid, Stat, StatHelpText, StatLabel, StatNumber } from "@chakra-ui/react"
-import PagesWithAuth from "../HOC/PageWithAuth"
+import {PagesWithAuth} from "../HOC/PageWithAuth"
 
 function HomePage() {
     return (

@@ -9,7 +9,7 @@ import {
 import { useField } from "formik";
 import { useState } from "react";
 
-const PasswordInput = ({ label, ...props }) => {
+export const PasswordInput = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -29,4 +29,4 @@ const PasswordInput = ({ label, ...props }) => {
   );
 };
 
-export default PasswordInput;
+;

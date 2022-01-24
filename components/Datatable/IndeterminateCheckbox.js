@@ -1,7 +1,7 @@
 import { Checkbox, Input } from "@chakra-ui/react"
 import { forwardRef, useEffect, useRef, useState } from "react"
 
-const IndeterminateCheckbox = forwardRef(
+export const IndeterminateCheckbox = forwardRef(
     ({ indeterminate, ...rest }, ref) => {
       const defaultRef = useRef()
       const resolvedRef = ref || defaultRef
@@ -20,4 +20,3 @@ const IndeterminateCheckbox = forwardRef(
     }
   )
   
-  export default IndeterminateCheckbox

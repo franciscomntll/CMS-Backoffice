@@ -9,10 +9,9 @@ import {
   MenuGroup,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { useState } from "react";
 import { BodyStaticAPP } from "../utils/schemas";
 
-const Sidebar = ({ state }) => {
+export const Sidebar = ({ state }) => {
 
   
   return (
@@ -82,4 +81,3 @@ const Sidebar = ({ state }) => {
   );
 };
 
-export default Sidebar;

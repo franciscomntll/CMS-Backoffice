@@ -2,7 +2,7 @@ import { Box, FormLabel, Input } from "@chakra-ui/react"
 import { useField } from "formik";
 
 
-const InputField = ({label, ...props}) => {
+export const InputField = ({label, ...props}) => {
 
     const [field, meta, helpers] = useField(props);
 
@@ -14,4 +14,3 @@ const InputField = ({label, ...props}) => {
     )
 }
 
-export default InputField;

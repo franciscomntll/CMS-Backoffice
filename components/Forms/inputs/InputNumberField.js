@@ -2,7 +2,7 @@ import { Box, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberI
 import { useField } from 'formik';
 import React from 'react';
 
-const InputNumberField = ({label, ...props}) => {
+export const InputNumberField = ({label, ...props}) => {
     const [field, meta, helpers] = useField({...props});
     const parse = (val) => val.replace(/^\$/, '')
   return (
@@ -18,5 +18,3 @@ const InputNumberField = ({label, ...props}) => {
   </Box>
   )
 };
-
-export default InputNumberField;

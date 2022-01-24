@@ -1,7 +1,7 @@
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
 
-const LoadingComponent = () => {
+export const LoadingComponent = () => {
   return (
     <Flex
     alignItems={"center"}
@@ -15,4 +15,3 @@ const LoadingComponent = () => {
   </Flex>)
 };
 
-export default LoadingComponent;

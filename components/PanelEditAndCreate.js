@@ -12,11 +12,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useFetch } from "../hooks/useFetch";
-import FormDinamical from "./Forms/Form";
+import {FormDinamical} from "./Forms/Form";
 import { FindOption } from "./Datatable/Columns";
-import LoadingComponent from "./LoadingComponent";
+import {LoadingComponent} from "./LoadingComponent";
 
-const PanelEditAndCreate = ({ slug, setAction, state }) => {
+export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [{ data, isLoading, isError }, setQuery] = useFetch();
 
   const options = FindOption(slug);
@@ -103,5 +103,3 @@ const PanelEditAndCreate = ({ slug, setAction, state }) => {
     
   );
 };
-
-export default PanelEditAndCreate;

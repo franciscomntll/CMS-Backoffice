@@ -1,9 +1,7 @@
-import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import LoadingLayout from "../components/LoadingLayout";
+import {LoadingLayout} from "../components/LoadingLayout";
 import { AuthContextProvider } from "../context/AuthContext";
-const PagesWithAuth = (WrappedComponent) => {
+export const PagesWithAuth = (WrappedComponent) => {
     
   return (props) => {
     // checks whether we are on client / browser or server.

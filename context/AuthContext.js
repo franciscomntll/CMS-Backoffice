@@ -5,7 +5,6 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { firebaseClient } from "../utils/firebase";
 
 
 const initialContext = {

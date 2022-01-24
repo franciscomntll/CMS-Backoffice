@@ -1,5 +1,5 @@
 import { BodyStaticAPP } from "../../utils/schemas";
-import ActionsCell from "./ActionsCell";
+import {ActionsCell} from "./ActionsCell";
 
 export const FindOption = (slug) => {
    //Unificar hijos a un mismo nivel | Sustraer de grupos

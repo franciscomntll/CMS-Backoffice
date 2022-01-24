@@ -1,11 +1,10 @@
 import { Box, Button, Flex, Text, Heading } from "@chakra-ui/react";
 import { useEffect, useMemo, useReducer, useState } from "react";
-import Datatable from "../components/Datatable/Datatable";
-import { FetchGraphQL } from "../utils/Fetching";
-import PanelEditAndCreate from "../components/PanelEditAndCreate";
+import { Datatable } from "../components/Datatable/Datatable";
+import { PanelEditAndCreate } from "../components/PanelEditAndCreate";
 import { useFetch } from "../hooks/useFetch";
 import { columnsDataTable } from "../components/Datatable/Columns";
-import PagesWithAuth from "../HOC/PageWithAuth";
+import {PagesWithAuth} from "../HOC/PageWithAuth";
 
 export class Action {
   type;

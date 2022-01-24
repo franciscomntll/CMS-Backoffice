@@ -29,12 +29,11 @@ import {
   MenuButton,
   MenuList,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
-import LoadingComponent from "../LoadingComponent";
-import IndeterminateCheckbox from "./IndeterminateCheckbox";
+import {LoadingComponent} from "../LoadingComponent";
+import {IndeterminateCheckbox} from "./IndeterminateCheckbox";
 
-const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props }) => {
+export const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -279,4 +278,3 @@ const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props
   );
 };
 
-export default Datatable;

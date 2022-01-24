@@ -3,10 +3,10 @@ const Editor = dynamic(() => import("ckeditor5-custom-build/build/ckeditor"), {
   ssr: false,
 });
 import dynamic from 'next/dynamic'
-import { FormLabel, GridItem } from "@chakra-ui/react";
+import { FormLabel } from "@chakra-ui/react";
 import { useField } from "formik";
 
-const CKEditorComponent = ({ label, ...props }) => {
+export const CKEditorComponent = ({ label, ...props }) => {
   const [field, meta, helpers] = useField({ ...props });
   const editorConfiguration = {
     toolbar: ["bold", "italic"],
@@ -26,4 +26,3 @@ const CKEditorComponent = ({ label, ...props }) => {
   };
 };
 
-export default CKEditorComponent;

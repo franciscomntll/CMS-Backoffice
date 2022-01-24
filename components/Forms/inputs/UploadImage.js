@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { ImageIcon } from "../../icons";
 
-const UploadImage = ({ label, ...props }) => {
+export const UploadImage = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   const handleChange = async (e) => {
@@ -61,5 +61,3 @@ const UploadImage = ({ label, ...props }) => {
     </Box>
   );
 };
-
-export default UploadImage;

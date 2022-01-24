@@ -2,7 +2,7 @@ import { Box, FormLabel, Textarea } from "@chakra-ui/react"
 import { useField } from "formik";
 
 
-const TextareaField = ({label, ...props}) => {
+export const TextareaField = ({label, ...props}) => {
 
     const [field, meta, helpers] = useField(props);
 
@@ -13,5 +13,3 @@ const TextareaField = ({label, ...props}) => {
         </Box>
     )
 }
-
-export default TextareaField;

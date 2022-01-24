@@ -16,7 +16,7 @@ import Link from 'next/link';
 
 
 
-const Navigation = ({set, state}) => {
+export const Navigation = ({set, state}) => {
   const {user} = AuthContextProvider()
   const Options = [
     {title: "Inicio", route: "/"},
@@ -58,4 +58,3 @@ const Navigation = ({set, state}) => {
   );
 };
 
-export default Navigation;

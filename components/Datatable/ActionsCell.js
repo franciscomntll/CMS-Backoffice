@@ -3,7 +3,7 @@ import { Box, Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { Action } from '../../pages/[slug]';
 
-const ActionsCell = (props) => {
+export const ActionsCell = (props) => {
   const {setAction, row} = props
   return (
     <Flex alignItems={"center"} gap={"0.5rem"}>
@@ -14,4 +14,3 @@ const ActionsCell = (props) => {
   )
 };
 
-export default ActionsCell;

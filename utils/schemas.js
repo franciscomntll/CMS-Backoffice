@@ -189,6 +189,12 @@ export const BodyStaticAPP = [
             type: "date",
             required: true
           },
+          {
+            Header: "Descripcion",
+            accessor: "description",
+            type: "textarea",
+            required: true
+          },
         ],
       },
       {
@@ -215,7 +221,6 @@ export const BodyStaticAPP = [
             Header: "Slug",
             accessor: "slug",
             type: "string",
-            required: true
           },
           {
             Header: "Creado el",
@@ -230,7 +235,7 @@ export const BodyStaticAPP = [
         route: "questions",
         getData: FetchGraphQL.questions.getAllQuestions,
         getByID: FetchGraphQL.questions.getOneQuestion,
-        createEntry: FetchGraphQL.questions.updateQuestions,
+        createEntry: FetchGraphQL.questions.createQuestions,
         deleteEntry: FetchGraphQL.questions.deleteQuestions,
         updateEntry: FetchGraphQL.questions.updateQuestions,
         visibleColumns: ["_id", "title", "slug", "createdAt"],

@@ -33,6 +33,6 @@ export const useFetch = (toast = false) => {
       fetchData()
     }, [query]);
     
-  return [{data, isLoading, isError}, setQuery]
+  return [data, isLoading, isError, setQuery]
 };
 

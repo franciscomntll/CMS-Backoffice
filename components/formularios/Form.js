@@ -15,7 +15,7 @@ import dynamic from "next/dynamic";
 import { PasswordInput } from "components/formularios/Inputs/PasswordInput";
 import { useEffect, useState } from "react";
 import { URLInputField } from "components/formularios/Inputs/URLInputField";
-
+import * as Yup from "yup";
 export const FormDinamical = ({
   schema: state,
   initialValues,
@@ -23,10 +23,29 @@ export const FormDinamical = ({
   onSubmit,
 }) => {
   const [schema, setSchema] = useState(null);
+
   const initialValuesCreated = schema?.reduce((acc, { accessor }) => {
     acc[accessor] = "";
     return acc;
   }, {});
+
+  const ValidationOptions = {
+    string: Yup.string(),
+  };
+
+  const dynamicalValidationSchema = schema?.reduce((acc, field) => {
+    if (ValidationOptions[field.type]) {
+      if (field.required) {
+        acc[field.accessor] = ValidationOptions[field.type].required();
+      } else {
+        acc[field.accessor] = ValidationOptions[field.type];
+      }
+    }
+
+    return acc;
+  }, {});
+
+  const validationSchema = Yup.object().shape(dynamicalValidationSchema);
 
   useEffect(() => {
     setSchema(state);
@@ -38,7 +57,7 @@ export const FormDinamical = ({
         <Formik
           onSubmit={onSubmit}
           initialValues={{ ...initialValuesCreated, ...initialValues }}
-          validationSchema={null}
+          validationSchema={validationSchema}
         >
           <Form>
             <Grid templateColumns={`repeat(${columns}, 1fr)`} gap={"2rem"}>

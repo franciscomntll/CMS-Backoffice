@@ -5,7 +5,7 @@ import { useFetch } from "hooks/useFetch";
 import { useEffect, useMemo, useState } from "react";
 
 export const PanelViewTable = ({ slug, state, dispatch }) => {
-  const [{ data, isLoading, isError }, setQuery] = useFetch();
+  const [data, isLoading, isError, setQuery] = useFetch();
   const [selected, setSelected] = useState(columnsDataTable({ slug }));
   const columns = useMemo(() => selected?.schema, [selected]);
 

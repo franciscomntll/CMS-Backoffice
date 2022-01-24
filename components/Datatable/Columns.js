@@ -19,6 +19,7 @@ export const columnsDataTable = ({ slug }) => {
 
   // Verificar si la seleccion no es nula
     if(options){
+      
       //Columna de acciones (Ver, editar, borrar)
         const actions = {
             Header: "Acciones",
@@ -30,7 +31,7 @@ export const columnsDataTable = ({ slug }) => {
           options.schema.findIndex(item => item.Header === "Acciones") === -1 && options.schema.push(actions)
     
       // Construir hiddenColumns a partir de definir los que sí quiero ver
-      options?.hiddenColumns = options?.schema?.reduce((acc, item) => {
+      options.hiddenColumns = options?.schema?.reduce((acc, item) => {
         !options?.visibleColumns?.includes(item?.accessor) &&
           acc?.push(item?.accessor);
         return acc;

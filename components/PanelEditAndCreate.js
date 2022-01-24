@@ -7,11 +7,9 @@ import {
   Grid,
   GridItem,
   Heading,
-  Spinner,
   Text,
-  useToast,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { FormDinamical } from "components/formularios/Form";
 import { FindOption } from "components/Datatable/Columns";
@@ -19,13 +17,14 @@ import { LoadingComponent } from "components/LoadingComponent";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
-  const [{ data, isLoading, isError }, setQuery] = useFetch();
+  const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
+  const [dataCreate, loadingCreate, errorCreate, setQueryCreate] = useFetch(true);
 
   const options = FindOption(slug);
 
   useEffect(() => {
     if (state.type === "edit") {
-      setQuery({ ...options?.getByID, variables: { id: state.data._id } });
+      setQueryValues({ ...options?.getByID, variables: { id: state.data._id } });
     }
   }, [state]);
 
@@ -34,19 +33,29 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     { title: "Creado por", value: "Francisco Montilla" },
   ];
 
-  const handleSubmit = (values, actions) => {
-    console.log(options?.createEntry, values);
-  };
+  const fetchCreate = useCallback((values) => {
+    setQueryCreate({...options.createEntry, variables: {...values}})
+  }, [slug]);
+
+  const fetchUpdate = useCallback((values) => {
+    //setQueryCreate({...options.createEntry, variables: {...values}})
+  }, [slug]);
+
+  const handleSubmit = (values) => {
+    state.type === "create" && fetchCreate(values)
+    state.type === "edit" && fetchUpdate(values)
+  }
+  
   return (
     <Flex flexDir={"column"}>
-      {!isLoading && !isError ? (
+      {!loadingValues && !errorValues ? (
         <>
           <Flex justifyContent={"space-between"} paddingBottom={"2rem"}>
             <Box>
               <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
-                {data?.businessName || data?.title || "Crear Registro"}
+                {valuesEdit?.businessName || valuesEdit?.title || "Crear Registro"}
               </Heading>
-              <Text fontSize={"xs"}>Identificador: {data?._id}</Text>
+              <Text fontSize={"xs"}>Identificador: {valuesEdit?._id}</Text>
             </Box>
             <Flex gap={"1rem"} alignItems={"center"}>
               <Button
@@ -79,7 +88,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
             >
               <FormDinamical
                 schema={options?.schema}
-                initialValues={data}
+                initialValues={valuesEdit}
                 onSubmit={handleSubmit}
                 columns={3}
               />
@@ -118,7 +127,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 ))}
               </Box>
 
-              <ButtonDeleteEntry values={data} options={options} />
+             {state.type === "edit" &&  <ButtonDeleteEntry values={valuesEdit} options={options} />}
             </GridItem>
           </Grid>
         </>
@@ -130,12 +139,10 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
 };
 
 const ButtonDeleteEntry = ({values, options}) => {
-  const [{data, isLoading, isError}, setQuery] = useFetch(true)
+  const [data, isLoading, isError, setQuery] = useFetch(true)
 
   const handleRemove = () => {
     setQuery({...options.deleteEntry, variables: {id : values?._id}})
-    
-     
   }
 
   return (

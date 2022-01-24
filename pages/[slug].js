@@ -4,6 +4,7 @@ import { PanelEditAndCreate } from "components/PanelEditAndCreate";
 import {PagesWithAuth} from "HOC/PageWithAuth";
 import { PanelViewTable } from "components/PanelViewTable";
 
+
 export class Action {
   type;
   data;
@@ -28,15 +29,14 @@ const reducer = (state, action) => {
   }
 };
 
+
 const Module = ({ slug }) => {
   const [state, dispatch] = useReducer(reducer, new Action("view", {}));
 
   return (
     <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"}>
       {state.type === "view" && (
-        <>
         <PanelViewTable slug={slug} state={state} dispatch={dispatch} /> 
-        </>
       )}
       {["edit", "create"].includes(state.type) && (
         <PanelEditAndCreate setAction={dispatch} slug={slug} state={state} />

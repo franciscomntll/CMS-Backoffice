@@ -133,6 +133,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
+            required: true
           },
           {
             Header: "Slug",

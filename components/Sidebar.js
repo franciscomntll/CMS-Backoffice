@@ -45,10 +45,10 @@ export const Sidebar = ({ state }) => {
         {BodyStaticAPP.map((item, idx) => (
           <Box key={idx} paddingBlock={"0.5rem"}>
             <Menu>
-              <MenuGroup color={"white"} title={item.title} fontSize={"sm"}>
+              <MenuGroup key={idx} color={"white"} title={item.title} fontSize={"sm"}>
                 <Divider />
                 {item.children.map((item, idx) => (
-                  <Link href={item.route}>
+                  <Link key={idx} href={item.route}>
                     <MenuItem
                       key={idx}
                       color={"white"}

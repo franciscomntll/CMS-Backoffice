@@ -54,11 +54,11 @@ export const Navigation = ({set, state}) => {
           <MenuList p={"0"} fontSize={"sm"}>
            {Options.map((item,idx) => (
              item.route ? (
-              <Link  key={idx} href={item.route}>
+              <Link key={idx} href={item.route}>
               <MenuItem color={"gray.500"}>{item.title}</MenuItem>
              </Link>
              ) : (
-              <MenuItem onClick={item?.function} color={"gray.500"}>{item.title}</MenuItem>
+              <MenuItem key={idx} onClick={item?.function} color={"gray.500"}>{item.title}</MenuItem>
              )
            ))}
            

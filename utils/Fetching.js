@@ -98,10 +98,10 @@ export const FetchGraphQL = {
     },
 
     // @DELETE Eliminar categoria
-    deleteCategoryBusiness : {
-      query :`mutation ($id: [ID]) {
+    deleteCategoryBusiness: {
+      query: `mutation ($id: [ID]) {
         deleteCategoryBusiness(_id: $id)
-      }`
+      }`,
     },
   },
   //ENDPOINTS DE SUB-CATEGORIAS DE LISTING
@@ -198,6 +198,37 @@ export const FetchGraphQL = {
       }`,
     },
   },
+  //ENDPOINTS DE PREGUNTAS FRECUENTES
+  questions: {
+    // @READ Buscar todas las preguntas
+    getAllQuestions: {
+      query: `query {
+      getQuestions{
+        total
+        results{
+          _id
+          title
+          createdAt
+          updatedAt
+        }
+      }
+    }`,
+      variables: {},
+    },
+
+    // @READ Buscar pregunta segun ID
+    getOneQuestion: {
+      query: `query ($id: ID){
+      getOneQuestions(_idQuestions: $id){
+          _id
+          title
+          createdAt
+          updatedAt
+    
+      }
+    }`,
+    },
+  },
 
   //ENDPOINTS DE POSTS
   posts: {
@@ -290,7 +321,7 @@ export const FetchGraphQL = {
             updatedAt
           }
         }
-      }`
+      }`,
     },
 
     // @READ Buscar subcategoria segun ID
@@ -307,38 +338,6 @@ export const FetchGraphQL = {
             icon
             createdAt
             updatedAt
-        }
-      }`,
-    },
-  },
-
-  //ENDPOINTS DE PREGUNTAS FRECUENTES
-  questions: {
-    // @READ Buscar todas las preguntas
-    getAllQuestions: {
-      query: `query {
-        getQuestions{
-          total
-          results{
-            _id
-            title
-            createdAt
-            updatedAt
-          }
-        }
-      }`,
-      variables: {},
-    },
-
-    // @READ Buscar pregunta segun ID
-    getOneQuestion: {
-      query: `query ($id: ID){
-        getOneQuestions(_idQuestions: $id){
-            _id
-            title
-            createdAt
-            updatedAt
-      
         }
       }`,
     },

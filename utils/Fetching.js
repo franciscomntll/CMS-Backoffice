@@ -103,6 +103,27 @@ export const FetchGraphQL = {
         deleteCategoryBusiness(_id: $id)
       }`,
     },
+
+    // @UPDATE Actualizar categoria
+    updateCategoryBusiness : {
+      query : `mutation ($id : ID, $args : inputCategoryBusiness) {
+        updateCategoryBusiness(_id: $id, args: $args){
+          _id
+          title
+          heading
+          slug
+          description
+          imgMiniatura
+          imgBanner
+          icon
+          createdAt
+          updatedAt
+          subCategories{
+            _id
+          }
+        }
+      }`
+    }
   },
   //ENDPOINTS DE SUB-CATEGORIAS DE LISTING
   subCatBusiness: {

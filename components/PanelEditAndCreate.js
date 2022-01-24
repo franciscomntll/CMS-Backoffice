@@ -18,7 +18,8 @@ import { DeleteIcon } from "@chakra-ui/icons";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
-  const [dataCreate, loadingCreate, errorCreate, setQueryCreate] = useFetch(true);
+  const [,,,setQueryCreate] = useFetch(true);
+  const [,,,setQueryUpdate] = useFetch(true);
 
   const options = FindOption(slug);
 
@@ -37,8 +38,8 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     setQueryCreate({...options.createEntry, variables: {...values}})
   }, [slug]);
 
-  const fetchUpdate = useCallback((values) => {
-    //setQueryCreate({...options.createEntry, variables: {...values}})
+  const fetchUpdate = useCallback(({_id, ...values}) => {
+    setQueryUpdate({...options.updateEntry, variables: {_id : _id, args: {...values}}})
   }, [slug]);
 
   const handleSubmit = (values) => {

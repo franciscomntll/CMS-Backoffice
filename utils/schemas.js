@@ -1,4 +1,5 @@
 import { FetchGraphQL } from "utils/Fetching";
+import { formatTime } from "utils/formatTime";
 
 export const BodyStaticAPP = [
   {
@@ -116,6 +117,7 @@ export const BodyStaticAPP = [
           {
             Header: "Creado el",
             accessor: "createdAt",
+            Cell : (props) => formatTime(props.value, "es"),
           },
           {
             Header: "Actualizado el",
@@ -153,6 +155,7 @@ export const BodyStaticAPP = [
             Header: "Creado el",
             accessor: "createdAt",
             type: "date",
+            Cell : (props) => formatTime(props.value, "es"),
             required: true
           },
         ],
@@ -186,6 +189,7 @@ export const BodyStaticAPP = [
           {
             Header: "Creado el",
             accessor: "createdAt",
+            Cell : (props) => formatTime(props.value, "es"),
             type: "date",
             required: true
           },
@@ -220,6 +224,7 @@ export const BodyStaticAPP = [
           {
             Header: "Creado el",
             accessor: "createdAt",
+            Cell : (props) => formatTime(props.value, "es"),
             type: "date",
             required: true
           },
@@ -254,6 +259,7 @@ export const BodyStaticAPP = [
           {
             Header: "Creado el",
             accessor: "createdAt",
+            Cell : (props) => formatTime(props.value, "es"),
             type: "date",
             required: true
           },

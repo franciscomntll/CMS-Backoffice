@@ -1,5 +1,5 @@
 import {Flex} from "@chakra-ui/react";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { PanelEditAndCreate } from "components/PanelEditAndCreate";
 import {PagesWithAuth} from "HOC/PageWithAuth";
 import { PanelViewTable } from "components/PanelViewTable";
@@ -33,6 +33,10 @@ const reducer = (state, action) => {
 const Module = ({ slug }) => {
   const [state, dispatch] = useReducer(reducer, new Action("view", {}));
 
+  useEffect(() => {
+    dispatch({ type: "VIEW", payload: {} });
+  }, [slug]);
+  
   return (
     <Flex as={"section"} flexDir={"column"} gap={"1rem"} h={"100%"}>
       {state.type === "view" && (

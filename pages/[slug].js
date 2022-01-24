@@ -1,10 +1,11 @@
 import { Box, Button, Flex, Text, Heading } from "@chakra-ui/react";
 import { useEffect, useMemo, useReducer, useState } from "react";
 import Datatable from "../components/Datatable/Datatable";
-import { FetchGraphQL } from "../Fetching";
+import { FetchGraphQL } from "../utils/Fetching";
 import PanelEditAndCreate from "../components/PanelEditAndCreate";
 import { useFetch } from "../hooks/useFetch";
 import { columnsDataTable } from "../components/Datatable/Columns";
+import PagesWithAuth from "../HOC/PageWithAuth";
 
 export class Action {
   type;
@@ -51,7 +52,7 @@ const Module = ({ slug }) => {
         <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
           <Box>
             <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
-              {slug}
+              {selected?.title}
             </Heading>
             <Text fontSize={"sm"}>{JSON.stringify(data?.total?? 0)} registros</Text>
           </Box>
@@ -92,7 +93,7 @@ const Module = ({ slug }) => {
   );
 };
 
-export default Module;
+export default PagesWithAuth(Module);
 
 export async function getServerSideProps({ params }) {
   return {

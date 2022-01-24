@@ -1,4 +1,4 @@
-import { BodyStaticAPP } from "../../schemas";
+import { BodyStaticAPP } from "../../utils/schemas";
 import ActionsCell from "./ActionsCell";
 
 export const FindOption = (slug) => {

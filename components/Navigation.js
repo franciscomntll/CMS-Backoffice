@@ -9,10 +9,15 @@ import {
   MenuList,
   Text,
   IconButton,
-  Link,
-} from "@chakra-ui/react";
+  } from "@chakra-ui/react";
+import {AuthContextProvider} from '../context/AuthContext';
+import Link from 'next/link';
+;
+
+
 
 const Navigation = ({set, state}) => {
+  const {user} = AuthContextProvider()
   const Options = [
     {title: "Inicio", route: "/"},
     {title: "Configuración", route: "/"},
@@ -34,8 +39,8 @@ const Navigation = ({set, state}) => {
           <MenuButton>
             <Flex alignItems={"center"} gap={"0.5rem"}>
               <Avatar size={"sm"} />
-              <Text fontSize={"md"} letterSpacing={"tight"} color={"gray.500"}>
-                Francisco Montilla
+              <Text fontSize={"sm"} letterSpacing={"tight"} color={"gray.500"}>
+                {user?.email}
               </Text>
             </Flex>
           </MenuButton>

@@ -9,9 +9,11 @@ import {
   MenuGroup,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { BodyStaticAPP } from "../schemas";
+import { useState } from "react";
+import { BodyStaticAPP } from "../utils/schemas";
 
 const Sidebar = ({ state }) => {
+
   
   return (
     <Flex
@@ -28,7 +30,7 @@ const Sidebar = ({ state }) => {
       transitionDuration={"150ms"}
     >
       <Flex alignItems={"center"} gap={"0.5rem"} p={"1rem"}>
-        <Flex p={"0.8rem"} w={"fit-content"} rounded={"xl"} bg={"white"}>
+        <Flex p={"0.8rem"} w={"fit-content"} rounded={"xl"} bg={"white"} _activeLink={true}>
           <Heading
             color={"blue.500"}
             as={"p"}

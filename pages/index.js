@@ -1,4 +1,5 @@
 import { Button, Flex, SimpleGrid, Stat, StatHelpText, StatLabel, StatNumber } from "@chakra-ui/react"
+import PagesWithAuth from "../HOC/PageWithAuth"
 
 function HomePage() {
     return (
@@ -32,4 +33,4 @@ function HomePage() {
     )
   }
   
-  export default HomePage
+  export default PagesWithAuth(HomePage)

@@ -85,8 +85,8 @@ export const FetchGraphQL = {
       getBussines(id: $id){
         _id
     		userUid
-    slug
-    businessName
+        slug
+        businessName
 
   }
     }`

@@ -197,6 +197,36 @@ export const FetchGraphQL = {
         }
       }`,
     },
+
+    //@CREATE Crear sub Categoria
+    createSubCategoryBusiness: {//done
+      query: `mutation (
+        $title: String,
+        $heading :String,
+        $slug: String,
+        $description: String,
+      ) {
+        createSubCategoryBusiness(args: {
+          title: $title,
+          heading: $heading,
+          slug: $slug,
+          description: $description,
+        }){
+          _id
+          title
+          heading
+          slug
+          description
+        }
+      }`,
+    },
+
+    //@DELETE eliminar sub categoria
+    deleteSubCategoryBusiness: {
+      query: `mutation ($id: [ID]) {
+        deleteSubCategoryBusiness(_id: $id)
+      }`,
+    },
   },
 
   //ENDPOINTS DE CARACTERISTICAS DE LISTING
@@ -237,6 +267,25 @@ export const FetchGraphQL = {
         }
       }`,
     },
+
+    //@CREATE create caracteristicas
+    createCharacteristics: {
+      query: `mutation(
+        $title: String,
+      ){
+        createCharacteristics(title:$title){
+          _id
+          title
+        }
+      }`,
+    },
+
+    //@DELETE eliminar caracteristica
+    deleteCharacteristics: { //revisar
+      query: `mutation ($idCharacteristic: [ID]) {
+        deleteCharacteristics(_idCharacteristic: $idCharacteristic)
+      }`,
+    },
   },
   //ENDPOINTS DE PREGUNTAS FRECUENTES
   questions: {
@@ -268,6 +317,26 @@ export const FetchGraphQL = {
       }
     }`,
     },
+
+    //@CREATE Create question
+    createQuestions: {//revisar... error por no aceptar null
+      query:`mutation (
+        $title: String,
+        ){
+        createQuestions(title: $title){
+          _id
+          title
+        }
+      }`,
+    },
+
+    //@DELETE borrar questions
+    deleteQuestions: { //revisar
+      query: `mutation ($idQuestions: [ID]) {
+        deleteQuestions(_idQuestions: $idQuestions)
+      }`,
+    },
+
   },
 
   //ENDPOINTS DE POSTS

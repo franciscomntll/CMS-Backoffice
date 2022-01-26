@@ -11,13 +11,14 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
 
   useEffect(() => {
     console.log("cambio", state.type);
-    setQuery(selected.getData);
+    setQuery({ ...selected.getData, type: "json" });
   }, [selected, state]);
 
   useEffect(() => {
     dispatch({ type: "VIEW", payload: {} });
     setSelected(columnsDataTable({ slug }));
   }, [slug]);
+
   return (
     <>
       <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>

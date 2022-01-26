@@ -1,3 +1,18 @@
+// const types = {
+//   business : ["_id", "userUid", "slug", "tags", "contactName", "contactEmail", "businessName", "webPage", "landline", "mobilePhone", "whatsapp", "twitter", "facebook", "linkedin", "youtube", "instagram", "country", "city", "zip", "address", "description", "content", "coordinates", "categories", "groupSubCategories", "subCategories", "questionsAndAnswers{frequentQuestions answers}", "photos{_id }", "imgMiniatura", "imgLogo", "fase", "status", "createdAt", "updatedAt"],
+//   categoryBusiness: ["_id", "title", "heading", "slug", "description", "imgMiniatura{ _id }", "imgBanner{ _id }", "icon{ _id }", "createdAt", "updatedAt", "subCategories{ _id }"]
+// }
+
+// export const schemaQuery = (type) => {
+//   if(types[type]){
+//     const json = JSON.stringify(types[type])
+//     const replaced = json.replace(/("|\[|\])/g, "").replace(/,/g, " ")
+//     return replaced
+//   }
+// }
+
+
+
 export const FetchGraphQL = {
   //ENDPOINTS DE EMPRESAS
   business: {
@@ -27,7 +42,7 @@ export const FetchGraphQL = {
           userUid
           slug
           businessName
-  
+          content
     }
       }`,
     },
@@ -45,9 +60,7 @@ export const FetchGraphQL = {
           heading
           slug
           description
-          imgMiniatura
-          imgBanner
-          icon
+          
           }
         }
       }`,
@@ -83,13 +96,19 @@ export const FetchGraphQL = {
         $slug: String,
         $description: String,
         $subCategories: [ID],
+        $imgBanner : Upload
+        $imgMiniatura : Upload
+        $icon : Upload
       ) {
         createCategoryBusiness(args: {
           title: $title,
           heading: $heading,
           slug: $slug,
           description: $description,
-          subCategories: $subCategories
+          subCategories: $subCategories,
+          imgBanner : $imgBanner
+          imgMiniatura : $imgMiniatura
+          icon : $icon
         }){
           _id
           title

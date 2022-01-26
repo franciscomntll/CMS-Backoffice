@@ -1,20 +1,15 @@
-import { Button, useToast, Grid, GridItem } from "@chakra-ui/react";
+import { Button, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
 import { InputField } from "components/formularios/Inputs/InputField";
 import { InputNumberField } from "components/formularios/Inputs/InputNumberField";
 import { TextareaField } from "components/formularios/Inputs/TextareaField";
 import { UploadImage } from "components/formularios/Inputs/UploadImage";
-const CKEditorComponent = dynamic(
-  () =>
-    import("components/formularios/Inputs/CKEditor").then(
-      (mod) => mod.CKEditorComponent
-    ),
-  { ssr: false }
-);
 import dynamic from "next/dynamic";
+const CKEditorComponent = dynamic( () => import("components/formularios/Inputs/CKEditor").then(mod => mod.CKEditorComponent), {ssr: false});
 import { PasswordInput } from "components/formularios/Inputs/PasswordInput";
 import { useEffect, useState } from "react";
 import { URLInputField } from "components/formularios/Inputs/URLInputField";
+import {CounstriesSelectField} from 'components/formularios/Inputs/CountriesSelectField'
 import * as Yup from "yup";
 export const FormDinamical = ({
   schema: state,
@@ -24,8 +19,10 @@ export const FormDinamical = ({
 }) => {
   const [schema, setSchema] = useState(null);
 
-  const initialValuesCreated = schema?.reduce((acc, { accessor }) => {
-    acc[accessor] = "";
+  const initialValuesCreated = schema?.reduce((acc, { type, accessor }) => {
+    if(type){
+      acc[accessor] = "";
+    }
     return acc;
   }, {});
 
@@ -57,6 +54,7 @@ export const FormDinamical = ({
         <Formik
           onSubmit={onSubmit}
           initialValues={{ ...initialValuesCreated, ...initialValues }}
+          
           validationSchema={validationSchema}
         >
           <Form>
@@ -112,7 +110,7 @@ export const FormDinamical = ({
                       break;
                     case "ckeditor":
                       return (
-                        <GridItem key={idx} colSpan={"2"}>
+                        <GridItem key={idx} colSpan={columns} fontSize={"sm"} >
                           <CKEditorComponent
                             name={item.accessor}
                             label={item.Header}
@@ -132,6 +130,15 @@ export const FormDinamical = ({
                     case "image":
                       return (
                         <UploadImage
+                          key={idx}
+                          name={item.accessor}
+                          label={item.Header}
+                        />
+                      );
+                      break;
+                    case "country":
+                      return (
+                        <CounstriesSelectField
                           key={idx}
                           name={item.accessor}
                           label={item.Header}

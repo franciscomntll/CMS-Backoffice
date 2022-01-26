@@ -10,16 +10,40 @@ export const BodyStaticAPP = [
         route: "business",
         getData: FetchGraphQL.business.getBusinessAll,
         getByID: FetchGraphQL.business.getBusinessByID,
-        createEntry: FetchGraphQL.catBusiness.createCategoryBusiness,//pendiente por cambiar 
-        updateEntry: {},//pendiente 
-        deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness,//pendiente por cambiar
+        createEntry: FetchGraphQL.catBusiness.createCategoryBusiness, //pendiente por cambiar
+        updateEntry: {}, //pendiente
+        deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness, //pendiente por cambiar
         visibleColumns: ["_id", "businessName", "slug", "createdAt"],
         schema: [
           {
             Header: "Nombre de empresa",
             accessor: "businessName",
             type: "string",
-            required: true
+            required: true,
+          },
+          {
+            Header: "Slug",
+            accessor: "slug",
+            type: "string",
+            required: true,
+          },
+          {
+            Header: "Pagina web",
+            accessor: "webPage",
+            type: "url",
+            required: true,
+          },
+          {
+            Header: "Imagen Banner",
+            accessor: "imgBanner",
+            type: "image",
+            required: true,
+          },
+          {
+            Header: "Contenido",
+            accessor: "content",
+            type: "ckeditor",
+            required: true,
           },
           {
             Header: "ID",
@@ -29,86 +53,87 @@ export const BodyStaticAPP = [
             Header: "Usuario UID",
             accessor: "userUid",
           },
-          {
-            Header: "Slug",
-            accessor: "slug",
-            type: "string",
-            required: true
-          },
 
           {
             Header: "Tags",
             accessor: "tags",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Nombre de contacto",
             accessor: "contactName",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Email de contacto",
             accessor: "contactEmail",
             type: "email",
-            required: true
+            required: true,
           },
-          {
-            Header: "Pagina web",
-            accessor: "webPage",
-            type: "url",
-            required: true
-          },
+          
           {
             Header: "Telefono fijo",
             accessor: "landline",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Telefono movil",
             accessor: "mobilePhone",
+            type: "number",
+            required: true
           },
           {
             Header: "Whatsapp",
             accessor: "whatsapp",
+            type: "number",
           },
           {
             Header: "Twitter",
             accessor: "twitter",
+            type: "string",
           },
           {
             Header: "Facebook",
             accessor: "facebook",
+            type: "string",
           },
           {
             Header: "Linkedin",
             accessor: "linkedin",
+            type: "string",
           },
           {
             Header: "Youtube",
             accessor: "youtube",
+            type: "string",
           },
           {
             Header: "Instagram",
             accessor: "instagram",
+            type: "string",
           },
           {
             Header: "País",
             accessor: "country",
+            type: "country",
           },
           {
             Header: "Ciudad",
             accessor: "city",
+            type: "string",
           },
           {
             Header: "Codigo Postal",
             accessor: "zip",
+            type: "number",
           },
           {
             Header: "Direccion",
             accessor: "address",
+            type: "string",
           },
           {
             Header: "Fase",
@@ -117,7 +142,7 @@ export const BodyStaticAPP = [
           {
             Header: "Creado el",
             accessor: "createdAt",
-            Cell : (props) => formatTime(props.value, "es"),
+            Cell: (props) => formatTime(props.value, "es"),
           },
           {
             Header: "Actualizado el",
@@ -143,20 +168,36 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
-            required: true
+            required: true,
+          },
+          {
+            Header: "Imagen Banner",
+            accessor: "imgBanner",
+            type: "image",
+            required: true,
+          },
+          {
+            Header: "Imagen Miniatura",
+            accessor: "imgMiniatura",
+            type: "image",
+            required: true,
+          },
+          {
+            Header: "Icono",
+            accessor: "icon",
+            type: "image",
+            required: true,
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
-            type: "date",
-            Cell : (props) => formatTime(props.value, "es"),
-            required: true
+            Cell: (props) => formatTime(props.value, "es"),
           },
         ],
       },
@@ -178,20 +219,18 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
-            Cell : (props) => formatTime(props.value, "es"),
-            type: "date",
-            required: true
+            Cell: (props) => formatTime(props.value, "es"),
           },
         ],
       },
@@ -213,20 +252,18 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
-            Cell : (props) => formatTime(props.value, "es"),
-            type: "date",
-            required: true
+            Cell: (props) => formatTime(props.value, "es"),
           },
         ],
       },
@@ -248,20 +285,18 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Slug",
             accessor: "slug",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "Creado el",
             accessor: "createdAt",
-            Cell : (props) => formatTime(props.value, "es"),
-            type: "date",
-            required: true
+            Cell: (props) => formatTime(props.value, "es"),
           },
         ],
       },
@@ -280,7 +315,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "ID",
@@ -299,7 +334,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "ID",
@@ -318,7 +353,7 @@ export const BodyStaticAPP = [
             Header: "Titulo",
             accessor: "title",
             type: "string",
-            required: true
+            required: true,
           },
           {
             Header: "ID",

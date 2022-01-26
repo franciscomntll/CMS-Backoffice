@@ -2,9 +2,13 @@ import { Box, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useField } from "formik";
 import Image from "next/image";
 import { ImageIcon } from "components/icons";
+import { useState } from "react";
 
 export const UploadImage = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
+  const [image, setImage] = useState(null)
+
+
 
   const handleChange = async (e) => {
     try {
@@ -13,11 +17,9 @@ export const UploadImage = ({ label, ...props }) => {
 
       reader.onloadend = async () => {
         if (reader.result) {
-          const nuevaImagen = {
-            file: file,
-            image: reader.result,
-          };
-          helpers.setValue(nuevaImagen)
+          
+          helpers.setValue(file)
+          setImage(reader.result)
         }
       };
 
@@ -47,7 +49,7 @@ export const UploadImage = ({ label, ...props }) => {
               <Text>Subir imagen</Text>
               </>
           )}
-          {field.value && <Image layout="fill" src={field.value.image} objectFit="contain" objectPosition={"center"}/>}
+          {image && <Image layout="fill" src={image ?? ""} objectFit="contain" objectPosition={"center"}/>}
         </Flex>
         <Input
           type="file"

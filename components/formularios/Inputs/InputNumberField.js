@@ -7,9 +7,9 @@ export const InputNumberField = ({label, ...props}) => {
     const parse = (val) => val.replace(/^\$/, '')
   return (
     <Box>
-    <FormLabel>{label}</FormLabel>
+    <FormLabel fontSize={"sm"}>{label}</FormLabel>
     <NumberInput  {...field} {...props} onChange={(e) => helpers.setValue(parse(e))} value={field.value}  >
-      <NumberInputField />
+      <NumberInputField fontSize={"sm"} />
       <NumberInputStepper>
         <NumberIncrementStepper />
         <NumberDecrementStepper />

@@ -15,6 +15,7 @@ import { FormDinamical } from "components/formularios/Form";
 import { FindOption } from "components/Datatable/Columns";
 import { LoadingComponent } from "components/LoadingComponent";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { formatTime } from "utils/formatTime";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
@@ -25,21 +26,26 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
 
   useEffect(() => {
     if (state.type === "edit") {
-      setQueryValues({ ...options?.getByID, variables: { id: state.data._id } });
+      setQueryValues({ ...options?.getByID, variables: { id: state.data._id }, type: "json" });
     }
   }, [state]);
 
   const Information = [
-    { title: "Ultima Actualización", value: "14/12/2022" },
-    { title: "Creado por", value: "Francisco Montilla" },
+    { title: "Ultima Actualización", value: formatTime(valuesEdit?.updatedAt, "es") },
+    { title: "Creado por", value: valuesEdit?.edit?.userUID },
   ];
 
   const fetchCreate = useCallback((values) => {
-    setQueryCreate({...options.createEntry, variables: {...values}})
+    setQueryCreate({...options.createEntry, variables: {...values}, type: "formData"})
   }, [slug]);
 
   const fetchUpdate = useCallback(({_id, ...values}) => {
-    setQueryUpdate({...options.updateEntry, variables: {_id : _id, args: {...values}}})
+    delete values.createdAt
+    delete values.updatedAt
+    delete values.imageBanner
+    delete values.icon
+
+    setQueryUpdate({...options.updateEntry, variables: {id : _id, args: {...values}}, type:"formData"})
   }, [slug]);
 
   const handleSubmit = (values) => {
@@ -48,7 +54,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   }
   
   return (
-    <Flex flexDir={"column"}>
+    <Flex flexDir={"column"} overflow={"auto"} h={"100%"} mb={"4rem"}>
       {!loadingValues && !errorValues ? (
         <>
           <Flex justifyContent={"space-between"} paddingBottom={"2rem"}>
@@ -143,7 +149,7 @@ const ButtonDeleteEntry = ({values, options}) => {
   const [data, isLoading, isError, setQuery] = useFetch(true)
 
   const handleRemove = () => {
-    setQuery({...options.deleteEntry, variables: {id : values?._id}})
+    setQuery({...options.deleteEntry, variables: {id : values?._id}, type: "json"})
   }
 
   return (

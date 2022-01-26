@@ -32,7 +32,7 @@ export const Navigation = ({set, state}) => {
 
   ]
   return (
-    <Flex bg={"white"} shadow={"sm"} w={"100%"} padding={"1rem"}>
+    <Flex bg={"white"} shadow={"sm"} w={"100%"} padding={"0.5rem"}>
       <Flex
         alignItems={"center"}
         justifyContent={"space-between"}

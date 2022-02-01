@@ -11,8 +11,6 @@
 //   }
 // }
 
-
-
 export const FetchGraphQL = {
   //ENDPOINTS DE EMPRESAS
   business: {
@@ -20,7 +18,7 @@ export const FetchGraphQL = {
     getBusinessAll: {
       query: `query {
               getAllBusinesses{
-                  total
+                total
                 results{
                   _id
                   businessName
@@ -30,7 +28,6 @@ export const FetchGraphQL = {
                 }
               }
             }`,
-
       variables: {},
     },
 
@@ -43,6 +40,10 @@ export const FetchGraphQL = {
           slug
           businessName
           content
+          imgMiniatura{
+            _id
+            smallUrl
+          }
     }
       }`,
     },
@@ -76,9 +77,27 @@ export const FetchGraphQL = {
           heading
           slug
           description
-          imgMiniatura
-          imgBanner
-          icon
+          imgMiniatura{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          imgBanner{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          icon{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
           subCategories{
             _id
           }
@@ -124,25 +143,22 @@ export const FetchGraphQL = {
     },
 
     // @UPDATE Actualizar categoria
-    updateCategoryBusiness : {
-      query : `mutation ($id : ID, $args : inputCategoryBusiness) {
+    updateCategoryBusiness: {
+      query: `mutation ($id : ID, $args : inputCategoryBusiness) {
         updateCategoryBusiness(_id: $id, args: $args){
           _id
           title
           heading
           slug
           description
-          imgMiniatura
-          imgBanner
-          icon
           createdAt
           updatedAt
           subCategories{
             _id
           }
         }
-      }`
-    }
+      }`,
+    },
   },
   //ENDPOINTS DE SUB-CATEGORIAS DE LISTING
   subCatBusiness: {
@@ -157,17 +173,6 @@ export const FetchGraphQL = {
           heading
           slug
           description
-          imgMiniatura
-          imgBanner
-          icon
-          characteristics{
-            _id
-            title
-          }
-          questions{
-            _id
-            title
-          }
           }
         }
       }`,
@@ -183,9 +188,30 @@ export const FetchGraphQL = {
           heading
           slug
           description
-          imgMiniatura
-          imgBanner
-          icon
+          imgMiniatura{
+            _id
+            i1024
+            i800
+            i640
+            i320
+            createdAt
+          }
+          imgBanner{
+            _id
+            i1024
+            i800
+            i640
+            i320
+            createdAt
+          }
+          icon{
+            _id
+            i1024
+            i800
+            i640
+            i320
+            createdAt
+          }
           characteristics{
             _id
           }
@@ -199,7 +225,8 @@ export const FetchGraphQL = {
     },
 
     //@CREATE Crear sub Categoria
-    createSubCategoryBusiness: {//done
+    createSubCategoryBusiness: {
+      //done
       query: `mutation (
         $title: String,
         $heading :String,
@@ -227,6 +254,19 @@ export const FetchGraphQL = {
         deleteSubCategoryBusiness(_id: $id)
       }`,
     },
+
+    // @UPDATE Actualizar sub categoria
+    updateSubCategoryBusiness: {
+      query: `mutation ($id : ID, $args : inputSubCategoryBusiness) {
+        updateSubCategoryBusiness(_id: $id, args: $args){
+          _id
+          title
+          questions{
+            _id
+          }
+        }
+      }`,
+    },
   },
 
   //ENDPOINTS DE CARACTERISTICAS DE LISTING
@@ -239,16 +279,18 @@ export const FetchGraphQL = {
           results{
             _id
             title
-            icon
+            icon{
+              _id
+            }
             items{
               _id
               title
-              icon
               createdAt
               updatedAt
+              icon{
+                _id
+              }
             }
-            createdAt
-            updatedAt
           }
         }
       }`,
@@ -257,33 +299,42 @@ export const FetchGraphQL = {
 
     // @READ Buscar caracteristica segun ID
     getOneCharacteristics: {
-      query: `query ($id : ID) {
-        getOneCharacteristicsItems(_idCharacteristic: $id){
-          _id
-          title
-          icon
-          createdAt
-          updatedAt
-        }
+      query: `query ($id: ID) {
+        getOneCharacteristics(_idCharacteristics:$id){
+            _id
+            title
+            icon{
+              _id
+            }
+            items{
+              title
+            }
+          }
       }`,
     },
 
     //@CREATE create caracteristicas
     createCharacteristics: {
-      query: `mutation(
-        $title: String,
-      ){
-        createCharacteristics(title:$title){
+      query: `mutation ($title: String, $icon : Upload, $items : [inputCharacteristicsItems] ){
+        createCharacteristics(args:{title: $title, icon : $icon, items: $items  }){
           _id
-          title
         }
       }`,
     },
 
     //@DELETE eliminar caracteristica
-    deleteCharacteristics: { //revisar
-      query: `mutation ($idCharacteristic: [ID]) {
-        deleteCharacteristics(_idCharacteristic: $idCharacteristic)
+    deleteCharacteristics: {
+      //revisar
+      query: `mutation ($id: [ID]) {
+        deleteCharacteristics(_idCharacteristic: $id)
+      }`,
+    },
+    updateCharacteristics: {
+      query: `mutation ($id :ID, $args : inputCharacteristics) {
+        updateCharacteristics(_id: $id, args: $args){
+          _id
+          title
+        }
       }`,
     },
   },
@@ -319,8 +370,9 @@ export const FetchGraphQL = {
     },
 
     //@CREATE Create question
-    createQuestions: {//revisar... error por no aceptar null
-      query:`mutation (
+    createQuestions: {
+      //revisar... error por no aceptar null
+      query: `mutation (
         $title: String,
         ){
         createQuestions(title: $title){
@@ -331,34 +383,59 @@ export const FetchGraphQL = {
     },
 
     //@DELETE borrar questions
-    deleteQuestions: { //revisar
-      query: `mutation ($idQuestions: [ID]) {
-        deleteQuestions(_idQuestions: $idQuestions)
+    deleteQuestions: {
+      //revisar
+      query: `mutation ($id: [ID]) {
+        deleteQuestions(_idQuestions: $id)
       }`,
     },
 
+    //@UPDATE Actualizar pregunta
+    updateQuestions: {
+      query: `mutation ($id:ID!, $args : inputQuestions){
+        updateQuestions(_id: $id, args :$args){
+          _id
+          title
+          createdAt
+          updatedAt
+        }
+      }`,
+    },
   },
 
   //ENDPOINTS DE POSTS
   posts: {
     // @READ Buscar todos los posts
     getAllPost: {
-      query: `query {
+      query: `query{
         getAllPost{
           total
           results{
             _id
             title
             subTitle
-            permaLink
             slug
             createdAt
             updatedAt
+            status
+            views
           }
         }
-          
-      }`,
-      variables: {},
+      }`
+    },
+    getOnePost : {
+      query : `query ($id:ID){
+        getOnePost(_id: $id){
+            _id
+            title
+            subTitle
+            slug
+            createdAt
+            updatedAt
+            status
+            views
+        }
+      }`
     },
   },
 
@@ -366,7 +443,7 @@ export const FetchGraphQL = {
   categoryPost: {
     // @READ Buscar todas las categorias
     getAllCategoryPost: {
-      query: `query {
+      query: `query{
         getCategoryPost{
           total
           results{
@@ -375,12 +452,6 @@ export const FetchGraphQL = {
             heading
             slug
             description
-            imgMiniatura
-            imgBanner
-            icon
-            subCategories{
-              _id
-            }
             createdAt
             updatedAt
           }
@@ -390,24 +461,71 @@ export const FetchGraphQL = {
 
     // @READ Buscar categoria segun ID
     getOneCategoryPost: {
-      query: `query ($id:ID) {
-        getOneCategoryPost(_id :$id){
+      query: `query ($id :ID){
+        getOneCategoryPost(_id: $id){
+          _id
+          title
+          heading
+          slug
+          description
+          imgMiniatura{
             _id
-            title
-            heading
-            slug
-            description
-            imgMiniatura
-            imgBanner
-            icon
-            subCategories{
-              _id
-            }
-            createdAt
-            updatedAt
+            i1024
+            i800
+            i640
+            i320
+          }
+          imgBanner{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          icon{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          subCategories{
+            _id
+          }
         }
       }`,
     },
+
+    //@CREATE Crear categoria
+    createCategoryPost : {
+      query :`mutation ($title:String, $heading: String, $slug : String, $description: String, $imgMiniatura : Upload, $imgBanner :Upload, $icon: Upload, $subCategories: [ID] ) {
+        createCategoryPost(args: {
+          title: $title,
+          heading: $heading,
+          slug: $slug,
+          description: $description,
+          imgMiniatura: $imgMiniatura,
+          imgBanner: $imgBanner,
+          icon: $icon,
+          subCategories: $subCategories
+        }){
+          _id
+        }
+      }`
+    },
+
+    updateCategoryPost : {
+      query : `mutation ($id :ID, $args: inputCategoryPost ) {
+        updateCategoryPost(_id: $id, args: $args){
+          _id
+        }
+      }`
+    },
+    deleteCategoryPost: {
+      query : `mutation ($id : [ID]) {
+        deleteCategoryPost(_id: $id)
+      }`
+    }
   },
 
   //ENDPOINTS DE SUB-CATEGORIAS DE POSTS
@@ -423,9 +541,6 @@ export const FetchGraphQL = {
             heading
             slug
             description
-            imgMiniatura
-            imgBanner
-            icon
             createdAt
             updatedAt
           }
@@ -442,13 +557,62 @@ export const FetchGraphQL = {
             heading
             slug
             description
-            imgMiniatura
-            imgBanner
-            icon
+            imgMiniatura{
+              _id
+              i1024
+              i800
+              i640
+              i320
+            }
+            imgBanner{
+              _id
+              i1024
+              i800
+              i640
+              i320
+            }
+            icon{
+              _id
+              i1024
+              i800
+              i640
+              i320
+            }
             createdAt
             updatedAt
         }
       }`,
+    },
+
+    // @CREATE Crear subcategoria
+    createSubCategoryPost : {
+      query : `mutation ($title :String, $heading :String, $slug:String, $description: String, $imgMiniatura: Upload, $imgBanner :Upload, $icon :Upload ){
+        createSubCategoryPost(args:{
+          title :$title,
+          heading: $heading,
+          slug: $slug,
+          description: $description,
+          imgMiniatura : $imgMiniatura,
+          imgBanner : $imgBanner,
+          icon : $icon
+        }){
+          _id
+        }
+      }`
+    },
+
+    //@UPDATE Actualizar subcategoria
+    updateSubCategoryPost : {
+      query : `mutation ($id: ID, $args :inputSubCategoryPost ){
+        updateSubCategoryPost(_id: $id, args: $args){
+          _id
+        }
+      }`
+    },
+    deleteSubCategoryPost : {
+      query : `mutation ($id:[ID]) {
+        deleteSubCategoryPost(_id: $id)
+      }`
     },
   },
 };

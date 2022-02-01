@@ -3,8 +3,8 @@ import { useField } from "formik";
 
 
 export const InputField = ({label, ...props}) => {
-
     const [field, meta, helpers] = useField(props);
+    
 
     return(
         <Box>

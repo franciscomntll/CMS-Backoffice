@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { URLInputField } from "components/formularios/Inputs/URLInputField";
 import {CounstriesSelectField} from 'components/formularios/Inputs/CountriesSelectField'
 import * as Yup from "yup";
+import Relationship from "components/formularios/Inputs/Relationship";
+import { useFetch } from "hooks/useFetch";
+import { FieldArrayField } from "components/formularios/Inputs/FieldArrayField";
 export const FormDinamical = ({
   schema: state,
   initialValues,
@@ -20,20 +23,32 @@ export const FormDinamical = ({
   const [schema, setSchema] = useState(null);
 
   const initialValuesCreated = schema?.reduce((acc, { type, accessor }) => {
-    if(type){
-      acc[accessor] = "";
+    switch (type) {
+      case "string":
+        acc[accessor] = "";
+        break;
+      case "email":
+        acc[accessor] = "";
+        break;
+      case "country":
+        acc[accessor] = "";
+        break;
+    
+      default:
+       
+        break;
     }
     return acc;
   }, {});
 
   const ValidationOptions = {
-    string: Yup.string(),
+    string: Yup.string().nullable(),
   };
 
   const dynamicalValidationSchema = schema?.reduce((acc, field) => {
     if (ValidationOptions[field.type]) {
       if (field.required) {
-        acc[field.accessor] = ValidationOptions[field.type].required();
+        acc[field.accessor] = ValidationOptions[field.type].required(`${field.Header ?? "Campo"} requerido`);
       } else {
         acc[field.accessor] = ValidationOptions[field.type];
       }
@@ -54,7 +69,6 @@ export const FormDinamical = ({
         <Formik
           onSubmit={onSubmit}
           initialValues={{ ...initialValuesCreated, ...initialValues }}
-          
           validationSchema={validationSchema}
         >
           <Form>
@@ -136,9 +150,30 @@ export const FormDinamical = ({
                         />
                       );
                       break;
+                    case "relationship":
+                      
+                      
+                      return (
+                        <Relationship
+                          key={idx}
+                          name={item.accessor}
+                          label={item.Header}
+                          tabList={item.tabList}
+                        />
+                      );
+                      break;
                     case "country":
                       return (
                         <CounstriesSelectField
+                          key={idx}
+                          name={item.accessor}
+                          label={item.Header}
+                        />
+                      );
+                      break;
+                    case "fieldArray":
+                      return (
+                        <FieldArrayField
                           key={idx}
                           name={item.accessor}
                           label={item.Header}

@@ -32,7 +32,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
 
   const Information = [
     { title: "Ultima Actualización", value: formatTime(valuesEdit?.updatedAt, "es") },
-    { title: "Creado por", value: valuesEdit?.edit?.userUID },
+    { title: "Creado por", value: "Jhon Doe" },
   ];
 
   const fetchCreate = useCallback((values) => {
@@ -42,8 +42,6 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const fetchUpdate = useCallback(({_id, ...values}) => {
     delete values.createdAt
     delete values.updatedAt
-    delete values.imageBanner
-    delete values.icon
 
     setQueryUpdate({...options.updateEntry, variables: {id : _id, args: {...values}}, type:"formData"})
   }, [slug]);

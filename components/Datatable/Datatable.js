@@ -33,7 +33,7 @@ import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
 import {LoadingComponent} from "components/LoadingComponent";
 import {IndeterminateCheckbox} from "components/Datatable/IndeterminateCheckbox";
 
-export const Datatable = ({ isLoading, initialState, columns, data, setAction, ...props }) => {
+export const Datatable = ({ isLoading, initialState, columns, data = [], setAction, ...props }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -58,7 +58,7 @@ export const Datatable = ({ isLoading, initialState, columns, data, setAction, .
       data,
       initialState,
       setAction,
-      props,
+      ...props,
     },
     useSortBy,
     usePagination,
@@ -72,11 +72,13 @@ export const Datatable = ({ isLoading, initialState, columns, data, setAction, .
           // to render a checkbox
           Header: ({ getToggleAllPageRowsSelectedProps, column, ...rest }) => {
             return (
+                <Tooltip label={"Seleccionar todos"}>
               <div>
                 <IndeterminateCheckbox
                   {...getToggleAllPageRowsSelectedProps()}
                 />
               </div>
+                </Tooltip>
             );
           },
           // The cell can use the individual row's getToggleRowSelectedProps method
@@ -118,9 +120,11 @@ export const Datatable = ({ isLoading, initialState, columns, data, setAction, .
           </Button>
         )}
         <Menu>
+            <Tooltip label={"Editar columnas"}>
           <MenuButton>
             <IconButton icon={<SettingsIcon />} />
           </MenuButton>
+            </Tooltip>
           <MenuList
             h={"15rem"}
             overflow={"auto"}

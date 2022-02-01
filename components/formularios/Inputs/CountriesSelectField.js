@@ -12,7 +12,6 @@ export const CounstriesSelectField = ({label, ...props}) => {
         try {
             const {data} = await api.getAllCountries()
             const map = data?.map(item => ({name : item.name.common}))
-            console.log(map);
             setData(map)
         } catch (error) {
             console.log(error);
@@ -27,7 +26,7 @@ export const CounstriesSelectField = ({label, ...props}) => {
     return(
         <Box>
             <FormLabel fontSize={"sm"} >{label}</FormLabel>
-            <Select multiple variant={"filled"} fontSize={"sm"} {...field} {...props} >
+            <Select variant={"filled"} fontSize={"sm"} {...field} {...props} >
                 <option disabled={field.value === "" ? false : true}>Seleccionar</option>
                 {data?.sort((a,b) => a.name.localeCompare(b.name))?.map((item,idx) => (
                     <option key={idx} value={item.name}>{item.name}</option>

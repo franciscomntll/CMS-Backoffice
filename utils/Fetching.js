@@ -443,35 +443,35 @@ export const FetchGraphQL = {
 
     // @READ Buscar post por ID
     getOnePost : {
-      query : `query ($id:ID){
-        getOnePost(_id: $id){
+      query : `query ($id :ID) {
+        getOnePost(_id:$id){
+          _id
+          title
+          subTitle
+          content
+          slug
+          seoDescription
+          subCategories{
             _id
-            title
-            subTitle
-            content
-            slug
-            seoDescription
-            subCategories
-            tags
-            authorUsername
-            imgCarrusel{
-              _id
-              i1024
-              i800
-              i640
-              i320
-            }
-            imgMiniatura{
-              _id
-              i1024
-              i800
-              i640
-              i320
-            }
-            createdAt
-            updatedAt
-            status
-            views
+          }
+          imgCarrusel{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          imgMiniatura{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          authorUsername
+          status
+          createdAt
+          updatedAt
         }
       }`
     },
@@ -512,7 +512,17 @@ export const FetchGraphQL = {
       query : `mutation ($id :[ID]){
         deletePost(_id: $id)
       }`
-    }
+    },
+
+    // @UPDATE Actualizar post
+    updatePost: {
+      query :`mutation ($id :ID, $args : inputPost){
+        updatePost(_id: $id, args:$args){
+          _id
+        }
+      }`
+    },
+    
   },
 
   //ENDPOINTS DE CATEGORIAS DE POSTS

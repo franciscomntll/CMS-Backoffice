@@ -34,7 +34,7 @@ export const useFetch = (toast = false) => {
           const formData = new FormData();
           const values = Object?.entries(query.variables);
 
-
+          console.log(values)
           // Generar el map del Form Data para las imagenes
           const map = values?.reduce((acc, item) => {
             if (item[1] instanceof File) {
@@ -44,6 +44,13 @@ export const useFetch = (toast = false) => {
               Object.entries(item[1]).forEach((el) => {
                 if (el[1] instanceof File) {
                   acc[el[0]] = [`variables.${item[0]}.${el[0]}`];
+                }
+                if (el[1] instanceof Object) {
+                  Object.entries(el[1]).forEach((elemento) => {
+                    if (elemento[1] instanceof File) {
+                      acc[elemento[0]] = [`variables.${item[0]}.${el[0]}.${elemento[0]}`];
+                    }
+                  })
                 }
               });
             }
@@ -64,6 +71,13 @@ export const useFetch = (toast = false) => {
               Object.entries(item[1]).forEach((el) => {
                 if (el[1] instanceof File) {
                   formData.append(el[0], el[1]);
+                }
+                if (el[1] instanceof Object) {
+                  Object.entries(el[1]).forEach((elemento) => {
+                    if (elemento[1] instanceof File) {
+                      formData.append(elemento[0], elemento[1]);
+                    }
+                  });
                 }
               });
             }

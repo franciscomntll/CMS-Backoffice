@@ -43,7 +43,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     delete values.createdAt
     delete values.updatedAt
 
-    setQueryUpdate({...options.updateEntry, variables: {id : _id, args: {...values}}, type:"formData"})
+    setQueryUpdate({...options.updateEntry, variables: {id : _id, args: values}, type:"formData"})
   }, [slug]);
 
   const handleSubmit = (values) => {

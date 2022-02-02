@@ -1,8 +1,9 @@
 import { Box, Text, FormLabel, Input } from "@chakra-ui/react"
 import { useField } from "formik";
+import { memo } from "react";
 
 
-export const InputField = ({label, ...props}) => {
+export const InputField = memo(({label, ...props}) => {
     const [field, meta, helpers] = useField(props);
     
 
@@ -13,5 +14,5 @@ export const InputField = ({label, ...props}) => {
             {meta.touched && meta.error && <Text color={"red"} fontSize={"xs"}>{meta.error}</Text>}
         </Box>
     )
-}
+})
 

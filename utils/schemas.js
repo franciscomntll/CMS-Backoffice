@@ -357,6 +357,7 @@ export const BodyStaticAPP = [
         getByID: FetchGraphQL.posts.getOnePost,
         createEntry : FetchGraphQL.posts.createPost,
         deleteEntry : FetchGraphQL.posts.deletePost,
+        updateEntry : FetchGraphQL.posts.updatePost,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {
@@ -373,7 +374,6 @@ export const BodyStaticAPP = [
             Header: "Subtitulo",
             accessor: "subTitle",
             type: "string",
-            required: true,
           },
           {
             Header: "Slug",

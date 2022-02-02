@@ -33,7 +33,7 @@ import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
 import {LoadingComponent} from "components/LoadingComponent";
 import {IndeterminateCheckbox} from "components/Datatable/IndeterminateCheckbox";
 
-export const Datatable = ({ isLoading, initialState, columns, data = [], setAction, ...props }) => {
+export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, ...props }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -58,6 +58,7 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], setActi
       data,
       initialState,
       setAction,
+      handleRemoveItem,
       ...props,
     },
     useSortBy,
@@ -104,6 +105,9 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], setActi
             bg={"red.400"}
             color={"white"}
             _hover={{ bg: "red.500" }}
+            onClick={() => {
+              handleRemoveItem(selectedFlatRows.map(item => item.original._id))
+            }}
           >
             <Text
               display={"flex"}

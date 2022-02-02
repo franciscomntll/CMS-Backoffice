@@ -356,6 +356,7 @@ export const BodyStaticAPP = [
         getData: FetchGraphQL.posts.getAllPost,
         getByID: FetchGraphQL.posts.getOnePost,
         createEntry : FetchGraphQL.posts.createPost,
+        deleteEntry : FetchGraphQL.posts.deletePost,
         visibleColumns: ["_id", "title", "slug", "createdAt"],
         schema: [
           {

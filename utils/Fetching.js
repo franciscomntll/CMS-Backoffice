@@ -480,7 +480,7 @@ export const FetchGraphQL = {
     createPost : {
       query : `mutation (
         $title: String,
-        $subTitlte :String,
+        $subTitle :String,
         $content: String,
         $slug : String,
         $seoDescription : String,
@@ -490,7 +490,7 @@ export const FetchGraphQL = {
         $imgCarrusel : [Upload],
         $imgMiniatura : Upload
       ){
-        createPost (inputPost:{
+        createPost (args:{
           title: $title,
           subTitle:$subTitle,
           content: $content,
@@ -504,6 +504,13 @@ export const FetchGraphQL = {
         }){
           _id
         }
+      }`
+    },
+
+    // @DELETE Eliminar post
+    deletePost : {
+      query : `mutation ($id :[ID]){
+        deletePost(_id: $id)
       }`
     }
   },

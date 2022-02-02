@@ -6,8 +6,6 @@ import {
   Input,
   Button,
   Flex,
-  Badge,
-  Grid,
   List,
   ListIcon,
   ListItem,
@@ -22,7 +20,6 @@ export const FieldArrayField = ({ label, ...props }) => {
 
   const handleRemove = (values, selected) => {
       const idx = values.findIndex(item => item === selected)
-
   }
 
   return (

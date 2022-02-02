@@ -95,7 +95,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 schema={options?.schema}
                 initialValues={valuesEdit}
                 onSubmit={handleSubmit}
-                columns={3}
+                columns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
               />
             </GridItem>
             <GridItem

@@ -47,6 +47,23 @@ export const FetchGraphQL = {
     }
       }`,
     },
+    
+    // @READ Buscar según ID
+    getBusinessByID: {
+      query: `query ($id: ID) {
+        getBussines(id: $id){
+          _id
+          userUid
+          slug
+          businessName
+          content
+          imgMiniatura{
+            _id
+            smallUrl
+          }
+    }
+      }`,
+    },
   },
   //ENDPOINTS DE CATEGORIAS DE LISTING
   catBusiness: {
@@ -423,13 +440,34 @@ export const FetchGraphQL = {
         }
       }`
     },
+
+    // @READ Buscar post por ID
     getOnePost : {
       query : `query ($id:ID){
         getOnePost(_id: $id){
             _id
             title
             subTitle
+            content
             slug
+            seoDescription
+            subCategories
+            tags
+            authorUsername
+            imgCarrusel{
+              _id
+              i1024
+              i800
+              i640
+              i320
+            }
+            imgMiniatura{
+              _id
+              i1024
+              i800
+              i640
+              i320
+            }
             createdAt
             updatedAt
             status
@@ -437,6 +475,37 @@ export const FetchGraphQL = {
         }
       }`
     },
+
+    // @CREATE Crear post
+    createPost : {
+      query : `mutation (
+        $title: String,
+        $subTitlte :String,
+        $content: String,
+        $slug : String,
+        $seoDescription : String,
+        $subCategories: [ID],
+        $tags :[String],
+        $authorUsername :String,
+        $imgCarrusel : [Upload],
+        $imgMiniatura : Upload
+      ){
+        createPost (inputPost:{
+          title: $title,
+          subTitle:$subTitle,
+          content: $content,
+          slug:$slug,
+          seoDescription: $seoDescription,
+          subCategories :$subCategories,
+          tags: $tags,
+          authorUsername :$authorUsername,
+          imgCarrusel: $imgCarrusel,
+          imgMiniatura : $imgMiniatura,
+        }){
+          _id
+        }
+      }`
+    }
   },
 
   //ENDPOINTS DE CATEGORIAS DE POSTS

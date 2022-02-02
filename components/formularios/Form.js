@@ -12,12 +12,12 @@ import { URLInputField } from "components/formularios/Inputs/URLInputField";
 import {CounstriesSelectField} from 'components/formularios/Inputs/CountriesSelectField'
 import * as Yup from "yup";
 import Relationship from "components/formularios/Inputs/Relationship";
-import { useFetch } from "hooks/useFetch";
 import { FieldArrayField } from "components/formularios/Inputs/FieldArrayField";
+import { MultipleImages } from "components/formularios/Inputs/MultipleImages";
 export const FormDinamical = ({
   schema: state,
   initialValues,
-  columns = 2,
+  columns,
   onSubmit,
 }) => {
   const [schema, setSchema] = useState(null);
@@ -72,7 +72,7 @@ export const FormDinamical = ({
           validationSchema={validationSchema}
         >
           <Form>
-            <Grid templateColumns={`repeat(${columns}, 1fr)`} gap={"2rem"}>
+            <Grid templateColumns={columns} gap={"2rem"}>
               {schema &&
                 schema?.map((item, idx) => {
                   switch (item.type) {
@@ -124,7 +124,7 @@ export const FormDinamical = ({
                       break;
                     case "ckeditor":
                       return (
-                        <GridItem key={idx} colSpan={columns} fontSize={"sm"} >
+                        <GridItem key={idx} colSpan={[1,,,3]} fontSize={"sm"} >
                           <CKEditorComponent
                             name={item.accessor}
                             label={item.Header}
@@ -148,6 +148,17 @@ export const FormDinamical = ({
                           name={item.accessor}
                           label={item.Header}
                         />
+                      );
+                      break;
+                    case "imageMultiple":
+                      return (
+                        <GridItem colSpan={[1,,,3]}>
+                        <MultipleImages
+                          key={idx}
+                          name={item.accessor}
+                          label={item.Header}
+                        />
+                        </GridItem>
                       );
                       break;
                     case "relationship":

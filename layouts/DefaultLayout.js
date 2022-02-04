@@ -1,8 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import {Navigation} from "components/Navigation";
-import {Sidebar} from "components/Sidebar";
-import { AuthProvider } from "context/AuthContext";
+import dynamic from 'next/dynamic'
+const AuthProvider = dynamic (() => import('context/AuthContext').then(mod => mod.AuthProvider))
+const Sidebar = dynamic (() => import('components/Sidebar').then(mod => mod.Sidebar))
+const Navigation = dynamic (() => import('components/Navigation').then(mod => mod.Navigation))
 export const DefaultLayout = ({ children }) => {
   const [show, setShow] = useState(true);
   return (

@@ -11,7 +11,7 @@ import Editor from '@ckeditor/ckeditor5-build-classic'
 //   { ssr: false }
 // );
 
-import { FormLabel } from "@chakra-ui/react";
+import { Divider, FormLabel } from "@chakra-ui/react";
 import { useField } from "formik";
 import { UploadAdapter } from "utils/UploadAdapter";
 import { useCallback } from "react";
@@ -70,7 +70,8 @@ export const CKEditorComponent = ({ label, ...props }) => {
     <>
       {typeof window !== "undefined" && (
         <>
-          <FormLabel>{label}</FormLabel>
+        <Divider />
+        <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
           <CKEditor
             editor={Editor}
             config={editorConfiguration}

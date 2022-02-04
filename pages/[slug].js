@@ -1,6 +1,7 @@
 import {Flex} from "@chakra-ui/react";
 import { useEffect, useReducer } from "react";
-import { PanelEditAndCreate } from "components/PanelEditAndCreate";
+import dynamic from 'next/dynamic'
+const PanelEditAndCreate = dynamic(() => import('components/PanelEditAndCreate').then(mod => mod.PanelEditAndCreate), {ssr: false})
 import {PagesWithAuth} from "HOC/PageWithAuth";
 import { PanelViewTable } from "components/PanelViewTable";
 

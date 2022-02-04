@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   FormLabel,
   Input,
   InputGroup,
@@ -16,7 +17,8 @@ export const PasswordInput = ({ label, ...props }) => {
 
   return (
     <Box>
-      <FormLabel fontSize={"sm"}>{label}</FormLabel>
+       <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
       <InputGroup>
         <Input fontSize={"sm"} {...field} {...props} type={show ? 'text' : 'password'} />
         <InputRightElement width="4.5rem" pr={"0.5rem"}>

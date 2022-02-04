@@ -10,6 +10,7 @@ import {
   ListIcon,
   ListItem,
   IconButton,
+  Divider,
 } from "@chakra-ui/react";
 import { FieldArray, useField } from "formik";
 import { useState } from "react";
@@ -29,7 +30,8 @@ export const FieldArrayField = ({ label, schema, ...props }) => {
         name={props.name}
         render={(arrayHelpers) => (
           <>
-            <FormLabel fontSize={"sm"}>{label}</FormLabel>
+            <Divider />
+          <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
             <Flex gap={"0.5rem"}>
               <Input
                 size={"sm"}

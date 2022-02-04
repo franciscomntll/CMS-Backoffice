@@ -1,4 +1,4 @@
-import { Box, FormLabel, Textarea } from "@chakra-ui/react"
+import { Box, Divider, FormLabel, Textarea } from "@chakra-ui/react"
 import { useField } from "formik";
 
 
@@ -8,7 +8,8 @@ export const TextareaField = ({label, ...props}) => {
 
     return(
         <Box>
-            <FormLabel fontSize={"sm"} >{label}</FormLabel>
+             <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
             <Textarea fontSize={"sm"} {...field} {...props}  />
         </Box>
     )

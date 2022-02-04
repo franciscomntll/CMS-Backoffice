@@ -1,4 +1,4 @@
-import { Box, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
+import { Box, Divider, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useField } from "formik";
 import Image from "next/image";
 import { ImageIcon } from "components/icons";
@@ -34,7 +34,8 @@ export const UploadImage = ({ label, ...props }) => {
   };
   return (
     <Box>
-      <FormLabel>
+       <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>
         {label}
         <Flex
           alignItems={"center"}
@@ -46,6 +47,7 @@ export const UploadImage = ({ label, ...props }) => {
           rounded={"xl"}
           color={"gray.400"}
           pos={"relative"}
+          mt={"0.5rem"}
         >
           {!field?.value?.i640 && !image && (
               <>

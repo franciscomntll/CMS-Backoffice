@@ -1,5 +1,6 @@
 import {
     Box,
+  Divider,
   FormLabel,
   Input,
   InputGroup,
@@ -12,8 +13,9 @@ export const URLInputField = ({label, ...props}) => {
 
   return (
     <Box>
-      <FormLabel fontSize={"sm"}>{label}</FormLabel>
-      <InputGroup size="sm">
+       <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
+      <InputGroup fontSize={"sm"} >
         <InputLeftAddon children="https://" />
         <Input variant={"filled"} fontSize={"sm"} {...field} {...props} />
       </InputGroup>

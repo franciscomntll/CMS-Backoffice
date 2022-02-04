@@ -1,6 +1,7 @@
 import {
   Box,
   Checkbox,
+  Divider,
   FormLabel,
   Grid,
   RadioGroup,
@@ -30,7 +31,8 @@ const Relationship = memo(({ label, tabList = {}, ...props }) => {
         render={({push, remove, form}) => {
         return (
           <>
-            <FormLabel  fontWeight={"900"} >{label}</FormLabel>
+             <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
             <RadioGroup
               w={"100%"}
               p={"0.5rem"}

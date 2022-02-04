@@ -1,4 +1,4 @@
-import { FormLabel, Input } from "@chakra-ui/react";
+import { Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useAsyncDebounce } from "react-table";
 

@@ -1,4 +1,4 @@
-import { Box, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
+import { Box, Divider, FormLabel, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
 import { useField } from 'formik';
 import React from 'react';
 
@@ -7,8 +7,9 @@ export const InputNumberField = ({label, ...props}) => {
     const parse = (val) => val.replace(/^\$/, '')
   return (
     <Box>
-    <FormLabel fontSize={"sm"}>{label}</FormLabel>
-    <NumberInput  {...field} {...props} onChange={(e) => helpers.setValue(parse(e))} value={field.value}  >
+      <Divider />
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
+    <NumberInput variant={"filled"}  {...field} {...props} onChange={(e) => helpers.setValue(parse(e))} value={field.value}  >
       <NumberInputField fontSize={"sm"} />
       <NumberInputStepper>
         <NumberIncrementStepper />

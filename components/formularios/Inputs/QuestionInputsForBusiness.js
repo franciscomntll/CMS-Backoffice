@@ -207,14 +207,14 @@ const InputQuestions = ({ label, question, ...props }) => {
   );
 };
 
-const CharactesticsComponent = ({data, ...props}) => {
+const CharactesticsComponent = ({data = [], ...props}) => {
   return (
     <FieldArray
         name={"characteristics"}
         render={({ push, remove, form }) => {
           return (
               <Grid templateColumns={"repeat(3, 1fr)"} gap={"1rem"}>
-                {data.length > 0 ? (
+                {data?.length > 0 ? (
                   <>
                   {data
                     ?.filter((item) => item && item)

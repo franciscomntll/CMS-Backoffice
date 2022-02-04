@@ -29,11 +29,29 @@ import {
   MenuButton,
   MenuList,
 } from "@chakra-ui/react";
-import { useTable, useSortBy, usePagination, useRowSelect } from "react-table";
+import { useTable, useSortBy, usePagination, useRowSelect, useFilters, useGlobalFilter } from "react-table";
 import {LoadingComponent} from "components/LoadingComponent";
 import {IndeterminateCheckbox} from "components/Datatable/IndeterminateCheckbox";
+import GlobalFilter from "components/Datatable/GlobalFilter";
+import { useMemo } from "react";
 
 export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, ...props }) => {
+  const filterTypes = useMemo(
+    () => ({
+      text: (rows, id, filterValue) => {
+        return rows.filter(row => {
+          const rowValue = row.values[id]
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true
+        })
+      },
+    }),
+    []
+  )
+  
   const {
     getTableProps,
     getTableBodyProps,
@@ -49,8 +67,10 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
     previousPage,
     setPageSize,
     selectedFlatRows,
-    state: { pageIndex, pageSize, selectedRowIds },
+    state: { pageIndex, pageSize, selectedRowIds, globalFilter },
     allColumns,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     getToggleHideAllColumnsProps,
   } = useTable(
     {
@@ -59,8 +79,11 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
       initialState,
       setAction,
       handleRemoveItem,
+      filterTypes,
       ...props,
     },
+    useFilters,
+    useGlobalFilter ,
     useSortBy,
     usePagination,
     useRowSelect,
@@ -96,7 +119,12 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
   );
   return (
     <>
-      <Flex justifyContent={"end"} gap={"1rem"}>
+      <Flex justifyContent={"end"} gap={"1rem"} paddingBottom={"1rem"}>
+      <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
         {selectedFlatRows.length > 0 && (
           <Button
             w={"fit-content"}

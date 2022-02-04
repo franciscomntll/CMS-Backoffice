@@ -54,7 +54,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   }
   
   return (
-    <Flex flexDir={"column"} overflow={"auto"} h={"100%"} mb={"4rem"}>
+    <Flex flexDir={"column"} overflow={"auto"} maxH={"100%"} mb={"4rem"}>
       {!loadingValues && !errorValues ? (
         <>
           <Flex justifyContent={"space-between"} paddingBottom={"2rem"}>

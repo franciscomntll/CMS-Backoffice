@@ -30,7 +30,7 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
   };
   return (
     <>
-      <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
+      <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"} >
         <Box>
           <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
             {selected?.title}

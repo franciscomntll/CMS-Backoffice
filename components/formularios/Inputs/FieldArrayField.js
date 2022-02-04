@@ -14,12 +14,13 @@ import {
 import { FieldArray, useField } from "formik";
 import { useState } from "react";
 
-export const FieldArrayField = ({ label, ...props }) => {
+export const FieldArrayField = ({ label, schema, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [value, setValue] = useState("");
 
-  const handleRemove = (values, selected) => {
-      const idx = values.findIndex(item => item === selected)
+  const schemas = {
+    string : value,
+    object : {title : value}
   }
 
   return (
@@ -39,33 +40,61 @@ export const FieldArrayField = ({ label, ...props }) => {
               />
               <Button
                 size={"sm"}
-                onClick={() => arrayHelpers.push({ title: value })}
+                onClick={() => arrayHelpers.push(schemas[schema])}
               >
                 Crear
               </Button>
             </Flex>
             <List spacing={3} py={"0.5rem"} columnGap={"2rem"} display={"grid"} gridTemplateColumns={"repeat(2, 1fr)"}>
               {field.value &&
-                field?.value?.map((item, idx) => (
-                  <>
-                    {item.title && (
-                      <ListItem
-                        textTransform={"capitalize"}
-                        fontSize={"sm"}
-                        display={"flex"}
-                        alignItems={"center"}
-                        justifyContent={"space-between"}
-                      >
-                        <ListIcon key={idx} as={CheckIcon} color="green.500" />
-                        {item.title}
-                        <IconButton size={"xs"} onClick={() => {
-                            const indice = arrayHelpers.form.values[props.name].findIndex(ele => item === ele)
-                            arrayHelpers.remove(indice)
-                        }}><CloseIcon/></IconButton>
-                      </ListItem>
-                    )}
-                  </>
-                ))}
+                field?.value?.map((item, idx) => {
+
+                  if(typeof item === "string"){
+                    return (
+                    item && (
+                        <ListItem
+                          textTransform={"capitalize"}
+                          fontSize={"sm"}
+                          display={"flex"}
+                          alignItems={"center"}
+                          justifyContent={"space-between"}
+                        >
+                          <ListIcon key={idx} as={CheckIcon} color="green.500" />
+                          {item}
+                          <IconButton size={"xs"} onClick={() => {
+                              const indice = arrayHelpers.form.values[props.name].findIndex(ele => item === ele)
+                              arrayHelpers.remove(indice)
+                          }}><CloseIcon/></IconButton>
+                        </ListItem>
+                      )
+                    )
+                  }
+
+                  if(item instanceof Object){
+                    return (
+                      <>
+                        {item.title && (
+                          <ListItem
+                            textTransform={"capitalize"}
+                            fontSize={"sm"}
+                            display={"flex"}
+                            alignItems={"center"}
+                            justifyContent={"space-between"}
+                          >
+                            <ListIcon key={idx} as={CheckIcon} color="green.500" />
+                            {item.title}
+                            <IconButton size={"xs"} onClick={() => {
+                                const indice = arrayHelpers.form.values[props.name].findIndex(ele => item === ele)
+                                arrayHelpers.remove(indice)
+                            }}><CloseIcon/></IconButton>
+                          </ListItem>
+                        )}
+                      </>
+                    )
+                  }
+
+                  
+                })}
             </List>
             {meta.touched && meta.error && (
               <Text color={"red"} fontSize={"xs"}>

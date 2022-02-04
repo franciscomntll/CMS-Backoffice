@@ -2,16 +2,16 @@ import {
   Box,
   Checkbox,
   FormLabel,
-  Radio,
+  Grid,
   RadioGroup,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { FieldArray, useField } from "formik";
 import { useFetch } from "hooks/useFetch";
-import React, { useEffect } from "react";
+import { useEffect, memo } from "react";
 
-const Relationship = ({ label, tabList = {}, ...props }) => {
+const Relationship = memo(({ label, tabList = {}, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [dataTabList, isError, isLoading, setQueryTabList] = useFetch();
 
@@ -30,19 +30,20 @@ const Relationship = ({ label, tabList = {}, ...props }) => {
         render={({push, remove, form}) => {
         return (
           <>
-            <FormLabel fontSize={"sm"}>{label}</FormLabel>
+            <FormLabel  fontWeight={"900"} >{label}</FormLabel>
             <RadioGroup
               w={"100%"}
               p={"0.5rem"}
               rounded={"lg"}
-              maxH={"10rem"}
-              overflow={"auto"}
+              // maxH={"10rem"}
+              // overflow={"visible"}
             >
-              <Stack direction="column" fontSize={"xs"}>
+              <Grid templateColumns={"repeat(3, 1fr)"} gap={"1rem"}>
                 {!isError &&
                   !isLoading &&
                   dataTabList?.results
                     ?.filter((item) => item && item)
+                    ?.sort((a,b) => a.title.localeCompare(b.title))
                     ?.map((item) => {
                       return (
                         <Checkbox key={item?._id} size={"sm"} variant={""} isChecked={form?.values[props?.name]?.includes(item._id)} textTransform={"capitalize"}  onChange={(e) => {
@@ -53,7 +54,7 @@ const Relationship = ({ label, tabList = {}, ...props }) => {
                         </Checkbox>
                       )
                     })}
-              </Stack>
+              </Grid>
             </RadioGroup>
           </>
         )}}
@@ -65,6 +66,6 @@ const Relationship = ({ label, tabList = {}, ...props }) => {
             )}
     </Box>
   );
-};
+});
 
 export default Relationship;

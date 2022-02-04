@@ -56,9 +56,7 @@ export const BodyStaticAPP = [
           {
             Header: "Elegir categorias",
             accessor: "subCategories",
-            type: "relationship",
-            tabList: FetchGraphQL.subCatBusiness.getSubCategoryBusiness,
-            required: true,
+            type: "questions",
           },
           {
             Header: "Nombre de contacto",
@@ -309,7 +307,8 @@ export const BodyStaticAPP = [
           {
             Header: "Elementos",
             accessor: "items",
-            type: "fieldArray"
+            type: "fieldArray",
+            schema : "object"
           },
           {
             Header: "Creado el",
@@ -405,6 +404,7 @@ export const BodyStaticAPP = [
             Header: "Etiquetas",
             accessor: "tags",
             type: "fieldArray",
+            schema : "string"
           },
           {
             Header: "Imagen Miniatura",
@@ -551,4 +551,29 @@ export const BodyStaticAPP = [
       },
     ],
   },
+  {
+    title: "Paginas",
+    children: [
+      {
+        title: "Secciones",
+        route: "sections",
+        getData: "",
+        getByID: "",
+        createEntry : "",
+        deleteEntry : "",
+        updateEntry : "",
+        visibleColumns: ["_id", "title", "slug", "createdAt"],
+        schema: [
+          {
+            Header: "ID",
+            accessor: "_id",
+          },
+        ],
+      },
+    ]
+  },
+  {
+    title: "Usuarios",
+    children: []
+  }
 ];

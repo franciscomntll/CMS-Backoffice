@@ -9,7 +9,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { FormDinamical } from "components/formularios/Form";
 import { FindOption } from "components/Datatable/Columns";
@@ -21,6 +21,8 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
   const [,,,setQueryCreate] = useFetch(true);
   const [,,,setQueryUpdate] = useFetch(true);
+
+  const refButton = useRef()
 
   const options = FindOption(slug);
 
@@ -71,7 +73,18 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
               </Button>
               <Button
                 w={"fit-content"}
-                onClick={() => setAction({ type: "VIEW", payload: {} })}
+                bg={"blue.600"}
+                color={"white"}
+                fontWeight={"500"}
+                _hover={{
+                  bg: "blue.700",
+                }}
+                onClick={async () => {
+                  await refButton.current.handleSubmit()
+                  setTimeout(() => {
+                    setAction({ type: "VIEW", payload: {} })
+                  }, 1000);
+                }}
               >
                 Guardar
               </Button>
@@ -95,6 +108,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 schema={options?.schema}
                 initialValues={valuesEdit}
                 onSubmit={handleSubmit}
+                ref={refButton}
                 columns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
               />
             </GridItem>

@@ -12,6 +12,7 @@ import {
 import { useField } from "formik";
 import { memo, useEffect, useState } from "react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { IDGenerator } from "utils/IDGenerator";
 
 export const MultipleImages = memo(({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
@@ -42,7 +43,7 @@ export const MultipleImages = memo(({ label, ...props }) => {
         reader.onloadend = async () => {
           if (reader.result) {
             const nuevaImagen = {
-              _id: Math.random().toString(36).slice(2),
+              _id: IDGenerator(),
               file: item,
               image: reader.result,
             };

@@ -6,7 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 
 export const PanelViewTable = ({ slug, state, dispatch }) => {
   const [data, isLoading, isError, setQuery] = useFetch();
-  const [dataRemove, isLoadingRemove, isErrorRemove, setQueryRemove] = useFetch(true)
+  const [dataRemove, isLoadingRemove, isErrorRemove, setQueryRemove] =
+    useFetch(true);
   const [selected, setSelected] = useState(columnsDataTable({ slug }));
   const columns = useMemo(() => selected?.schema, [selected]);
 
@@ -19,16 +20,14 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
     setSelected(columnsDataTable({ slug }));
   }, [slug]);
 
-  // useEffect(() => {
-  //   !isLoading && !isError && setData(dato)
-  // }, [dato, isLoading, isError]);
-  
-
   const handleRemoveItem = (idSelected) => {
-    console.log(idSelected);
-    setQueryRemove({...selected.deleteEntry, variables: {id : idSelected}, type: "json"})
+    setQueryRemove({
+      ...selected.deleteEntry,
+      variables: { id: idSelected },
+      type: "json",
+    });
     //setQuery({ ...selected.getData, type: "json" });
-  }
+  };
   return (
     <>
       <Flex justifyContent={"space-between"} alignItems={"center"} w={"100%"}>
@@ -43,6 +42,12 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
         <Button
           w={"fit-content"}
           px={"1rem"}
+          bg={"blue.600"}
+          color={"white"}
+          fontWeight={"500"}
+          _hover={{
+            bg: "blue.700",
+          }}
           onClick={() => dispatch({ type: "CREATE", payload: {} })}
         >
           Añadir registro
@@ -61,18 +66,18 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
         >
           <Datatable
             columns={columns}
-            data={data?.results?.filter(item => item&&item) ?? [] }
+            data={data?.results?.filter((item) => item && item) ?? []}
             isLoading={isLoading}
             handleRemoveItem={handleRemoveItem}
-            initialState={{ 
+            initialState={{
               hiddenColumns: selected?.hiddenColumns ?? {},
               sortBy: [
                 {
-                    id: 'createdAt',
-                    desc: true
-                }
-            ]
-             }}
+                  id: "createdAt",
+                  desc: true,
+                },
+              ],
+            }}
             setAction={dispatch}
           />
         </Box>

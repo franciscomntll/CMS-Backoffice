@@ -4,7 +4,7 @@ import {
   Heading,
   useToast,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useRef } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { AuthContextProvider } from "context/AuthContext";
 import { useRouter } from "next/router";
@@ -40,6 +40,7 @@ const FormLogin = () => {
   const toast = useToast();
   const router = useRouter()
   const {setUser} = AuthContextProvider()
+  const refButton = useRef()
 
   const handleSubmit = async (values, actions) => {
     try {
@@ -100,8 +101,10 @@ const FormLogin = () => {
             Iniciar sesión
           </Heading>
           
-      <FormDinamical schema={schemaLogin} columns={1} onSubmit={handleSubmit} initialValues={initialValues}/>
-    
+      <FormDinamical  schema={schemaLogin} columns={[`repeat(1, 1fr)`]} onSubmit={handleSubmit} initialValues={initialValues} ref={refButton}/>
+      <Button  type={"submit"} w={"100%"} mt={"2rem"} onClick={() => refButton.current.handleSubmit()}>
+              Entrar
+      </Button>
     </Flex>
   );
 };

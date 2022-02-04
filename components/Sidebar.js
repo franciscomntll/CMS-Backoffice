@@ -9,11 +9,12 @@ import {
   MenuGroup,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useState } from "react";
 import { BodyStaticAPP } from "utils/schemas";
 
 export const Sidebar = ({ state }) => {
+  const [isActive, setActive] = useState("business")
 
-  
   return (
     <Flex
       pos={"relative"}
@@ -52,10 +53,15 @@ export const Sidebar = ({ state }) => {
                     <MenuItem
                       key={idx}
                       color={"white"}
-                      _hover={{ bg: "gray.900" }}
-                      _focus={{ bg: "gray.900" }}
+                      bg={isActive === item.route ? "blue.600" : "gray.500"}
+                      _hover={{ bg: "blue.800" }}
+                      _focus={{bg: "blue.600"}}
+                      onClick={() => setActive(item.route)}
                       w={"100%"}
                       fontSize={"sm"}
+                      transitionProperty={"all"}
+      transitionTimingFunction={"cubic-bezier(0.4, 0, 0.2, 1)"}
+      transitionDuration={"150ms"}
                     >
                       {item.title}
                     </MenuItem>
@@ -73,7 +79,7 @@ export const Sidebar = ({ state }) => {
         insetX={"0"}
         w={"fit-content"}
         color={"white"}
-        fontSize={"xs"}
+        fontSize={"10px"}
       >
         Derechos Reservados © {(() => new Date().getFullYear())()}
       </Box>

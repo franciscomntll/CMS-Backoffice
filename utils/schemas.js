@@ -11,7 +11,7 @@ export const BodyStaticAPP = [
          getData: FetchGraphQL.business.getBusinessAll,
          getByID: FetchGraphQL.business.getOneBusiness,
          createEntry: FetchGraphQL.business.createBusiness, 
-         updateEntry: FetchGraphQL.business.createBusiness, 
+         updateEntry: FetchGraphQL.business.updateBusiness, 
          deleteEntry: FetchGraphQL.business.deleteBusiness, 
          visibleColumns: ["_id", "businessName", "slug", "createdAt"],
          schema: [

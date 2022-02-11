@@ -150,10 +150,6 @@ export const FetchGraphQL = {
             }
             answers
           }
-          coordinates{
-            lat
-            lng
-          }
           categories{
             _id
           }
@@ -223,7 +219,7 @@ export const FetchGraphQL = {
     // @CREATE Crear empresa
     createBusiness : {
       query : `mutation (
-        $_id : ID
+        $id : ID
         $slug: String
         $userUid: ID
         $tags : [String]
@@ -255,7 +251,7 @@ export const FetchGraphQL = {
         $imgLogo : Upload
         $status: Boolean
       ){
-        createBusinessCms(id: $_id, args: {
+        createBusinessCms(id: $id, args: {
           slug: $slug
           userUid: $userUid
           tags : $tags
@@ -295,9 +291,13 @@ export const FetchGraphQL = {
 
     // @UPDATE Actualizar empresa
     updateBusiness : {
-      query : `mutation ($id : ID, $args :inputBusiness){
-        updateBusiness(_id: $id, args : $args){
+      query : `mutation (
+        $id : ID
+        $args : inputBusinessCms
+      ){
+        createBusinessCms(id: $id, args: $args ){
           _id
+           
         }
       }`
     },

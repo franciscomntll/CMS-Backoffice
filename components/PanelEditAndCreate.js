@@ -72,12 +72,13 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   );
 
   const fetchUpdate = useCallback(
-    async ({ _id, ...values }) => {
+    async ({ _id, characteristics2, questionsAndAnswers2, categories, ...values }) => {
 
       try {
         delete values.createdAt;
         delete values.updatedAt;
         const data = await fetchApi(options?.updateEntry?.query, { id: _id, args: values }, "formData")
+        console.log(data)
         if(data){
           toast({
             status: "success",
@@ -85,7 +86,10 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
             isClosable: true,
           });
           setAction({ type: "VIEW", payload: {} })
+        } else {
+            throw new Error("Error en la peticion")
         }
+        
       } catch (error) {
         toast({
           status: "error",

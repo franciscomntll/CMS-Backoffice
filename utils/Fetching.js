@@ -25,26 +25,97 @@ export const FetchGraphQL = {
                   slug
                   createdAt
                   updatedAt
+                  contactName
                 }
               }
-            }`,
-      variables: {},
+            }`
     },
 
     // @READ Buscar según ID
-    getBusinessByID: {
-      query: `query ($id: ID) {
-        getBussines(id: $id){
+    getOneBusiness: {
+      query: `query ($id: ID, $slug : String) {
+        getOneBusiness(_id: $id, slug: $slug){
           _id
-          userUid
           slug
+          tags
+          contactName
+          contactEmail
           businessName
+          webPage
+          landline
+          mobilePhone
+          whatsapp
+          twitter
+          facebook
+          linkedin
+          youtube
+          instagram
+          country
+          city
+          zip
+          address
+          description
           content
+          subCategories{
+            _id
+          }
+          questionsAndAnswers{
+            questions{
+              _id
+              title
+            }
+            answers
+          }
+          coordinates{
+            lat
+            lng
+          }
+          categories{
+            _id
+          }
+          subCategories{
+            _id
+          }
           imgMiniatura{
             _id
-            smallUrl
+            i1024
+            i800
+            i640
+            i320
           }
-    }
+          imgLogo{
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+          status
+          createdAt
+          updatedAt
+          characteristics{
+            characteristic{
+              _id
+              title
+              items{
+                _id
+                title
+              }
+            }
+            items{
+              _id
+              title
+            }
+            
+          }
+          imgCarrusel {
+            _id
+            i1024
+            i800
+            i640
+            i320
+          }
+        }
       }`,
     },
     
@@ -64,6 +135,94 @@ export const FetchGraphQL = {
     }
       }`,
     },
+
+    // @CREATE Crear empresa
+    createBusiness : {
+      query : `mutation (
+        $slug: String
+        $userUid: ID
+        $tags : [String]
+        $contactName: String
+        $contactEmail: String
+        $businessName:String
+        $webPage : String,
+        $landline: String
+        $mobilePhone : String
+        $whatsapp : String
+        $twitter : String
+        $facebook : String
+        $linkedin : String
+        $youtube : String
+        $instagram : String
+        $country : String
+        $city : String
+        $zip : String
+        $address : String
+        $description : String
+        $content : String
+        $coordinates : inputCoordinates
+        $subCategories : [inputObjectID]
+        $questionsAndAnswers : [inputQuestionsAndAnswers]
+        $characteristics : [inputCharacteristicsCms]
+        $business_hours :inputDias
+        $imgCarrusel : [Upload]
+        $imgMiniatura : Upload
+        $imgLogo : Upload
+        $status: Boolean
+      ){
+        createBusinessCms(args: {
+          slug: $slug
+          userUid: $userUid
+          tags : $tags
+          contactName: $contactName
+          contactEmail: $contactEmail
+          businessName: $businessName
+          webPage: $webPage
+          landline: $landline
+          mobilePhone: $mobilePhone
+          whatsapp :$whatsapp
+          twitter: $twitter
+          facebook : $facebook
+          linkedin : $linkedin
+          youtube : $youtube
+          instagram : $instagram
+          country : $country
+          city : $city
+          zip : $zip
+          address : $address
+          description : $description
+          content : $content
+          coordinates : $coordinates
+          subCategories: $subCategories
+          questionsAndAnswers : $questionsAndAnswers
+          characteristics: $characteristics
+          business_hours: $business_hours
+          imgCarrusel: $imgCarrusel
+          imgMiniatura : $imgMiniatura
+          imgLogo: $imgLogo
+          status: $status
+        } ){
+          _id
+           
+        }
+      }`
+    },
+
+    // @UPDATE Actualizar empresa
+    updateBusiness : {
+      query : `mutation ($id : ID, $args :inputBusiness){
+        updateBusiness(_id: $id, args : $args){
+          _id
+        }
+      }`
+    },
+
+    // @DELETE Borrar empresa
+    deleteBusiness :{
+      query : `mutation ($id : [ID]){
+        deleteBusinesses(id: $id)
+      }`
+    }
   },
   //ENDPOINTS DE CATEGORIAS DE LISTING
   catBusiness: {

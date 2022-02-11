@@ -4,9 +4,11 @@ import {
   Button,
   Divider,
   Flex,
+  FormLabel,
   Grid,
   GridItem,
   Heading,
+  Switch,
   Text,
 } from "@chakra-ui/react";
 import { useEffect, useCallback, useRef } from "react";
@@ -19,40 +21,63 @@ import { formatTime } from "utils/formatTime";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
-  const [,,,setQueryCreate] = useFetch(true);
-  const [,,,setQueryUpdate] = useFetch(true);
+  const [, loadingCreate, errorCreate, setQueryCreate] = useFetch(true);
+  const [, , , setQueryUpdate] = useFetch(true);
 
-  const refButton = useRef()
+  const refButton = useRef();
 
   const options = FindOption(slug);
 
   useEffect(() => {
     if (state.type === "edit") {
-      setQueryValues({ ...options?.getByID, variables: { id: state.data._id }, type: "json" });
+      setQueryValues({
+        ...options?.getByID,
+        variables: { id: state.data._id },
+        type: "json",
+      });
     }
   }, [state]);
 
   const Information = [
-    { title: "Ultima Actualización", value: formatTime(valuesEdit?.updatedAt, "es") },
+    {
+      title: "Ultima Actualización",
+      value: formatTime(valuesEdit?.updatedAt, "es"),
+    },
     { title: "Creado por", value: "Jhon Doe" },
   ];
 
-  const fetchCreate = useCallback((values) => {
-    setQueryCreate({...options.createEntry, variables: {...values}, type: "formData"})
-  }, [slug]);
+  const fetchCreate = useCallback(
+    (values) => {
+      setQueryCreate({
+        ...options.createEntry,
+        variables: { ...values },
+        type: "formData",
+      });
+      !loadingCreate && !errorCreate && setAction({ type: "VIEW", payload: {} })
+    },
+    [slug]
+  );
 
-  const fetchUpdate = useCallback(({_id, ...values}) => {
-    delete values.createdAt
-    delete values.updatedAt
+  const fetchUpdate = useCallback(
+    ({ _id, ...values }) => {
+      delete values.createdAt;
+      delete values.updatedAt;
 
-    setQueryUpdate({...options.updateEntry, variables: {id : _id, args: values}, type:"formData"})
-  }, [slug]);
+      setQueryUpdate({
+        ...options.updateEntry,
+        variables: { id: _id, args: values },
+        type: "formData",
+      });
+      setAction({ type: "VIEW", payload: {} })
+    },
+    [slug]
+  );
 
   const handleSubmit = (values) => {
-    state.type === "create" && fetchCreate(values)
-    state.type === "edit" && fetchUpdate(values)
-  }
-  
+    state.type === "create" && fetchCreate(values);
+    state.type === "edit" && fetchUpdate(values);
+  };
+
   return (
     <Flex flexDir={"column"} overflow={"auto"} maxH={"100%"} mb={"4rem"}>
       {!loadingValues && !errorValues ? (
@@ -60,7 +85,9 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
           <Flex justifyContent={"space-between"} paddingBottom={"2rem"}>
             <Box>
               <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
-                {valuesEdit?.businessName || valuesEdit?.title || "Crear Registro"}
+                {valuesEdit?.businessName ||
+                  valuesEdit?.title ||
+                  "Crear Registro"}
               </Heading>
               <Text fontSize={"xs"}>Identificador: {valuesEdit?._id}</Text>
             </Box>
@@ -80,10 +107,12 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                   bg: "blue.700",
                 }}
                 onClick={async () => {
-                  await refButton.current.handleSubmit()
-                  setTimeout(() => {
-                    setAction({ type: "VIEW", payload: {} })
-                  }, 1000);
+                  try {
+                    await refButton.current.handleSubmit();
+                    // setAction({ type: "VIEW", payload: {} })
+                  } catch (error) {
+                    console.log(error);
+                  }
                 }}
               >
                 Guardar
@@ -122,7 +151,20 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 <Heading pb={"1rem"} fontSize={"sm"} color={"gray.500"}>
                   Información
                 </Heading>
+              
+
                 <Divider />
+                <Flex w={"100%"} pt={"1rem"} justifyContent={"center"} >
+                  <FormLabel display={"flex"} justifyContent={"center"} alignItems={"center"} gap={"0.5rem"} fontWeight={"900"} fontSize={"sm"} cursor={"pointer"}>
+                    ¿Publicar?
+                  <Switch isChecked={refButton?.current?.values?.status} onChange={() => {
+                    if(refButton.current){
+                      const valueStatus = refButton?.current?.values?.status
+                      refButton.current.setValues({...refButton.current.values, status : !valueStatus})
+                    }
+                  }} />
+                  </FormLabel>
+                </Flex>
                 {Information?.map((item, idx) => (
                   <Flex
                     key={idx}
@@ -146,7 +188,9 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 ))}
               </Box>
 
-             {state.type === "edit" &&  <ButtonDeleteEntry values={valuesEdit} options={options} />}
+              {state.type === "edit" && (
+                <ButtonDeleteEntry values={valuesEdit} options={options} />
+              )}
             </GridItem>
           </Grid>
         </>
@@ -157,12 +201,16 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   );
 };
 
-const ButtonDeleteEntry = ({values, options}) => {
-  const [data, isLoading, isError, setQuery] = useFetch(true)
+const ButtonDeleteEntry = ({ values, options }) => {
+  const [data, isLoading, isError, setQuery] = useFetch(true);
 
   const handleRemove = () => {
-    setQuery({...options.deleteEntry, variables: {id : values?._id}, type: "json"})
-  }
+    setQuery({
+      ...options.deleteEntry,
+      variables: { id: values?._id },
+      type: "json",
+    });
+  };
 
   return (
     <Button

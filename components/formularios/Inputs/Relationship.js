@@ -5,7 +5,7 @@ import {
   FormLabel,
   Grid,
   RadioGroup,
-  Stack,
+  Flex,
   Text,
 } from "@chakra-ui/react";
 import { FieldArray, useField } from "formik";
@@ -32,7 +32,18 @@ const Relationship = memo(({ label, tabList = {}, ...props }) => {
         return (
           <>
              <Divider />
-    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
+    <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>
+
+    <Flex gap={"0.3rem"} alignItems={"center"}>
+          {label}{" "}
+          {meta.touched && meta.error && (
+            <Text color={"red"} fontSize={"xs"} fontWeight={"500"}>
+              {meta.error}
+            </Text>
+          )}
+        </Flex>
+
+    </FormLabel>
             <RadioGroup
               w={"100%"}
               p={"0.5rem"}
@@ -61,11 +72,7 @@ const Relationship = memo(({ label, tabList = {}, ...props }) => {
           </>
         )}}
       />
-      {meta.touched && meta.error && (
-              <Text color={"red"} fontSize={"xs"}>
-                {meta.error}
-              </Text>
-            )}
+      
     </Box>
   );
 });

@@ -18,7 +18,6 @@ export const useFetch = (toast = false) => {
     try {
       // Verificar que tenga la query del endpoint
       if (query) {
-
         // Determinar si se usara json o form data
 
         //JSON
@@ -30,11 +29,10 @@ export const useFetch = (toast = false) => {
 
           //Form data
         } else if (query.type === "formData") {
-          
           const formData = new FormData();
           const values = Object?.entries(query.variables);
 
-          console.log(values)
+          console.log(values);
           // Generar el map del Form Data para las imagenes
           const map = values?.reduce((acc, item) => {
             if (item[1] instanceof File) {
@@ -48,16 +46,16 @@ export const useFetch = (toast = false) => {
                 if (el[1] instanceof Object) {
                   Object.entries(el[1]).forEach((elemento) => {
                     if (elemento[1] instanceof File) {
-                      acc[elemento[0]] = [`variables.${item[0]}.${el[0]}.${elemento[0]}`];
+                      acc[elemento[0]] = [
+                        `variables.${item[0]}.${el[0]}.${elemento[0]}`,
+                      ];
                     }
-                  })
+                  });
                 }
               });
             }
             return acc;
           }, {});
-
-
 
           // Agregar filas al FORM DATA
 
@@ -83,11 +81,14 @@ export const useFetch = (toast = false) => {
             }
           });
 
-          const data = await api.GraphQL(formData, {
+          const { data } = await api.GraphQL(formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
+          if (data.errors) {
+            throw new Error(JSON.stringify(data.errors));
+          }
         }
         toast &&
           Toast({
@@ -97,7 +98,7 @@ export const useFetch = (toast = false) => {
           });
       }
     } catch (error) {
-      setIsError({ status: true, error });
+      setIsError(true);
       toast &&
         Toast({
           status: "error",
@@ -105,9 +106,9 @@ export const useFetch = (toast = false) => {
           description: JSON.stringify(error),
           isClosable: true,
         });
-      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [query]);
 
   useEffect(() => {

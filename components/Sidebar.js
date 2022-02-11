@@ -13,7 +13,7 @@ import { useState } from "react";
 import { BodyStaticAPP } from "utils/schemas";
 
 export const Sidebar = ({ state }) => {
-  const [isActive, setActive] = useState("business")
+  const [isActive, setActive] = useState("")
 
   return (
     <Flex
@@ -72,17 +72,7 @@ export const Sidebar = ({ state }) => {
           </Box>
         ))}
       </Flex>
-      <Box
-        pos={"absolute"}
-        bottom={"3"}
-        mx={"auto"}
-        insetX={"0"}
-        w={"fit-content"}
-        color={"white"}
-        fontSize={"10px"}
-      >
-        Derechos Reservados © {(() => new Date().getFullYear())()}
-      </Box>
+      
     </Flex>
   );
 };

@@ -5,148 +5,145 @@ export const BodyStaticAPP = [
   {
     title: "Empresas",
     children: [
-      {
-        title: "Empresas",
-        route: "business",
-        getData: FetchGraphQL.business.getBusinessAll,
-        getByID: FetchGraphQL.business.getBusinessByID,
-        createEntry: FetchGraphQL.catBusiness.createCategoryBusiness, //pendiente por cambiar
-        updateEntry: {}, //pendiente
-        deleteEntry: FetchGraphQL.catBusiness.deleteCategoryBusiness, //pendiente por cambiar
-        visibleColumns: ["_id", "businessName", "slug", "createdAt"],
-        schema: [
-          {
-            Header: "Nombre de empresa",
-            accessor: "businessName",
-            type: "string",
-            required: true,
-          },
-          {
-            Header: "Slug",
-            accessor: "slug",
-            type: "string",
-            required: true,
-          },
-          {
-            Header: "Pagina web",
-            accessor: "webPage",
-            type: "url",
-            required: true,
-          },
-          {
-            Header: "Imagen Miniatura",
-            accessor: "imgMiniatura",
-            type: "image",
-            required: true,
-          },
-          {
-            Header: "Contenido",
-            accessor: "content",
-            type: "ckeditor",
-            required: true,
-          },
-          {
-            Header: "ID",
-            accessor: "_id",
-          },
-          {
-            Header: "Usuario UID",
-            accessor: "userUid",
-          },
-          {
-            Header: "Elegir categorias",
-            accessor: "subCategories",
-            type: "questions",
-          },
-          {
-            Header: "Nombre de contacto",
-            accessor: "contactName",
-            type: "string",
-            required: true,
-          },
-          {
-            Header: "Email de contacto",
-            accessor: "contactEmail",
-            type: "email",
-            required: true,
-          },
-          {
-            Header: "Telefono fijo",
-            accessor: "landline",
-            type: "string",
-            required: true,
-          },
-          {
-            Header: "Telefono movil",
-            accessor: "mobilePhone",
-            type: "string",
-            required: true,
-          },
-          {
-            Header: "Whatsapp",
-            accessor: "whatsapp",
-            type: "string",
-          },
-          {
-            Header: "Twitter",
-            accessor: "twitter",
-            type: "string",
-          },
-          {
-            Header: "Facebook",
-            accessor: "facebook",
-            type: "string",
-          },
-          {
-            Header: "Linkedin",
-            accessor: "linkedin",
-            type: "string",
-          },
-          {
-            Header: "Youtube",
-            accessor: "youtube",
-            type: "string",
-          },
-          {
-            Header: "Instagram",
-            accessor: "instagram",
-            type: "string",
-          },
-          {
-            Header: "País",
-            accessor: "country",
-            type: "country",
-          },
-          {
-            Header: "Ciudad",
-            accessor: "city",
-            type: "string",
-          },
-          {
-            Header: "Codigo Postal",
-            accessor: "zip",
-            type: "number",
-          },
-          {
-            Header: "Direccion",
-            accessor: "address",
-            type: "string",
-          },
-          {
-            Header: "Fase",
-            accessor: "fase",
-          },
-          {
-            Header: "Creado el",
-            accessor: "createdAt",
-            Cell: (props) => formatTime(props.value, "es"),
-          },
-          {
-            Header: "Actualizado el",
-            accessor: "updatedAt",
-          },
-        ],
-      },
+       {
+         title: "Empresas",
+         route: "business",
+         getData: FetchGraphQL.business.getBusinessAll,
+         getByID: FetchGraphQL.business.getOneBusiness,
+         createEntry: FetchGraphQL.business.createBusiness, 
+         updateEntry: FetchGraphQL.business.createBusiness, 
+         deleteEntry: FetchGraphQL.business.deleteBusiness, 
+         visibleColumns: ["_id", "businessName", "slug", "createdAt"],
+         schema: [
+           {
+             Header: "Nombre de empresa",
+             accessor: "businessName",
+             type: "string",
+             required: true,
+           },
+           {
+             Header: "Slug",
+             accessor: "slug",
+             type: "string",
+             
+           },
+           {
+             Header: "Pagina web",
+             accessor: "webPage",
+             type: "url",
+           },
+           {
+             Header: "Imagen Miniatura",
+             accessor: "imgMiniatura",
+             type: "image",
+           },
+           {
+             Header: "Contenido",
+             accessor: "content",
+             type: "ckeditor",
+           },
+           {
+             Header: "ID",
+             accessor: "_id",
+           },
+           {
+             Header: "Usuario UID",
+             accessor: "userUid",
+           },
+           {
+             Header: "Elegir categorias",
+             accessor: "subCategories",
+             type: "questions",
+           },
+           {
+             Header: "Nombre de contacto",
+             accessor: "contactName",
+             type: "string",
+           },
+           {
+             Header: "Email de contacto",
+             accessor: "contactEmail",
+             type: "email",
+           },
+           {
+             Header: "Telefono fijo",
+             accessor: "landline",
+             type: "string",
+           },
+           {
+             Header: "Telefono movil",
+             accessor: "mobilePhone",
+             type: "string",
+           },
+           {
+             Header: "Whatsapp",
+             accessor: "whatsapp",
+             type: "string",
+           },
+           {
+             Header: "Twitter",
+             accessor: "twitter",
+             type: "url",
+           },
+           {
+             Header: "Facebook",
+             accessor: "facebook",
+             type: "url",
+           },
+           {
+             Header: "Linkedin",
+             accessor: "linkedin",
+             type: "url",
+           },
+           {
+             Header: "Youtube",
+             accessor: "youtube",
+             type: "url",
+           },
+           {
+             Header: "Instagram",
+             accessor: "instagram",
+             type: "url",
+           },
+           {
+             Header: "País",
+             accessor: "country",
+             type: "country",
+           },
+           {
+             Header: "Ciudad",
+             accessor: "city",
+             type: "string",
+           },
+           {
+             Header: "Codigo Postal",
+             accessor: "zip",
+             type: "number",
+           },
+           {
+             Header: "Direccion",
+             accessor: "address",
+             type: "string",
+           },
+           {
+             Header: "Fase",
+             accessor: "fase",
+           },
+           {
+             Header: "Creado el",
+             accessor: "createdAt",
+             Cell: (props) => formatTime(props.value, "es"),
+           },
+           {
+             Header: "Actualizado el",
+             accessor: "updatedAt",
+           },
+           {
+             Header: "Estatus",
+             accessor: "status",
+           },
+         ],
+       },
       {
         title: "Categorias",
         route: "categoryBusiness",

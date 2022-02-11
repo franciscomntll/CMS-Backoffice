@@ -6,12 +6,8 @@ const CKEditor = dynamic(
 
 import Editor from '@ckeditor/ckeditor5-build-classic'
 
-// const Editor = dynamic(
-//   () => import("@ckeditor/ckeditor5-build-classic"),
-//   { ssr: false }
-// );
 
-import { Divider, FormLabel } from "@chakra-ui/react";
+import { Divider, Flex, FormLabel, Text } from "@chakra-ui/react";
 import { useField } from "formik";
 import { UploadAdapter } from "utils/UploadAdapter";
 import { useCallback } from "react";
@@ -71,7 +67,16 @@ export const CKEditorComponent = ({ label, ...props }) => {
       {typeof window !== "undefined" && (
         <>
         <Divider />
-        <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
+        <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>
+        <Flex gap={"0.3rem"} alignItems={"center"}>
+          {label}
+          {meta.touched && meta.error && (
+            <Text color={"red"} fontSize={"xs"} fontWeight={"500"}>
+              {meta.error}
+            </Text>
+          )}
+        </Flex>
+          </FormLabel>
           <CKEditor
             editor={Editor}
             config={editorConfiguration}

@@ -9,7 +9,7 @@ export const InputNumberField = ({label, ...props}) => {
     <Box>
       <Divider />
     <FormLabel paddingTop={"1rem"} fontWeight={"900"} textAlign={"left"} fontSize={"sm"}>{label}</FormLabel>
-    <NumberInput variant={"filled"}  {...field} {...props} onChange={(e) => helpers.setValue(parse(e))} value={field.value}  >
+    <NumberInput variant={"filled"}  {...field} {...props} onChange={(e) => helpers.setValue(parse(e))} value={field.value ?? undefined}  >
       <NumberInputField fontSize={"sm"} />
       <NumberInputStepper>
         <NumberIncrementStepper />

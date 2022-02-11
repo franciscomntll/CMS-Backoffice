@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Checkbox,
   Divider,
@@ -6,28 +7,37 @@ import {
   FormLabel,
   Grid,
   GridItem,
-  Heading,
+  SimpleGrid,
   Input,
+  List,
+  ListItem,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { LoadingComponent } from "components/LoadingComponent";
 import { FieldArray, useField } from "formik";
 import { useFetch } from "hooks/useFetch";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FetchGraphQL } from "utils/Fetching";
+import {useFormikContext} from 'formik'
+import {InputField} from 'components/formularios/Inputs/InputField'
 
-const queryResults = `query ($id: [ID]){
-    getQuestionsAndCharacteristics(_id: $id,){
-      characteristics{
-        _id
-        title
-      }
-      questions{
+const queryResults = `query ($id: [inputObjectID]){
+  getQuestionsAndCharacteristics(_id: $id,){
+    characteristics{
+      _id
+      title
+      items{
         _id
         title
       }
     }
-  }`;
+    questions{
+      _id
+      title
+    }
+  }
+}`;
 
 const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
   const [field, meta, helpers] = useField(props);
@@ -47,30 +57,26 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
     });
   }, []);
 
+  const compareSelected = (selection = [], options = []) => {
+    const r = selection?.filter(select => select === options._id)
+    return r
+  }
+
+ 
+
   // Cada vez que cambie la seleccion de categorias solicitar preguntas y caracteristicas
   useEffect(() => {
-    setQueryResults({
-      query: queryResults,
-      variables: { id: field.value },
-      type: "json",
-    });
-  }, [field.value]);
-
-  useEffect(() => {
-    if (!isLoadingResults && !isErrorResults) {
-      const idsQuestions = results?.questions?.map((item) => item._id);
-      const questionsAndAnswers = [];
-      // const filter = values?.questionsAndAnswers?.filter((item) => {
-      //   return idsQuestions?.includes(item?.frequentQuestions);
-      // });
-      for (const key in values.questionsAndAnswers2) {
-        if (idsQuestions?.includes(key)) {
-          questionsAndAnswers.push(values.questionsAndAnswers2[key]);
-        }
-      }
-      setValues({ ...values, questionsAndAnswers });
+    if (field?.value?.length >= 0 && ["object", "undefined"].includes(typeof field.value[0])) {
+      setQueryResults({
+        query: queryResults,
+        variables: { id: field.value },
+        type: "json",
+      });
     }
-  }, [results, isLoadingResults, isErrorResults, values.questionsAndAnswers2]);
+  }, [field.value]);
+  
+
+ 
 
   return (
     <Box w={"100%"}>
@@ -81,7 +87,14 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
             <Box>
               <Divider />
               <FormLabel py={"1.5rem"} fontWeight={"900"} textAlign={"left"}>
-                {label}
+                <Flex gap={"0.3rem"} alignItems={"center"}>
+                  {label}
+                  {meta.touched && meta.error && (
+                    <Text color={"red"} fontSize={"xs"} fontWeight={"500"}>
+                      {meta.error}
+                    </Text>
+                  )}
+                </Flex>
               </FormLabel>
 
               <Grid templateColumns={"repeat(3, 1fr)"} gap={"1rem"}>
@@ -94,20 +107,18 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
                         <Checkbox
                           key={item?._id}
                           size={"sm"}
-                          variant={""}
-                          isChecked={form?.values[props?.name]?.includes(
-                            item._id
-                          )}
+                          isChecked={values[props?.name]?.filter((el) => el._id === item._id)?.length > 0}
                           textTransform={"capitalize"}
                           onChange={(e) => {
                             const idx =
                               form?.values[props?.name]?.length > 0 &&
                               form.values[props.name].findIndex(
-                                (el) => el === item._id
+                                (el) => el._id === item._id
                               );
                             e.currentTarget.checked
-                              ? push(item._id)
+                              ? push({_id : item._id})
                               : remove(idx);
+                           
                           }}
                         >
                           {item?.title}
@@ -119,18 +130,14 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
           );
         }}
       />
-      {meta.touched && meta.error && (
-        <Text color={"red"} fontSize={"xs"}>
-          {meta.error}
-        </Text>
-      )}
+
       <Flex w={"100%"} flexDir={"column"} py={"1.5rem"}>
         <Divider />
         <FormLabel py={"1.5rem"} fontWeight={"900"} textAlign={"left"}>
           Preguntas frecuentes
         </FormLabel>
         {!isLoadingResults && !isErrorResults ? (
-          <QuestionsComponent data={results?.questions} />
+          <QuestionsComponent data={results?.questions} setValues={setValues} values={values}/>
         ) : (
           <LoadingComponent />
         )}
@@ -141,7 +148,10 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
           Caracteristicas
         </FormLabel>
         {!isLoadingResults && !isErrorResults ? (
-          <CharactesticsComponent name={"characteristics"} data={results?.characteristics} />
+          <CharactesticsComponent
+            name={"characteristics"}
+            data={results?.characteristics}
+          />
         ) : (
           <LoadingComponent />
         )}
@@ -153,14 +163,39 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
 export default QuestionInputsForBusiness;
 
 const QuestionsComponent = ({ data = [] }) => {
-  useEffect(() => {}, [data]);
+  
+  const {values, setFieldValue} = useFormikContext()
+
+  useEffect(() => {
+    if(values.questionsAndAnswers){
+      const mapResult = values.questionsAndAnswers.reduce((acc,item ) => {
+        acc[item.questions._id] = item.answers
+        return acc
+      }, {})
+      setFieldValue("questionsAndAnswers2", mapResult)
+    }
+  }, []) 
+
+  
+  useEffect(() => {
+    if (values.questionsAndAnswers2) {
+      const arrCharac = Object?.entries(values?.questionsAndAnswers2 ?? {});
+      const reduce = arrCharac?.reduce((acc, item) => {
+          acc.push({ questions: {_id : item[0]}, answers: item[1] });
+        return acc;
+      }, []);
+      console.log("reduce", reduce)
+      values && setFieldValue("questionsAndAnswers", reduce);
+    }
+  }, [values.questionsAndAnswers2]);
+
 
   return (
     <>
       {data.length > 0 ? (
         <>
-          {data?.map((item, idx) => (
-            <InputQuestions
+          {data?.map((item) => (
+            <InputField
               key={item._id}
               label={item.title}
               name={`questionsAndAnswers2.${item._id}`}
@@ -175,91 +210,120 @@ const QuestionsComponent = ({ data = [] }) => {
           color={"gray.400"}
           py={"4rem"}
         >
-         Debes seleccionar una categoria que contenga items
+          Debes seleccionar una categoria que contenga items
         </Text>
       )}
     </>
   );
 };
 
-const InputQuestions = ({ label, question, ...props }) => {
-  const [field, meta, { setValue }] = useField(props);
+const CharactesticsComponent = ({ data = [] }) => {
+ 
+  const {values, setFieldValue} = useFormikContext()
+
+  useEffect(() => {
+    if(values.characteristics){
+      const mapResult = values.characteristics.reduce((acc,item ) => {
+        if(item.characteristic._id){
+          acc[item.characteristic._id] = item.items.map((character) => character.title)
+        }
+        return acc
+      }, {})
+      setFieldValue("characteristics2", mapResult)
+    }
+  }, []) 
+
+  useEffect(() => {
+    if (values.characteristics2) {
+      const arrCharac = Object?.entries(values?.characteristics2 ?? {});
+      const reduce = arrCharac?.reduce((acc, item) => {
+        if (item[1]?.length > 0) {
+          acc.push({ characteristic: {_id : item[0]}, items: item[1]?.map((item) => ({title: item})) });
+        }
+        return acc;
+      }, []);
+      values && setFieldValue("characteristics", reduce);
+    }
+  }, [values.characteristics2]);
 
   return (
-    <Box>
-      <FormLabel fontSize={"sm"}>{label}</FormLabel>
-      <Input
-        variant={"filled"}
-        fontSize={"sm"}
-        {...field}
-        {...props}
-        value={field?.value?.answers}
-        onChange={(e) =>
-          setValue({ frequentQuestions: question, answers: e.target.value })
-        }
-      />
-      {meta.touched && meta.error && (
-        <Text color={"red"} fontSize={"xs"}>
-          {meta.error}
-        </Text>
-      )}
-    </Box>
+    <Grid templateColumns={"repeat(3, 1fr)"} gap={"2rem"}>
+            {data?.length > 0 ? (
+              <>
+                {data
+                  ?.filter((item) => item && item)
+                  ?.map((item) => {
+                    return (
+                      <GridItem colSpan={[3]}>
+                      <FieldArrayWithProps
+                      key={item?._id}
+                      data={item?.items}
+                      label={item?.title}
+                      name={`characteristics2.${item?._id}`}
+                      values={values?.characteristics2 && values?.characteristics2[item._id]}
+                      />
+                    </GridItem>
+                    );
+                  })}
+              </>
+            ) : (
+              <GridItem colSpan={[3]}>
+                <Text
+                  fontSize={"sm"}
+                  textAlign={"center"}
+                  color={"gray.400"}
+                  w={"100%"}
+                  py={"4rem"}
+                >
+                  Debes seleccionar una categoria que contenga items
+                </Text>
+              </GridItem>
+            )}
+          </Grid>
   );
 };
 
-const CharactesticsComponent = ({data = [], ...props}) => {
+const FieldArrayWithProps= ({
+  data,
+  label,
+  name,
+  values
+}) => {
+  const [dataArray, setDataArray] = useState(data ?? []);
+
+  useEffect(() => {
+    setDataArray(data);
+  }, [data]);
+
+  const handleRemove = (values, id ) => {
+    return values.findIndex((item) => item === id);
+  };
+
   return (
-    <FieldArray
-        name={"characteristics"}
-        render={({ push, remove, form }) => {
-          return (
-              <Grid templateColumns={"repeat(3, 1fr)"} gap={"1rem"}>
-                {data?.length > 0 ? (
-                  <>
-                  {data
-                    ?.filter((item) => item && item)
-                    ?.map((item) => {
-                      return (
-                        <Checkbox
-                          key={item?._id}
-                          size={"sm"}
-                          variant={""}
-                          isChecked={form?.values[props?.name]?.includes(
-                            item._id
-                          )}
-                          textTransform={"capitalize"}
-                          onChange={(e) => {
-                            const idx =
-                              form?.values[props?.name]?.length > 0 &&
-                              form.values[props.name].findIndex(
-                                (el) => el === item._id
-                              );
-                            e.currentTarget.checked
-                              ? push(item._id)
-                              : remove(idx);
-                          }}
-                        >
-                          {item?.title}
-                        </Checkbox>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <GridItem colSpan={[3]}>
-                  <Text
-          fontSize={"sm"}
-          textAlign={"center"}
-          color={"gray.400"}
-          w={"100%"}
-          py={"4rem"}
-        >
-          Debes seleccionar una categoria que contenga items
-        </Text>
-        </GridItem>
-                )}
-              </Grid>
-          );
-        }}
-      />
-  )
+    <div className="w-full">
+      <h3 className="text-primary font-medium capitalize">{label}</h3>
+      <FieldArray name={name}>
+        {({ remove, push }) => (
+          <SimpleGrid columns={"3"} paddingBlock={"1rem"} gap={"1rem"} >
+            {dataArray?.map((item) => (
+              <Checkbox
+                key={item._id}
+                isChecked={values?.includes(item.title)}
+                name={item.title}
+                size={"sm"}
+                textTransform={"capitalize"}
+                onChange={(e) =>
+                  e.target.checked
+                    ? push(item.title)
+                    : remove(
+                        handleRemove(values, item.title)
+                      )
+                }
+              >{item.title}</Checkbox>
+            ))}
+          </SimpleGrid>
+        )}
+      </FieldArray>
+    </div>
+  );
 };

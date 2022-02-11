@@ -121,6 +121,16 @@ export const FormDinamical = forwardRef(
                               />
                             );
                             break;
+                          case "slug":
+                            return (
+                              <InputField
+                                key={idx}
+                                name={item.accessor}
+                                label={item.Header}
+                                disabled={true}
+                              />
+                            );
+                            break;
                           case "number":
                             return (
                               <InputNumberField

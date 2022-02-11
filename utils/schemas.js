@@ -24,7 +24,7 @@ export const BodyStaticAPP = [
            {
              Header: "Slug",
              accessor: "slug",
-             type: "string",
+             type: "slug",
              
            },
            {

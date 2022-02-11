@@ -10,6 +10,7 @@ import {
   Heading,
   Switch,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useCallback, useRef } from "react";
 import { useFetch } from "../hooks/useFetch";
@@ -18,14 +19,13 @@ import { FindOption } from "components/Datatable/Columns";
 import { LoadingComponent } from "components/LoadingComponent";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { formatTime } from "utils/formatTime";
+import { fetchApi } from "utils/Fetching";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
-  const [, loadingCreate, errorCreate, setQueryCreate] = useFetch(true);
-  const [, , , setQueryUpdate] = useFetch(true);
 
   const refButton = useRef();
-
+  const toast = useToast()
   const options = FindOption(slug);
 
   useEffect(() => {
@@ -47,28 +47,55 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   ];
 
   const fetchCreate = useCallback(
-    (values) => {
-      setQueryCreate({
-        ...options.createEntry,
-        variables: { ...values },
-        type: "formData",
-      });
-      !loadingCreate && !errorCreate && setAction({ type: "VIEW", payload: {} })
+    async (values) => {
+      try {
+        const data = await fetchApi(options?.createEntry?.query, {...values}, "formData")
+        if(data){
+          toast({
+            status: "success",
+            title: "Operacion exitosa",
+            isClosable: true,
+          });
+          setAction({ type: "VIEW", payload: {} })
+        }
+      } catch (error) {
+        toast({
+          status: "error",
+          title: "Error",
+          description: JSON.stringify(error),
+          isClosable: true,
+        });
+        console.log(error)
+      }
     },
     [slug]
   );
 
   const fetchUpdate = useCallback(
-    ({ _id, ...values }) => {
-      delete values.createdAt;
-      delete values.updatedAt;
+    async ({ _id, ...values }) => {
 
-      setQueryUpdate({
-        ...options.updateEntry,
-        variables: { id: _id, args: values },
-        type: "formData",
-      });
-      setAction({ type: "VIEW", payload: {} })
+      try {
+        delete values.createdAt;
+        delete values.updatedAt;
+        const data = await fetchApi(options?.updateEntry?.query, { id: _id, args: values }, "formData")
+        if(data){
+          toast({
+            status: "success",
+            title: "Operacion exitosa",
+            isClosable: true,
+          });
+          setAction({ type: "VIEW", payload: {} })
+        }
+      } catch (error) {
+        toast({
+          status: "error",
+          title: "Error",
+          description: JSON.stringify(error),
+          isClosable: true,
+        });
+        console.log(error)
+      }
+     
     },
     [slug]
   );

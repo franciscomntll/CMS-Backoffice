@@ -3,6 +3,8 @@
 //   categoryBusiness: ["_id", "title", "heading", "slug", "description", "imgMiniatura{ _id }", "imgBanner{ _id }", "icon{ _id }", "createdAt", "updatedAt", "subCategories{ _id }"]
 // }
 
+import { api } from "utils/api";
+
 // export const schemaQuery = (type) => {
 //   if(types[type]){
 //     const json = JSON.stringify(types[type])
@@ -10,6 +12,88 @@
 //     return replaced
 //   }
 // }
+
+export const fetchApi = async (
+  query = ``,
+  variables = {},
+  type = "json"
+) => {
+  if (query) {
+    // Determinar si se usara json o form data
+
+    //JSON
+    if (type === "json") {
+      const {
+        data: { data },
+      } = await api.GraphQL({query, variables});
+      return Object.values(data)[0]
+
+      //Form data
+    } else if (type === "formData") {
+      const formData = new FormData();
+      const values = Object?.entries(variables);
+      console.log(values)
+
+      // Generar el map del Form Data para las imagenes
+      const map = values?.reduce((acc, item) => {
+        if (item[1] instanceof File) {
+          acc[item[0]] = [`variables.${item[0]}`];
+        }
+        if (item[1] instanceof Object) {
+          Object.entries(item[1]).forEach((el) => {
+            if (el[1] instanceof File) {
+              acc[el[0]] = [`variables.${item[0]}.${el[0]}`];
+            }
+            if (el[1] instanceof Object) {
+              Object.entries(el[1]).forEach((elemento) => {
+                if (elemento[1] instanceof File) {
+                  acc[elemento[0]] = [
+                    `variables.${item[0]}.${el[0]}.${elemento[0]}`,
+                  ];
+                }
+              });
+            }
+          });
+        }
+        return acc;
+      }, {});
+
+      // Agregar filas al FORM DATA
+
+      formData.append("operations", JSON.stringify({query, variables}));
+      formData.append("map", JSON.stringify(map));
+      values.forEach((item) => {
+        if (item[1] instanceof File) {
+          formData.append(item[0], item[1]);
+        }
+        if (item[1] instanceof Object) {
+          Object.entries(item[1]).forEach((el) => {
+            if (el[1] instanceof File) {
+              formData.append(el[0], el[1]);
+            }
+            if (el[1] instanceof Object) {
+              Object.entries(el[1]).forEach((elemento) => {
+                if (elemento[1] instanceof File) {
+                  formData.append(elemento[0], elemento[1]);
+                }
+              });
+            }
+          });
+        }
+      });
+
+      const {
+        data: { data },
+      }  = await api.GraphQL(formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return Object.values(data)[0]
+    }
+    
+};
+}
 
 export const FetchGraphQL = {
   //ENDPOINTS DE EMPRESAS
@@ -139,6 +223,7 @@ export const FetchGraphQL = {
     // @CREATE Crear empresa
     createBusiness : {
       query : `mutation (
+        $_id : ID
         $slug: String
         $userUid: ID
         $tags : [String]
@@ -170,7 +255,7 @@ export const FetchGraphQL = {
         $imgLogo : Upload
         $status: Boolean
       ){
-        createBusinessCms(args: {
+        createBusinessCms(id: $_id, args: {
           slug: $slug
           userUid: $userUid
           tags : $tags

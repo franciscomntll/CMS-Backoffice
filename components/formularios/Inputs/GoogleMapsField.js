@@ -155,8 +155,9 @@ const Search = ({ panTo, center }) => {
               key={item.id}
               paddingBlock={"0.5rem"}
               fontSize={"sm"}
-              shadow={"md"}
+              
               cursor={"pointer"}
+              paddingInline={"1rem"}
               _hover={{ bg: "gray.100" }}
               onClick={() => setSelected(item.description)}
             >

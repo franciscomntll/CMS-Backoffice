@@ -4,15 +4,10 @@ import Image from "next/image";
 import { ImageIcon } from "components/icons";
 import { useEffect, useState } from "react";
 
-export const UploadImage = ({ label, ...props }) => {
+export const UploadImage = ({ label, typeFile = "all", ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [image, setImage] = useState(null)
 
-
-  useEffect(() => {
-    console.log("esteeeee",field)
-  }, [field.value]);
-  
 
   const handleChange = async (e) => {
     try {
@@ -32,6 +27,12 @@ export const UploadImage = ({ label, ...props }) => {
       console.log(error);
     }
   };
+
+  const typesFile = {
+    all : "image/*",
+    svg : "image/svg+xml"
+  }
+
   return (
     <Box>
        <Divider />
@@ -65,7 +66,7 @@ export const UploadImage = ({ label, ...props }) => {
         <Input
           type="file"
           display={"none"}
-          accept={"image/*"}
+          accept={typesFile[typeFile]}
           onChange={handleChange}
         />
       </FormLabel>

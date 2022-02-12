@@ -12,7 +12,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { FormDinamical } from "components/formularios/Form";
 import { FindOption } from "components/Datatable/Columns";
@@ -25,7 +25,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
 
   const refButton = useRef();
-  const toast = useToast()
+  const toast = useToast();
   const options = FindOption(slug);
 
   useEffect(() => {
@@ -49,14 +49,18 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const fetchCreate = useCallback(
     async (values) => {
       try {
-        const data = await fetchApi(options?.createEntry?.query, {...values}, "formData")
-        if(data){
+        const data = await fetchApi(
+          options?.createEntry?.query,
+          { ...values },
+          "formData"
+        );
+        if (data) {
           toast({
             status: "success",
             title: "Operacion exitosa",
             isClosable: true,
           });
-          setAction({ type: "VIEW", payload: {} })
+          setAction({ type: "VIEW", payload: {} });
         }
       } catch (error) {
         toast({
@@ -65,31 +69,39 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
           description: JSON.stringify(error),
           isClosable: true,
         });
-        console.log(error)
+        console.log(error);
       }
     },
     [slug]
   );
 
   const fetchUpdate = useCallback(
-    async ({ _id, characteristics2, questionsAndAnswers2, categories, ...values }) => {
-
+    async ({
+      _id,
+      characteristics2,
+      questionsAndAnswers2,
+      categories,
+      ...values
+    }) => {
       try {
         delete values.createdAt;
         delete values.updatedAt;
-        const data = await fetchApi(options?.updateEntry?.query, { id: _id, args: values }, "formData")
-        console.log(data)
-        if(data){
+        const data = await fetchApi(
+          options?.updateEntry?.query,
+          { id: _id, args: values },
+          "formData"
+        );
+        console.log(data);
+        if (data) {
           toast({
             status: "success",
             title: "Operacion exitosa",
             isClosable: true,
           });
-          setAction({ type: "VIEW", payload: {} })
+          setAction({ type: "VIEW", payload: {} });
         } else {
-            throw new Error("Error en la peticion")
+          throw new Error("Error en la peticion");
         }
-        
       } catch (error) {
         toast({
           status: "error",
@@ -97,9 +109,8 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
           description: JSON.stringify(error),
           isClosable: true,
         });
-        console.log(error)
+        console.log(error);
       }
-     
     },
     [slug]
   );
@@ -182,20 +193,8 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 <Heading pb={"1rem"} fontSize={"sm"} color={"gray.500"}>
                   Información
                 </Heading>
-              
 
                 <Divider />
-                <Flex w={"100%"} pt={"1rem"} justifyContent={"center"} >
-                  <FormLabel display={"flex"} justifyContent={"center"} alignItems={"center"} gap={"0.5rem"} fontWeight={"900"} fontSize={"sm"} cursor={"pointer"}>
-                    ¿Publicar?
-                  <Switch isChecked={refButton?.current?.values?.status} onChange={() => {
-                    if(refButton.current){
-                      const valueStatus = refButton?.current?.values?.status
-                      refButton.current.setValues({...refButton.current.values, status : !valueStatus})
-                    }
-                  }} />
-                  </FormLabel>
-                </Flex>
                 {Information?.map((item, idx) => (
                   <Flex
                     key={idx}

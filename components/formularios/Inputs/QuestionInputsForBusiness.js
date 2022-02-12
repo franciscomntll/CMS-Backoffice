@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { FetchGraphQL } from "utils/Fetching";
 import {useFormikContext} from 'formik'
 import {InputField} from 'components/formularios/Inputs/InputField'
+import { memo } from "react";
 
 const queryResults = `query ($id: [inputObjectID]){
   getQuestionsAndCharacteristics(_id: $id,){
@@ -39,7 +40,7 @@ const queryResults = `query ($id: [inputObjectID]){
   }
 }`;
 
-const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
+const QuestionInputsForBusiness = memo(({ label, values, setValues, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   //Fetching de lista de subcategorias
@@ -158,7 +159,7 @@ const QuestionInputsForBusiness = ({ label, values, setValues, ...props }) => {
       </Flex>
     </Box>
   );
-};
+})
 
 export default QuestionInputsForBusiness;
 

@@ -21,13 +21,15 @@ import Relationship from "components/formularios/Inputs/Relationship";
 import { FieldArrayField } from "components/formularios/Inputs/FieldArrayField";
 import { MultipleImages } from "components/formularios/Inputs/MultipleImages";
 import QuestionInputsForBusiness from "components/formularios/Inputs/QuestionInputsForBusiness";
+import { SwitchField } from "components/formularios/Inputs/SwitchField";
+import GoogleMapsField from "components/formularios/Inputs/GoogleMapsField";
 
 export const FormDinamical = forwardRef(
   ({ schema: state, initialValues, columns, onSubmit }, ref) => {
     const [schema, setSchema] = useState(null);
 
     const reduceInitialValues = Object?.entries(initialValues ?? {}).reduce((acc, item) => {
-      if(item[1]){
+      if(item[1] !== null){ 
         //@ts-ignore
         acc[item[0]] = item[1]
       }
@@ -121,6 +123,15 @@ export const FormDinamical = forwardRef(
                               />
                             );
                             break;
+                          case "switch":
+                            return (
+                              <SwitchField
+                                key={idx}
+                                name={item.accessor}
+                                label={item.Header}
+                              />
+                            );
+                            break;
                           case "slug":
                             return (
                               <InputField
@@ -197,6 +208,7 @@ export const FormDinamical = forwardRef(
                                 key={idx}
                                 name={item.accessor}
                                 label={item.Header}
+                                typeFile={item.typeFile}
                               />
                             );
                             break;
@@ -236,6 +248,17 @@ export const FormDinamical = forwardRef(
                               </GridItem>
                             );
                             break;
+                          case "maps":
+                            return (
+                              <GridItem colSpan={[1, , , 3]}>
+                                <GoogleMapsField
+                                  key={idx}
+                                  name={item.accessor}
+                                  label={item.Header}
+                                />
+                              </GridItem>
+                            );
+                            break;
                           case "country":
                             return (
                               <CounstriesSelectField
@@ -269,3 +292,4 @@ export const FormDinamical = forwardRef(
     );
   }
 );
+

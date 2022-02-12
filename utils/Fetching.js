@@ -124,6 +124,10 @@ export const FetchGraphQL = {
           tags
           contactName
           contactEmail
+          coordinates {
+            lat
+            lng
+          }
           businessName
           webPage
           landline
@@ -140,6 +144,7 @@ export const FetchGraphQL = {
           address
           description
           content
+          status
           subCategories{
             _id
           }
@@ -291,13 +296,9 @@ export const FetchGraphQL = {
 
     // @UPDATE Actualizar empresa
     updateBusiness : {
-      query : `mutation (
-        $id : ID
-        $args : inputBusinessCms
-      ){
-        createBusinessCms(id: $id, args: $args ){
-          _id
-           
+      query : `mutation ($id :ID, $args: inputBusiness) {
+        updateBusinessCms(_id: $id, args: $args){
+           _id
         }
       }`
     },

@@ -1,9 +1,10 @@
 import { Box, Text, FormLabel, Select, Image, Divider } from "@chakra-ui/react"
 import { useField } from "formik";
+import { memo } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { api } from 'utils/api'
 
-export const CounstriesSelectField = ({label, ...props}) => {
+export const CounstriesSelectField = memo(({label, ...props}) => {
 
     const [field, meta, helpers] = useField(props);
     const [data, setData] = useState([])
@@ -36,5 +37,5 @@ export const CounstriesSelectField = ({label, ...props}) => {
             {meta.touched && meta.error && <Text color={"red"} fontSize={"xs"}>{meta.error}</Text>}
         </Box>
     )
-}
+})
 

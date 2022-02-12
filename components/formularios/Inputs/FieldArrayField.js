@@ -13,9 +13,10 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { FieldArray, useField } from "formik";
+import { memo } from "react";
 import { useState } from "react";
 
-export const FieldArrayField = ({ label, schema, ...props }) => {
+export const FieldArrayField = memo(({ label, schema, ...props }) => {
   const [field, meta, helpers] = useField(props);
   const [value, setValue] = useState("");
 
@@ -108,4 +109,4 @@ export const FieldArrayField = ({ label, schema, ...props }) => {
       />
     </Box>
   );
-};
+})

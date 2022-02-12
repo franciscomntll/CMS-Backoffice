@@ -28,6 +28,11 @@ export const BodyStaticAPP = [
              
            },
            {
+            Header: "¿Publicar?",
+            accessor: "status",
+            type: "switch",
+          },
+           {
              Header: "Pagina web",
              accessor: "webPage",
              type: "url",
@@ -36,7 +41,18 @@ export const BodyStaticAPP = [
              Header: "Imagen Miniatura",
              accessor: "imgMiniatura",
              type: "image",
-           },
+            },
+           {
+             Header: "Logotipo",
+             accessor: "imgLogo",
+             type: "image",
+            },
+           {
+             Header: "Carrusel de imagenes",
+             accessor: "imgCarrusel",
+             type: "imageMultiple",
+            },
+            
            {
              Header: "Contenido",
              accessor: "content",
@@ -139,9 +155,11 @@ export const BodyStaticAPP = [
              accessor: "updatedAt",
            },
            {
-             Header: "Estatus",
-             accessor: "status",
+             Header: "Ubicacion exacta",
+             accessor: "coordinates",
+             type: "maps"
            },
+           
          ],
        },
       {
@@ -186,7 +204,7 @@ export const BodyStaticAPP = [
             Header: "Icono",
             accessor: "icon",
             type: "image",
-            required: true,
+            typeFile: "svg"
           },
           {
             Header: "Sub Categorias",
@@ -253,6 +271,7 @@ export const BodyStaticAPP = [
             Header: "Icono",
             accessor: "icon",
             type: "image",
+            typeFile: "svg"
           },
           {
             Header: "Descripcion",

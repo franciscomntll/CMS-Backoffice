@@ -122,12 +122,12 @@ export const BodyStaticAPP = [
              type: "url",
            },
            {
-             Header: "País",
+             Header: "País",//
              accessor: "country",
              type: "country",
            },
            {
-             Header: "Ciudad",
+             Header: "Ciudad",//
              accessor: "city",
              type: "string",
            },
@@ -137,7 +137,7 @@ export const BodyStaticAPP = [
              type: "number",
            },
            {
-             Header: "Direccion",
+             Header: "Direccion",//
              accessor: "address",
              type: "string",
            },
@@ -584,6 +584,226 @@ export const BodyStaticAPP = [
             Header: "ID",
             accessor: "_id",
           },
+        ],
+      },
+      {
+        title: "Condiciones Generales y Privacidad",
+        route: "CondicionesPrivacidad",
+        getData: "",
+        getByID: "",
+        createEntry : "",
+        deleteEntry : "",
+        updateEntry : "",
+        visibleColumns: ["_id", "title", "slug", "createdAt"],
+        schema: [
+          {
+            Header: "ID",
+            accessor: "_id",
+          },
+          {
+            Header: "Condiciones Generales y Privacidad",
+            accessor: "Condiciones Generales",
+            type: "ckeditor",
+
+          }
+        ]
+      },
+      {
+        title: "Condiciones Generales para Empresas",
+        route: "CondicionesEmpresas",
+        getData: "",
+        getByID: "",
+        createEntry : "",
+        deleteEntry : "",
+        updateEntry : "",
+        visibleColumns: ["_id", "title", "slug", "createdAt"],
+        schema: [
+          {
+            Header: "ID",
+            accessor: "_id",
+          },
+          {
+            Header: "Objeto",
+            accessor: "Objeto",
+            type: "ckeditor",
+          },
+          {
+            Header: "Cuentas",
+            accessor: "Cuentas",
+            type: "ckeditor",
+          },
+          {
+            Header: "Propiedad Intelectual",
+            accessor: "Propiedad Intelectual",
+            type: "ckeditor",
+          },
+          {
+            Header: "Opiniones",
+            accessor: "Opiniones",
+            type: "ckeditor",
+          },
+          {
+            Header: "Solicitudes de Información y leads",
+            accessor: "Solicitudes de Información",
+            type: "ckeditor",
+          },
+          {
+            Header: "Promociones y Descuentos",
+            accessor: "Promociones",
+            type: "ckeditor",
+          },
+          {
+            Header: "Privacidad",
+            accessor: "Privacidad",
+            type: "ckeditor",
+          },
+          {
+            Header: "Exoneración de Responsabilidad",
+            accessor: "Exoneración de Responsabilidad",
+            type: "ckeditor",
+          },
+          {
+            Header: "Ley Vigente y modificaciones",
+            accessor: "Ley Vigente",
+            type: "ckeditor",
+          },
+        ],
+      },
+      {
+        title: "Privacidad para Usuarios y Empresas",
+        route: "Privacidad",
+        getData: "",
+        getByID: "",
+        createEntry : "",
+        deleteEntry : "",
+        updateEntry : "",
+        visibleColumns: ["_id", "title", "slug", "createdAt"],
+        schema: [
+          {
+            Header: "ID",
+            accessor: "_id",
+          },
+          {
+            Header: "Entidad Responsable",
+            accessor: "Entidad",
+            type: "string",
+          },
+          {
+            Header: "Email",
+            accessor: "Email",
+            type: "email",
+          },
+          {
+            Header: "Direccion",
+            accessor: "address",
+            type: "string",
+          },
+          {
+            Header: "Tratamiento de Datos",
+            accessor: "Tratamiento de Datos",
+            type: "ckeditor",
+          },
+          {
+            Header: "Período de Almacenamiento de Datos",
+            accessor: "Periodo de Almacenamiento de Datos",
+            type: "ckeditor",
+          },
+          {
+            Header: "Cesión Limitada de Datos",
+            accessor: "Cesión Limitada de Datos",
+            type: "ckeditor",
+          },
+          {
+            Header: "Inicio de sesión a través de redes sociales",
+            accessor: "Inicio de sesión",
+            type: "ckeditor",
+          },
+          {
+            Header: "Contacto, solicitud de información, renovación, bloqueo o supresión",
+            accessor: "informacion, renovación, bloqueo o supresión",
+            type: "ckeditor",
+          },
+          {
+            Header: "Seguridad de datos",
+            accessor: "Seguridad de datos",
+            type: "ckeditor",
+          },
+          {
+            Header: "Sitios enlazados",
+            accessor: "Sitios enlazados",
+            type: "ckeditor",
+          },
+          {
+            Header: "Descargo de responsabilidad",
+            accessor: "Descargo de responsabilidad",
+            type: "ckeditor",
+          },
+          {
+            Header: "Modificaciones",
+            accessor: "Modificaciones",
+            type: "ckeditor",
+          },
+        ],
+      },
+      {
+        title: "Políticas de cookies",
+        route: "PoliticasCookis",
+        getData: "",
+        getByID: "",
+        createEntry : "",
+        deleteEntry : "",
+        updateEntry : "",
+        visibleColumns: ["_id", "title", "slug", "createdAt"],
+        schema: [
+          {
+            Header: "ID",
+            accessor: "_id",
+          },
+          {
+            Header: "Utilizamos cookies",
+            accessor: "Utilizamos cookies",
+            type: "ckeditor",
+          },
+          {
+            Header: "Cookies",
+            accessor: "Cookies",
+            type: "ckeditor",
+          },
+          {
+            Header: "Cookies utilizados",
+            accessor: "Cookies utilizados",
+            type: "ckeditor",
+          },
+          {
+            Header: "Google Analytics",
+            accessor: "Google Analytics",
+            type: "ckeditor",
+          },
+          {
+            Header: "Google AdWords",
+            accessor: "Google AdWords",
+            type: "ckeditor",
+          },
+          {
+            Header: "Google DoubleClick",
+            accessor: "Google DoubleClick",
+            type: "ckeditor",
+          },
+          {
+            Header: "Optimizely",
+            accessor: "Optimizely",
+            type: "ckeditor",
+          },
+          {
+            Header: "Cookies de comentaristas",
+            accessor: "Cookies de comentaristas",
+            type: "ckeditor",
+          },
+          {
+            Header: "Plug-ins",
+            accessor: "Plug-ins",
+            type: "ckeditor",
+          },          
         ],
       },
     ]

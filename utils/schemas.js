@@ -584,9 +584,19 @@ export const BodyStaticAPP = [
             Header: "ID",
             accessor: "_id",
           },
+          {
+            Header: "Titulo",
+            accessor: "Title",
+            type: "string",
+          },
+          {
+            Header: "Descripción",
+            accessor: "Description",
+            type: "ckeditor",
+          },
         ],
       },
-      {
+     /*  {
         title: "Condiciones Generales y Privacidad",
         route: "CondicionesPrivacidad",
         getData: "",
@@ -805,7 +815,7 @@ export const BodyStaticAPP = [
             type: "ckeditor",
           },          
         ],
-      },
+      }, */
     ]
   },
   {

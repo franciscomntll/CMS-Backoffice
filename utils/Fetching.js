@@ -217,7 +217,7 @@ export const FetchGraphQL = {
             _id
             smallUrl
           }
-    }
+        }
       }`,
     },
 
@@ -931,7 +931,6 @@ export const FetchGraphQL = {
         }
       }`
     },
-
     //@UPDATE Actualizar subcategoria
     updateSubCategoryPost : {
       query : `mutation ($id: ID, $args :inputSubCategoryPost ){
@@ -940,10 +939,81 @@ export const FetchGraphQL = {
         }
       }`
     },
+
     deleteSubCategoryPost : {
       query : `mutation ($id:[ID]) {
         deleteSubCategoryPost(_id: $id)
       }`
     },
   },
+
+  //ENDPOINTS PARA CREAR PAGINAS DE POLITICAS
+  sections: {
+
+    getAllPage: {
+      query: `query{
+        getAllPage{
+          total
+          results{
+            _id
+            title
+            slug
+            content
+            status
+            authorUsername
+            createdAt
+            updatedAt
+          }
+        }
+      }`
+    },
+
+    getOnePage: {
+      query: `query($id:ID) {
+        getOnePage(_id:$id){
+          _id
+          title
+          slug
+          content
+          status
+          authorUsername
+          createdAt
+          updatedAt
+        }
+      }` 
+    },
+
+    createPage: {
+      query: `mutation ($title: String,  $content:String, $status:Boolean, $authorUsername:String){
+        createPage(args:{
+        title: $title,
+        content: $content,
+        status: $status,
+        authorUsername: $authorUsername,
+      }){
+         _id
+        }
+      }`
+    },
+
+    updatePage: {
+      queri: `mutation($_id:ID, $title: String, $content: String, $status: Boolean, $authorUsername: String,){
+        updatePage(_id:$_id ,args:{
+          title: $title,
+          content: $content,
+          status: $status,
+          authorUsername: $authorUsername,
+        })
+        {
+          _id
+        }
+      }` 
+    },
+
+    deletePage: {
+      query: `mutation ($id:[ID]){
+        deletePage(_id: $id)
+      }`
+    },
+  }
 };

@@ -590,8 +590,8 @@ export const BodyStaticAPP = [
             type: "string",
           },
           {
-            Header: "Autor",
-            accessor: "autor",
+            Header: "Slug",
+            accessor: "slug",
             type: "string",
           },
           {
@@ -600,8 +600,8 @@ export const BodyStaticAPP = [
             type: "switch",
           },
           {
-            Header: "Descripción",
-            accessor: "Description",
+            Header: "Contenido",
+            accessor: "content",
             type: "ckeditor",
           },
           
@@ -609,8 +609,4 @@ export const BodyStaticAPP = [
       },
     ]
   },
-  {
-    title: "Usuarios",
-    children: []
-  }
 ];

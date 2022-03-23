@@ -944,6 +944,7 @@ export const FetchGraphQL = {
           results{
             _id
             title
+            subTitle
             slug
             content
             status
@@ -960,6 +961,7 @@ export const FetchGraphQL = {
         getOnePage(_id:$id){
           _id
           title
+          subTitle
           slug
           content
           status
@@ -974,6 +976,7 @@ export const FetchGraphQL = {
       query: `mutation ($title: String,  $content:String, $status:Boolean, $authorUsername:String){
         createPage(args:{
         title: $title,
+        subTitle: $subTitle,
         content: $content,
         status: $status,
         authorUsername: $authorUsername,

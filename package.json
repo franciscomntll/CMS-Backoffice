@@ -15,6 +15,7 @@
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.4",
+    "@ckeditor/ckeditor5-basic-styles": "^33.0.0",
     "@ckeditor/ckeditor5-build-classic": "^31.1.0",
     "@ckeditor/ckeditor5-react": "^3.0.3",
     "@ckeditor/ckeditor5-upload": "^31.1.0",

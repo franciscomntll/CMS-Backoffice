@@ -1,17 +1,4 @@
-// const types = {
-//   business : ["_id", "userUid", "slug", "tags", "contactName", "contactEmail", "businessName", "webPage", "landline", "mobilePhone", "whatsapp", "twitter", "facebook", "linkedin", "youtube", "instagram", "country", "city", "zip", "address", "description", "content", "coordinates", "categories", "groupSubCategories", "subCategories", "questionsAndAnswers{frequentQuestions answers}", "photos{_id }", "imgMiniatura", "imgLogo", "fase", "status", "createdAt", "updatedAt"],
-//   categoryBusiness: ["_id", "title", "heading", "slug", "description", "imgMiniatura{ _id }", "imgBanner{ _id }", "icon{ _id }", "createdAt", "updatedAt", "subCategories{ _id }"]
-// }
-
 import { api } from "utils/api";
-
-// export const schemaQuery = (type) => {
-//   if(types[type]){
-//     const json = JSON.stringify(types[type])
-//     const replaced = json.replace(/("|\[|\])/g, "").replace(/,/g, " ")
-//     return replaced
-//   }
-// }
 
 export const fetchApi = async (
   query = ``,
@@ -125,8 +112,8 @@ export const FetchGraphQL = {
           contactName
           contactEmail
           coordinates {
-            lat
-            lng
+            type
+            coordinates
           }
           businessName
           webPage
@@ -246,7 +233,7 @@ export const FetchGraphQL = {
         $address : String
         $description : String
         $content : String
-        $coordinates : inputCoordinates
+        $coordinates : inputCoordinate
         $subCategories : [inputObjectID]
         $questionsAndAnswers : [inputQuestionsAndAnswers]
         $characteristics : [inputCharacteristicsCms]
@@ -997,13 +984,8 @@ export const FetchGraphQL = {
     },
 
     updatePage: {
-      queri: `mutation($_id:ID, $title: String, $content: String, $status: Boolean, $authorUsername: String,){
-        updatePage(_id:$_id ,args:{
-          title: $title,
-          content: $content,
-          status: $status,
-          authorUsername: $authorUsername,
-        })
+      query: `mutation($id: ID, $args: inputPage){
+        updatePage(_id:$id ,args:$args)
         {
           _id
         }

@@ -12,8 +12,6 @@ const mapContainerStyle = {
   height: "300px",
 };
 
-
-
 const options = {
   disableDefaultUI: true,
   zoomControl: true,
@@ -34,13 +32,16 @@ const GoogleMapsField = ({ label, ...props }) => {
   const [marker, setMarker] = useState(null);
 
   useEffect(() => {
-    field?.value?.lat && setCenter(field.value)
-  }, [])
+    field?.value && setCenter({
+      lng : field.value.coordinates[0],
+      lat: field.value.coordinates[1]
+    })
+  }, [field.value])
   
   const onMapClick = useCallback((event) => {
     setValue({
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
+      type: "Point",
+      coordinates: [event.latLng.lng(), event.latLng.lat()]
     });
   }, []);
 
@@ -52,7 +53,10 @@ const GoogleMapsField = ({ label, ...props }) => {
   const panTo = useCallback(({ lat, lng }) => {
     mapRef?.current?.panTo({ lat, lng });
     mapRef?.current?.setZoom(16);
-    setValue({ lat, lng });
+    setValue({
+      type: "Point",
+      coordinates:[lng, lat]
+    });
   }, []);
 
   return (
@@ -83,7 +87,7 @@ const GoogleMapsField = ({ label, ...props }) => {
                 onRightClick={onMapClick}
                 onLoad={onMapLoad}
               >
-                <Marker position={field.value} />
+                {field?.value?.coordinates?.length > 0 && <Marker position={center} />}
               </GoogleMap>
             </Box>
           </div>

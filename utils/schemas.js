@@ -590,6 +590,11 @@ export const BodyStaticAPP = [
             type: "string",
           },
           {
+            Header: "Subtitulo",
+            accessor: "subTitle",
+            type: "string",
+          },
+          {
             Header: "Slug",
             accessor: "slug",
             type: "string",

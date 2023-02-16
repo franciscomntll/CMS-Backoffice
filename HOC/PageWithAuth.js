@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import {LoadingLayout} from "components/LoadingLayout";
-import { AuthContextProvider } from "context/AuthContext";
+import {LoadingLayout} from "../components/LoadingLayout";
+import { AuthContextProvider } from "../context/AuthContext";
 export const PagesWithAuth = (WrappedComponent) => {
     
   return (props) => {

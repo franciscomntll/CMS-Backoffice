@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
-import { api } from "utils/api";
+import { api } from "../utils/api";
 
 //query : {query, variables, type}
 export const useFetch = (toast = false) => {

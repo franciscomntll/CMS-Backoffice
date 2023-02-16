@@ -1,28 +1,28 @@
 import { Button, Grid, GridItem } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import { InputField } from "components/formularios/Inputs/InputField";
-import { InputNumberField } from "components/formularios/Inputs/InputNumberField";
-import { TextareaField } from "components/formularios/Inputs/TextareaField";
-import { UploadImage } from "components/formularios/Inputs/UploadImage";
+import { InputField } from "../../components/formularios/Inputs/InputField";
+import { InputNumberField } from "../../components/formularios/Inputs/InputNumberField";
+import { TextareaField } from "../../components/formularios/Inputs/TextareaField";
+import { UploadImage } from "../../components/formularios/Inputs/UploadImage";
 import dynamic from "next/dynamic";
 const CKEditorComponent = dynamic(
   () =>
-    import("components/formularios/Inputs/CKEditor").then(
+    import("../../components/formularios/Inputs/CKEditor").then(
       (mod) => mod.CKEditorComponent
     ),
   { ssr: false }
 );
-import { PasswordInput } from "components/formularios/Inputs/PasswordInput";
+import { PasswordInput } from "../../components/formularios/Inputs/PasswordInput";
 import { forwardRef, useEffect, useState } from "react";
-import { URLInputField } from "components/formularios/Inputs/URLInputField";
-import { CounstriesSelectField } from "components/formularios/Inputs/CountriesSelectField";
+import { URLInputField } from "../../components/formularios/Inputs/URLInputField";
+import { CounstriesSelectField } from "../../components/formularios/Inputs/CountriesSelectField";
 import * as Yup from "yup";
-import Relationship from "components/formularios/Inputs/Relationship";
-import { FieldArrayField } from "components/formularios/Inputs/FieldArrayField";
-import { MultipleImages } from "components/formularios/Inputs/MultipleImages";
-import QuestionInputsForBusiness from "components/formularios/Inputs/QuestionInputsForBusiness";
-import { SwitchField } from "components/formularios/Inputs/SwitchField";
-import GoogleMapsField from "components/formularios/Inputs/GoogleMapsField";
+import Relationship from "../../components/formularios/Inputs/Relationship";
+import { FieldArrayField } from "../../components/formularios/Inputs/FieldArrayField";
+import { MultipleImages } from "../../components/formularios/Inputs/MultipleImages";
+import QuestionInputsForBusiness from "../../components/formularios/Inputs/QuestionInputsForBusiness";
+import { SwitchField } from "../../components/formularios/Inputs/SwitchField";
+import GoogleMapsField from "../../components/formularios/Inputs/GoogleMapsField";
 
 export const FormDinamical = forwardRef(
   ({ schema: state, initialValues, columns, onSubmit }, ref) => {

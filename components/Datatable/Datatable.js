@@ -26,14 +26,19 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  Link,
 } from "@chakra-ui/react";
-import { useTable, useSortBy, usePagination, useRowSelect, useFilters, useGlobalFilter } from "react-table";
-import {LoadingComponent} from "components/LoadingComponent";
-import {IndeterminateCheckbox} from "components/Datatable/IndeterminateCheckbox";
-import GlobalFilter from "components/Datatable/GlobalFilter";
-import { useMemo } from "react";
+import { useTable, useSortBy, usePagination, useRowSelect, useFilters, useGlobalFilter, } from "react-table";
+import { LoadingComponent } from "../../components/LoadingComponent";
+import { IndeterminateCheckbox } from "../../components/Datatable/IndeterminateCheckbox";
+import GlobalFilter from "../../components/Datatable/GlobalFilter";
+import { useMemo, useState,useEffect } from "react";
+import { ActionsCell } from "./ActionsCell";
 
-export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, ...props }) => {
+
+export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, setGloball, seteador, setSeteador, buscar, setBuscar, ...props }) => {
+  
+
   const filterTypes = useMemo(
     () => ({
       text: (rows, id, filterValue) => {
@@ -41,15 +46,15 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
           const rowValue = row.values[id]
           return rowValue !== undefined
             ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
+              .toLowerCase()
+              .startsWith(String(filterValue).toLowerCase())
             : true
         })
       },
     }),
     []
   )
-  
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -81,7 +86,7 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
       ...props,
     },
     useFilters,
-    useGlobalFilter ,
+    useGlobalFilter,
     useSortBy,
     usePagination,
     useRowSelect,
@@ -94,13 +99,13 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
           // to render a checkbox
           Header: ({ getToggleAllPageRowsSelectedProps, column, ...rest }) => {
             return (
-                <Tooltip label={"Seleccionar todos"}>
-              <div>
-                <IndeterminateCheckbox
-                  {...getToggleAllPageRowsSelectedProps()}
-                />
-              </div>
-                </Tooltip>
+              <Tooltip label={"Seleccionar todos"}>
+                <div>
+                  <IndeterminateCheckbox
+                    {...getToggleAllPageRowsSelectedProps()}
+                  />
+                </div>
+              </Tooltip>
             );
           },
           // The cell can use the individual row's getToggleRowSelectedProps method
@@ -115,14 +120,19 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
       ]);
     }
   );
+
+ /*  useEffect(()=>{
+    setGloball(globalFilter)
+  },[globalFilter])
+
+  useEffect(()=>{
+    setSeteador(setGlobalFilter)
+  },[setGlobalFilter]) */
+
   return (
     <>
-      <Flex justifyContent={"end"} gap={"1rem"} paddingBottom={"1rem"}>
-      <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
+      {/* <Flex justifyContent={"star"} gap={"1rem"} paddingBottom={"1rem"}>
+       
         {selectedFlatRows.length > 0 && (
           <Button
             w={"fit-content"}
@@ -139,7 +149,7 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
               display={"flex"}
               alignItems={"center"}
               gap={"0.5rem"}
-              w={"100%"}
+              w={"27rem"}
               fontSize={"sm"}
               justifyContent={"center"}
               fontWeight={"medium"}
@@ -150,11 +160,11 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
           </Button>
         )}
         <Menu>
-            <Tooltip label={"Editar columnas"}>
-          <MenuButton>
-            <IconButton icon={<SettingsIcon />} />
-          </MenuButton>
-            </Tooltip>
+          <Tooltip label={"Editar columnas"}>
+            <MenuButton>
+              <IconButton icon={<SettingsIcon />} />
+            </MenuButton>
+          </Tooltip>
           <MenuList
             h={"15rem"}
             overflow={"auto"}
@@ -184,11 +194,12 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
                   alignItems={"center"}
                   gap={"0.5rem"}
                   fontSize={"sm"}
+                  
                 >
                   <Checkbox
                     type={"checkbox"}
                     isChecked={column.getToggleHiddenProps().checked}
-                    {...column.getToggleHiddenProps()}
+                    {...column.getToggleHiddenProps()}                  
                   />
                   {typeof column.Header === "string"
                     ? column.Header
@@ -198,42 +209,120 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
             </Flex>
           </MenuList>
         </Menu>
-      </Flex>
+      </Flex> */}
+      <div className="my-2  mr-11 flex justify-end ">
+        
+        <GlobalFilter          
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
+        
+      </div>
+
 
       {!isLoading ? (
         <>
-          <Table {...getTableProps()} bg={"white"}>
-            <Thead overflow={"auto"}>
+          <Table {...getTableProps()} bg={"white"} >
+            <Thead overflow={"auto"}   >
               {headerGroups.map((headerGroup) => (
-                <Tr {...headerGroup.getHeaderGroupProps()}>
+
+                <Tr {...headerGroup.getHeaderGroupProps()}  >
+
                   {headerGroup.headers.map((column) => (
                     <Th
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
                       {column.render("Header")}
-                      <span>
+                      {/*  <span>
                         {column.isSorted
                           ? column.isSortedDesc
                             ? " 🔽"
                             : " 🔼"
                           : ""}
-                      </span>
+                      </span> */}
                     </Th>
                   ))}
+                  <Th display={"flex"} justifyContent={"center"} justifyItems={"center"}>
+                    <Menu>
+                      <Tooltip label={"Editar columnas"}>
+                        <MenuButton>
+                          <IconButton icon={<SettingsIcon />} />
+                        </MenuButton>
+                      </Tooltip>
+                      <MenuList
+                        h={"15rem"}
+                        overflow={"auto"}
+                        bg={"white"}
+                        p={"1rem"}
+                        rounded={"lg"}
+                        shadow={"md"}
+                      >
+                        <Flex flexDir={"column"}>
+                          <Heading as={"p"} fontSize={"sm"}>
+                            Campos mostrados
+                          </Heading>
+                          <Divider paddingBlock={"0.3rem"} />
+                          <FormLabel
+                            paddingTop={"0.5rem"}
+                            display={"flex"}
+                            alignItems={"center"}
+                            gap={"0.5rem"}
+                            fontSize={"sm"}
+                          >
+                            <IndeterminateCheckbox {...getToggleHideAllColumnsProps()} />
+                            Seleccionar todos
+                          </FormLabel>
+                          {allColumns.map((column) => (
+                            <FormLabel
+                              display={"flex"}
+                              alignItems={"center"}
+                              gap={"0.5rem"}
+                              fontSize={"sm"}
+
+                            >
+                              <Checkbox
+                                type={"checkbox"}
+                                isChecked={column.getToggleHiddenProps().checked}
+                                {...column.getToggleHiddenProps()}
+                              />
+                              {typeof column.Header === "string"
+                                ? column.Header
+                                : column.id}
+                            </FormLabel>
+                          ))}
+                        </Flex>
+                      </MenuList>
+                    </Menu>
+                  </Th>
+
                 </Tr>
+
               ))}
+
             </Thead>
+
             <Tbody {...getTableBodyProps()} overflow={"auto"}>
               {page.map((row, i) => {
                 prepareRow(row);
+
+
                 return (
-                  <Tr fontSize={"xs"} {...row.getRowProps()}>
+
+                  <Tr fontSize={"xs"} {...row.getRowProps()} _hover={{ bg: "gray.100" }} className={`${row.isSelected && "bg-gray-100"}`} /* onClick={() => setAction({ type: "VIEWW", payload: { _id: row.original._id } })}  */>
                     {row.cells.map((cell) => {
                       return (
-                        <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
+                        <Td {...cell.getCellProps()} paddingY="0.9rem" paddingInlineEnd={"1rem"} onClick={() => setAction({ type: "VIEWW", payload: { _id: row.original._id } })}> <Text noOfLines={1} > {cell.render("Cell")}</Text></Td>
                       );
                     })}
+                    <Td
+                      display={"flex"}
+                      justifyContent={"center"}
+                      justifyItems={"center"}
+                    >
+                      <ActionsCell id={row.original._id} handleRemoveItem={handleRemoveItem} />
+                    </Td>
                   </Tr>
+
                 );
               })}
             </Tbody>
@@ -241,8 +330,9 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
 
           <Flex
             justifyContent={"space-between"}
-            alignItems={"center"}
-            paddingBlock={"1rem"}
+            //alignItems={"center"}
+            //paddingBlock={"0.5rem"}
+            className="flex justify-center items-center my-1.5 px-4 "
           >
             <Flex alignItems={"center"} gap={"0.5rem"}>
               <Select
@@ -255,7 +345,7 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
                   setPageSize(Number(e.target.value));
                 }}
               >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
+                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
                     {pageSize}
                   </option>
@@ -306,7 +396,7 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
           </Flex>
         </>
       ) : (
-        <LoadingComponent/>
+        <LoadingComponent />
       )}
     </>
   );

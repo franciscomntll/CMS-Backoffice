@@ -14,13 +14,13 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { LoadingComponent } from "components/LoadingComponent";
+import { LoadingComponent } from "../../../components/LoadingComponent";
 import { FieldArray, useField } from "formik";
-import { useFetch } from "hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
 import { useEffect, useState } from "react";
-import { FetchGraphQL } from "utils/Fetching";
+import { FetchGraphQL } from "../../../utils/Fetching";
 import {useFormikContext} from 'formik'
-import {InputField} from 'components/formularios/Inputs/InputField'
+import {InputField} from '../../../components/formularios/Inputs/InputField'
 import { memo } from "react";
 
 const queryResults = `query ($id: [inputObjectID]){

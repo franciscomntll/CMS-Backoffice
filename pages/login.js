@@ -6,9 +6,9 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { AuthContextProvider } from "context/AuthContext";
+import { AuthContextProvider } from "../context/AuthContext";
 import { useRouter } from "next/router";
-import { FormDinamical } from "components/formularios/Form";
+import { FormDinamical } from "../components/formularios/Form";
 const Login = () => {
   
   return (

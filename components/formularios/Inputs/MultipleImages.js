@@ -12,7 +12,7 @@ import {
 import { useField } from "formik";
 import { memo, useEffect, useState } from "react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import { IDGenerator } from "utils/IDGenerator";
+import { IDGenerator } from "../../../utils/IDGenerator";
 
 export const MultipleImages = memo(({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
@@ -98,7 +98,7 @@ export const MultipleImages = memo(({ label, ...props }) => {
           />
         </FormLabel>
         {image?.map((item, idx) => {
-          if(item.image){
+          if(item?.image){
             return (
               <Square
                 key={idx}

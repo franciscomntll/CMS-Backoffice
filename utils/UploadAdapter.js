@@ -1,5 +1,5 @@
 import axios from "axios";
-import { api } from "utils/api";
+import { api } from "../utils/api";
 
 export class UploadAdapter {
   constructor(loader) {

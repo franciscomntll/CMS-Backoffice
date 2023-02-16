@@ -1,7 +1,7 @@
 import { Box, Divider, Flex, FormLabel, Input, Text } from "@chakra-ui/react";
 import { useField } from "formik";
 import Image from "next/image";
-import { ImageIcon } from "components/icons";
+import { ImageIcon } from "../../../components/icons";
 import { useEffect, useState } from "react";
 
 export const UploadImage = ({ label, typeFile = "all", ...props }) => {

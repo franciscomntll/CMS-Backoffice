@@ -9,7 +9,7 @@ import Editor from '@ckeditor/ckeditor5-build-classic'
 
 import { Divider, Flex, FormLabel, Text } from "@chakra-ui/react";
 import { useField } from "formik";
-import { UploadAdapter } from "utils/UploadAdapter";
+import { UploadAdapter } from "../../../utils/UploadAdapter";
 import { useCallback } from "react";
 
 export const CKEditorComponent = ({ label, ...props }) => {

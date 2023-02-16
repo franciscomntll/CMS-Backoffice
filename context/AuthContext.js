@@ -4,7 +4,7 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { auth } from "utils/firebase";
+import { auth } from "../utils/firebase";
 
 
 const initialContext = {

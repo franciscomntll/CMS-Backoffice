@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FieldArray, useField } from "formik";
-import { useFetch } from "hooks/useFetch";
+import { useFetch } from "../../../hooks/useFetch";
 import { useEffect, memo } from "react";
 
 const Relationship = memo(({ label, tabList = {}, ...props }) => {

@@ -14,19 +14,23 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useCallback, useRef, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
-import { FormDinamical } from "components/formularios/Form";
-import { FindOption } from "components/Datatable/Columns";
-import { LoadingComponent } from "components/LoadingComponent";
+import { FormDinamical } from "../components/formularios/Form";
+import { FindOption } from "../components/Datatable/Columns";
+import { LoadingComponent } from "../components/LoadingComponent";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { formatTime } from "utils/formatTime";
-import { fetchApi } from "utils/Fetching";
+import { formatTime } from "../utils/formatTime";
+import { fetchApi } from "../utils/Fetching";
+import { AuthContextProvider } from "../context/AuthContext";
 
 export const PanelEditAndCreate = ({ slug, setAction, state }) => {
-  const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
 
+  const [valuesEdit, loadingValues, errorValues, setQueryValues] = useFetch();
   const refButton = useRef();
   const toast = useToast();
   const options = FindOption(slug);
+  const {user} = AuthContextProvider();
+
+  console.log( "options",options)
 
   useEffect(() => {
     if (state.type === "edit") {
@@ -38,14 +42,16 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     }
   }, [state]);
 
+  /* componente que indica la actualizacion y por quien se creo la empresa o post */
   const Information = [
     {
       title: "Ultima Actualización",
       value: formatTime(valuesEdit?.updatedAt, "es"),
     },
-    { title: "Creado por", value: "Jhon Doe" },
+    { title: "Creado por", value: user.email },
   ];
 
+  /* Fetch para crear */
   const fetchCreate = useCallback(
     async (values) => {
       try {
@@ -75,6 +81,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     [slug]
   );
 
+  /* Fetch para actualizar */
   const fetchUpdate = useCallback(
     async ({
       _id,
@@ -124,7 +131,10 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
     <Flex flexDir={"column"} overflow={"auto"} maxH={"100%"} mb={"4rem"}>
       {!loadingValues && !errorValues ? (
         <>
-          <Flex justifyContent={"space-between"} paddingBottom={"2rem"}>
+          {/* Header del componente */}
+          <Flex justifyContent={"space-between"} paddingY={"2rem"} paddingX={"2rem"}>
+
+            {/* Titulo del componente */}
             <Box>
               <Heading fontSize={"3xl"} as={"h1"} textTransform={"capitalize"}>
                 {valuesEdit?.businessName ||
@@ -133,14 +143,18 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
               </Heading>
               <Text fontSize={"xs"}>Identificador: {valuesEdit?._id}</Text>
             </Box>
+
+            {/* Botones funcionales DESCARTAR O GUARDAR */}
             <Flex gap={"1rem"} alignItems={"center"}>
-              <Button
+              <utton
                 w={"fit-content"}
+                className=" bg-botonBack h-10 w-24 rounded-lg text-white flex justify-center items-center" 
                 onClick={() => setAction({ type: "VIEW", payload: {} })}
               >
                 Descartar
-              </Button>
-              <Button
+              </utton>
+
+              <button
                 w={"fit-content"}
                 bg={"blue.600"}
                 color={"white"}
@@ -148,6 +162,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 _hover={{
                   bg: "blue.700",
                 }}
+                className="bg-verde h-10 w-20 rounded-lg text-white"
                 onClick={async () => {
                   try {
                     await refButton.current.handleSubmit();
@@ -158,15 +173,17 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 }}
               >
                 Guardar
-              </Button>
+              </button>
             </Flex>
           </Flex>
 
+          {/* Cuerpo del componente Grilla */}
           <Grid
             templateColumns={["repeat(1, 1fr)", , , , "repeat(5, 1fr)"]}
-            gap={"2rem"}
+            gap={"1rem"}
             overflow={"auto"}
             h={"100%"}
+            paddingX={"1rem"}
           >
             <GridItem
               colSpan={["1", , , , "4"]}
@@ -183,6 +200,7 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
                 columns={["repeat(1, 1fr)", , , "repeat(3, 1fr)"]}
               />
             </GridItem>
+            
             <GridItem
               colSpan={"1"}
               display={"flex"}

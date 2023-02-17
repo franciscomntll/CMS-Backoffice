@@ -5,15 +5,15 @@ import { useFetch } from "../hooks/useFetch";
 import { useEffect, useMemo, useState } from "react";
 import { BodyStaticAPP } from "../utils/schemas";
 import { FiltrarIcon, SearchIcon, PermisosIcon, ArrowDownIcon, OptionIcon } from "../components/Icons/index"
+import GlobalFilter from "./Datatable/GlobalFilter";
 
 export const PanelViewTable = ({ slug, state, dispatch }) => {
   const [data, isLoading, isError, setQuery] = useFetch();
   const [dataRemove, isLoadingRemove, isErrorRemove, setQueryRemove] = useFetch(true);
   const [selected, setSelected] = useState(columnsDataTable({ slug }));
   const columns = useMemo(() => selected?.schema, [selected]);
-  const [global2, setGlobal2] = useState()
-  const [seteador, setSeteador] = useState()
-  //const [buscar, setBuscar] = useState("")
+  const [global, setGlobal] = useState()
+  const [seteador, setSeteador] = useState(() => () => { })
 
   useEffect(() => {
     setQuery({ ...selected.getData, type: "json" });
@@ -29,27 +29,22 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
       ...selected.deleteEntry,
       variables: { id: idSelected },
       type: "json",
-    });
-    //setQuery({ ...selected.getData, type: "json" });
+    });   
   };
 
   useEffect(() => {
-    //console.log("123",global)
-  }, [global])
-
-  useEffect(() => {
-    //console.log("456",seteador)
+    console.log(1001, seteador)
   }, [seteador])
 
   return (
     <>
-      <Flex /* justifyContent={"space-between"} */ alignItems={"center"} w={"100%"} >
+      <Flex  alignItems={"center"} w={"100%"} >
         <div className="w-full">
           <div className=" flex justify-between w-100%">
 
             <div>
               <Box>
-                <Heading fontSize={"2xl"} /* as={"h1"} */ textTransform={"capitalize"} className="mt-2">
+                <Heading fontSize={"2xl"} textTransform={"capitalize"} className="mt-2">
                   {(() => {
                     if (selected?.title === "Marcas") {
                       return (
@@ -95,31 +90,27 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
                   })()}
                   {/* {selected?.title} */}
                 </Heading>
-                {/* <Text fontSize={"sm"}>
-            {!isLoading && !isError && JSON.stringify(data?.total)} registros
-          </Text> */}
+
               </Box>
             </div>
 
             <div className="flex gap-2 w-auto mt-2 " >
 
-              {/* <div  className=" h-8 border-2 border-gray-200 rounded-md flex justify-center items-center px-2">
-                <SearchIcon />
-                <input
-                  value={buscar}
-                  onChange={(e) => setBuscar(e.target.value)}
-                  //variant={"filled"}
-                  className="ml-2 bg-transparent focus:outline-none text-sm "
-                
-                />
-              </div> */}
-             
 
-              <button className="h-8 w-auto gap-2 border-2 border-gray-200 rounded-md flex justify-center items-center px-2">
+              <div className=" h-8  rounded-md px-2 flex items-center  border-gray-200 border-2  ">
+                <SearchIcon />
+                <GlobalFilter
+                  globalFilter={global}
+                  setGlobalFilter={seteador}
+                />
+              </div>
+
+
+              {/* <button className="h-8 w-auto gap-2 border-2 border-gray-200 rounded-md flex justify-center items-center px-2">
                 <FiltrarIcon />
                 <Text className="text-sm">Juan Carlos</Text>
                 <ArrowDownIcon />
-              </button>
+              </button> */}
               <button className="h-8 w-auto border-2 border-gray-200 rounded-md flex justify-center items-center px-2">
                 <OptionIcon />
               </button>
@@ -131,7 +122,6 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
             <button
               w={"fit-content"}
               px={"0.5rem"}
-              //bg={"green.500"}
               color={"white"}
               fontWeight={"400"}
               _hover={"green.500"}
@@ -142,14 +132,11 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
             </button>
           </div>
         </div>
-      </Flex>
 
+      </Flex>
       <Flex w={"100%"} overflow={"hidden"}>
         <Box
           bg={"white"}
-          //pt={"1rem"}
-          //pb={"0.5rem"}
-          //shadow={"sm"}
           rounded={"xl"}
           overflow={"auto"}
           mb={"4rem"}
@@ -157,11 +144,6 @@ export const PanelViewTable = ({ slug, state, dispatch }) => {
 
         >
           <Datatable
-            //buscar={buscar}
-            //setBuscar={setBuscar}
-            //global={global}
-            setGloball={setGlobal2}
-            seteador={seteador}
             setSeteador={setSeteador}
             columns={columns}
             data={data?.results?.filter((item) => item && item) ?? []}

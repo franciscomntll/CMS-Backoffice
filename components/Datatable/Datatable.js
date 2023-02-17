@@ -32,12 +32,12 @@ import { useTable, useSortBy, usePagination, useRowSelect, useFilters, useGlobal
 import { LoadingComponent } from "../../components/LoadingComponent";
 import { IndeterminateCheckbox } from "../../components/Datatable/IndeterminateCheckbox";
 import GlobalFilter from "../../components/Datatable/GlobalFilter";
-import { useMemo, useState,useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ActionsCell } from "./ActionsCell";
 
 
-export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, setGloball, seteador, setSeteador, buscar, setBuscar, ...props }) => {
-  
+export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, setSeteador, buscar, setBuscar, ...props }) => {
+
 
   const filterTypes = useMemo(
     () => ({
@@ -121,13 +121,10 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
     }
   );
 
- /*  useEffect(()=>{
-    setGloball(globalFilter)
-  },[globalFilter])
 
-  useEffect(()=>{
-    setSeteador(setGlobalFilter)
-  },[setGlobalFilter]) */
+  useEffect(() => {
+    setSeteador(() => setGlobalFilter)
+  }, [setGlobalFilter])
 
   return (
     <>
@@ -210,14 +207,12 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
           </MenuList>
         </Menu>
       </Flex> */}
-      <div className="my-2  mr-11 flex justify-end ">
-        
-        <GlobalFilter          
+      {/* <div className="my-2  mr-11 flex justify-end ">
+        <GlobalFilter
           globalFilter={globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-        
-      </div>
+      </div> */}
 
 
       {!isLoading ? (
@@ -401,4 +396,3 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
     </>
   );
 };
-

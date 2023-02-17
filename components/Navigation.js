@@ -156,7 +156,7 @@ export const Hit = ({ hit }) => {
   console.log("hit", hit)
   return (
    /*  <Link passHref href={`/${hit.type}`}> */
-      <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center" >
+      <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center"  onClick={() => setAction({ type: "VIEWW", payload: { _id: hit.objectID } })}>
         <img
           alt={hit?.title}
           src={

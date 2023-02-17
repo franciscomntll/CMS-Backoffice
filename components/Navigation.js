@@ -31,15 +31,7 @@ export const Navigation = ({ set, state }) => {
           <IconButton onClick={() => set(!state)}>
             <HamburgerIcon w={"1.5rem"} h={"1.5rem"} color={"gray.500"} />
           </IconButton>
-          {/* <div className="relative w-full">
-            <div className="absolute bottom-2.5 left-2 ">
-              <SearchIcon />
-            </div>
-            <input className=" " />
-          </div> */}
           <SearchNavigation />
-
-          {/*  <GlobalFilter /> */}
         </div>
 
         <div className="flex justify-center items-center gap-2 ">
@@ -134,13 +126,13 @@ const MySearchBox = ({
 
   return (
     <>
-      <div className="flex gap-4 w-1/2">
-        <div className="absolute  top-6pxx left-23px ">
+      <div className="flex jistify-center  w-1/2  border-gray-200 border-2 rounded-md py-1 text-gray-600">
+        <div className="mt-0.5 ml-2">
           <SearchIcon />
         </div>
         <input
           autoFocus
-          className="w-full h-full focus:outline-none  border  focus:border-1  py-1.5 rounded-lg text-sm  border  focus:border-2  py-1. rounded-lg w-full focus:outline-none  text-gray-700 transition pl-10"
+          className="w-full h-full focus:outline-none text-sm pl-2"
           placeholder="Buscar "
           type="input"
           value={currentRefinement}
@@ -152,31 +144,31 @@ const MySearchBox = ({
 };
 
 export const Hit = ({ hit }) => {
-  
+
   console.log("hit", hit)
   return (
-   /*  <Link passHref href={`/${hit.type}`}> */
-      <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center"  onClick={() => setAction({ type: "VIEWW", payload: { _id: hit.objectID } })}>
-        <img
-          alt={hit?.title}
-          src={
-            hit?.image ? createURL(hit?.image ?? "") : "/placeholder/image.png"
-          }
-          className={"w-14 h-14 rounded-lg object-cover object-center"}
-        />
-        <div className="col-span-3">
-          <h3 className="text-xs md:text-sm font-semibold text-gray-500">
-            {hit?.title}
-          </h3>
-          <span
-            className={` text-xs   rounded  text-gray-500`}
-          >
-            {hit?.type}
-          </span>
-        </div>
-
+    /*  <Link passHref href={`/${hit.type}`}> */
+    <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center" onClick={() => setAction({ type: "VIEWW", payload: { _id: hit.objectID } })}>
+      <img
+        alt={hit?.title}
+        src={
+          hit?.image ? createURL(hit?.image ?? "") : "/placeholder/image.png"
+        }
+        className={"w-14 h-14 rounded-lg object-cover object-center"}
+      />
+      <div className="col-span-3">
+        <h3 className="text-xs md:text-sm font-semibold text-gray-500">
+          {hit?.title}
+        </h3>
+        <span
+          className={` text-xs   rounded  text-gray-500`}
+        >
+          {hit?.type}
+        </span>
       </div>
-  /*   </Link> */
+
+    </div>
+    /*   </Link> */
   );
 };
 

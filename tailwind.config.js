@@ -16,7 +16,7 @@ module.exports = {
             'botonBack':'#C2C2C2'
           },
           spacing:{
-            '80px':'57px',
+            '80px':'50px',
             '23px':'320px',
             '6pxx':'19px'
             

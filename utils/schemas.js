@@ -345,7 +345,7 @@ export const BodyStaticAPP = [
       {
         icon:<CampañasIcon/>,
         title: "Campañas",
-        route: "/",
+        route: "page404",
         getData: FetchGraphQL.questions.getAllQuestions,
         getByID: FetchGraphQL.questions.getOneQuestion,
         createEntry: FetchGraphQL.questions.createQuestions,
@@ -401,7 +401,7 @@ export const BodyStaticAPP = [
       {
         icon:<MetricasSociales className=""/>,
         title: "Metricas Sociales",
-        route: "metricas",        
+        route: "page404",        
       },
     ],
   },
@@ -667,7 +667,7 @@ export const BodyStaticAPP = [
       {
         icon:<PermisosIcon/>,
         title:"Permisos",
-        route:"/"
+        route:"page404"
       }
     ]
   }

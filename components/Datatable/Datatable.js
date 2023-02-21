@@ -34,11 +34,12 @@ import { IndeterminateCheckbox } from "../../components/Datatable/IndeterminateC
 import GlobalFilter from "../../components/Datatable/GlobalFilter";
 import { useMemo, useState, useEffect } from "react";
 import { ActionsCell } from "./ActionsCell";
+import { useRouter } from "next/router";
 
 
-export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, setSeteador, buscar, setBuscar, ...props }) => {
+export const Datatable = ({ isLoading, initialState, columns, data = [], handleRemoveItem, setAction, setSeteador, ...props }) => {
 
-
+  const {asPath} = useRouter()
   const filterTypes = useMemo(
     () => ({
       text: (rows, id, filterValue) => {
@@ -120,7 +121,6 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
       ]);
     }
   );
-
 
   useEffect(() => {
     setSeteador(() => setGlobalFilter)
@@ -219,12 +219,13 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
         <>
           <Table {...getTableProps()} bg={"white"} >
             <Thead overflow={"auto"}   >
-              {headerGroups.map((headerGroup) => (
+              {headerGroups.map((headerGroup, idx) => (
 
-                <Tr {...headerGroup.getHeaderGroupProps()}  >
+                <Tr key={idx} {...headerGroup.getHeaderGroupProps()}  >
 
-                  {headerGroup.headers.map((column) => (
+                  {headerGroup.headers.map((column, idx) => (
                     <Th
+                    key={idx}
                       {...column.getHeaderProps(column.getSortByToggleProps())}
                     >
                       {column.render("Header")}
@@ -267,8 +268,9 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
                             <IndeterminateCheckbox {...getToggleHideAllColumnsProps()} />
                             Seleccionar todos
                           </FormLabel>
-                          {allColumns.map((column) => (
+                          {allColumns.map((column, idx) => (
                             <FormLabel
+                              key={idx}
                               display={"flex"}
                               alignItems={"center"}
                               gap={"0.5rem"}
@@ -303,10 +305,10 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
 
                 return (
 
-                  <Tr fontSize={"xs"} {...row.getRowProps()} _hover={{ bg: "gray.100" }} className={`${row.isSelected && "bg-gray-100"}`} /* onClick={() => setAction({ type: "VIEWW", payload: { _id: row.original._id } })}  */>
+                  <Tr fontSize={"xs"} {...row.getRowProps()} _hover={{ bg: "gray.100" }} className={`${row.isSelected && "bg-gray-100"}`}>
                     {row.cells.map((cell) => {
                       return (
-                        <Td {...cell.getCellProps()} paddingY="0.9rem" paddingInlineEnd={"1rem"} onClick={() => setAction({ type: "VIEWW", payload: { _id: row.original._id } })}> <Text noOfLines={1} > {cell.render("Cell")}</Text></Td>
+                        <Td {...cell.getCellProps()} paddingY="0.9rem" paddingInlineEnd={"1rem"}  onClick={() => setAction( asPath!== "/questions"?{ type: "VIEWW", payload: { _id: row.original._id } }:{ type: "EDIT", payload: { _id: row.original._id } })}> <Text noOfLines={1} > {cell.render("Cell")}</Text></Td>
                       );
                     })}
                     <Td
@@ -354,39 +356,31 @@ export const Datatable = ({ isLoading, initialState, columns, data = [], handleR
               <Text fontSize={"sm"}>
                 Pagina {pageIndex + 1} de {pageOptions.length}
               </Text>
-              <Tooltip label={"Primera pagina"}>
-                <IconButton
-                  size={"sm"}
-                  onClick={() => gotoPage(0)}
-                  isDisabled={!canPreviousPage}
-                  icon={<ArrowLeftIcon h={3} w={3} />}
-                />
-              </Tooltip>
-              <Tooltip label={"Página anterior"}>
-                <IconButton
-                  size={"sm"}
-                  onClick={previousPage}
-                  isDisabled={!canPreviousPage}
-                  icon={<ChevronLeftIcon h={6} w={6} />}
-                />
-              </Tooltip>
+              <IconButton
+                size={"sm"}
+                onClick={() => gotoPage(0)}
+                isDisabled={!canPreviousPage}
+                icon={<ArrowLeftIcon h={3} w={3} />}
+              />
+              <IconButton
+                size={"sm"}
+                onClick={previousPage}
+                isDisabled={!canPreviousPage}
+                icon={<ChevronLeftIcon h={6} w={6} />}
+              />
 
-              <Tooltip label={"Siguiente pagina"}>
-                <IconButton
-                  size={"sm"}
-                  onClick={nextPage}
-                  isDisabled={!canNextPage}
-                  icon={<ChevronRightIcon h={6} w={6} />}
-                />
-              </Tooltip>
-              <Tooltip label={"Ultima pagina"}>
-                <IconButton
-                  size={"sm"}
-                  onClick={() => gotoPage(pageCount - 1)}
-                  isDisabled={!canNextPage}
-                  icon={<ArrowRightIcon h={3} w={3} />}
-                />
-              </Tooltip>
+              <IconButton
+                size={"sm"}
+                onClick={nextPage}
+                isDisabled={!canNextPage}
+                icon={<ChevronRightIcon h={6} w={6} />}
+              />
+              <IconButton
+                size={"sm"}
+                onClick={() => gotoPage(pageCount - 1)}
+                isDisabled={!canNextPage}
+                icon={<ArrowRightIcon h={3} w={3} />}
+              />
             </Flex>
           </Flex>
         </>

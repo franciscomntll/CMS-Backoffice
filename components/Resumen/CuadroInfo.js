@@ -13,10 +13,8 @@ export const CuadroInfoSimple = ({ info, icon, title }) => {
             <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
                 <div className="flex justify-between items-center px-4">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button >{icon}</button> */}
                 </div>
                 <div className="px-8 py-3 mt-4 text-tituloSecundario bg-gray-100 rounded-lg text-sm">
-                    {/* {info ? info :"Agrega un resumen para describir tu marca "} */}
                     {
                         info ? (<Markup className="text-sm text-justify transition-all bg-none" content={info} />) : ""
                     }
@@ -31,7 +29,6 @@ export const CuadroMultiInfo = ({ title, icon, label1, label2, label3, title1, t
         <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
             <div className="flex justify-between px-4">
                 <label className="text-2xl text-slate-600">{title}</label>
-                {/* <button>{icon}</button> */}
             </div>
 
             <div className=" flex flex-col px-8 pt-4">
@@ -59,7 +56,6 @@ export const CuadroContacto = ({ title, icon, info, contactIcon, contactLabel, e
         <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
             <div className="flex justify-between px-4 ">
                 <label className="text-2xl text-slate-600">{title}</label>
-                {/* <button>{icon}</button> */}
             </div>
             <div className=" flex flex-col px-8 pt-4 truncate ">
                 <div className="pb-2 ">
@@ -94,7 +90,6 @@ export const CuadroSocial = ({ title, icon, info, facebookIcon, facebookLabel, i
             <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
                 <div className="flex justify-between px-4 ">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button>{icon}</button> */}
                 </div>
 
 
@@ -144,7 +139,6 @@ export const CuadroImg = ({ imagee, title, icon }) => {
             <div className={`${imagee?.length > 0 ? "block" : "hidden"} bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg `}>
                 <div className="flex justify-between px-4  mb-4">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button>{icon}</button> */}
                 </div>
                 <div className="grid grid-cols-3 px-8 py-5 justify-items-center border-2 border-dashed gap-5 ">
                     {imagee?.map((item, idx) => {
@@ -213,7 +207,6 @@ export const CuadroTituloSlug = ({ title, info, labelSlug, labelTitle, seo, auto
             <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
                 <div className="flex justify-between px-4  mb-4">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button>{icon}</button> */}
                 </div>
 
                 <div className="flex flex-col px-8 pt-4">
@@ -267,7 +260,6 @@ export const CuadroImagenSmall = ({ title, imgBanner, imgMiniatura, imgIcon, img
             <div className=" bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
                 <div className="flex justify-between px-4  mb-4">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button>{icon}</button> */}
                 </div>
 
 
@@ -739,7 +731,6 @@ export const CuadroItems = ({ title, info, tacs }) => {
             <div className="bg-white h-full w-3/4 px-6 py-8 flex-col justify-center items-center rounded-lg ">
                 <div className="flex justify-between px-4  mb-4">
                     <label className="text-2xl text-slate-600">{title}</label>
-                    {/* <button>{icon}</button> */}
                 </div>
 
                 <div className="flex flex-col px-8 pt-4">

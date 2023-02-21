@@ -3,13 +3,19 @@ import { Avatar, Box, Flex, MenuButton, MenuItem, Menu, MenuList, Text, IconButt
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import { authentication } from "../utils/Authentication";
-import { BombillaIcon, AddUserIcon, AyudaIcon, ArrowDownIcon, SearchIcon } from "../components/Icons/index";
+import { BombillaIcon, AddUserIcon, AyudaIcon, ArrowDownIcon, SearchIcon, CloseIcon } from "../components/Icons/index";
 import algoliasearch from "algoliasearch";
-import { InstantSearch, connectSearchBox, Hits } from "react-instantsearch-dom";
+import { InstantSearch, connectSearchBox, Hits, SearchBox } from "react-instantsearch-dom";
 import { createURL } from "../utils/UrlImage"
+import { AuthContextProvider } from "../context/AuthContext";
+import ClickAwayListener from "react-click-away-listener";
 
-export const Navigation = ({ set, state }) => {
+
+
+export const Navigation = ({ set, state, }) => {
   const router = useRouter()
+
+
   const Options = [
     { title: "Inicio", route: "/" },
     { title: "Ayuda", route: "/" },
@@ -25,17 +31,18 @@ export const Navigation = ({ set, state }) => {
 
   return (
     <Flex bg={"white"} shadow={"sm"} w={"100%"} padding={"0.5rem"}>
-      <Flex alignItems={"center"} justifyContent={"space-between"} w={"100%"} px={"1.5rem"} >
+      {/* <Flex alignItems={"center"} justifyContent={"space-between"} w={"100%"} px={"1.5rem"} > */}
+      < div className="flex justify-between w-full">
 
-        <div className="flex gap-4 w-full ">
-          <IconButton onClick={() => set(!state)}>
-            <HamburgerIcon w={"1.5rem"} h={"1.5rem"} color={"gray.500"} />
-          </IconButton>
+        <IconButton onClick={() => set(!state)}>
+          <HamburgerIcon w={"1.5rem"} h={"1.5rem"} color={"gray.500"} />
+        </IconButton>
+        <div className="w-1/2">
           <SearchNavigation />
         </div>
 
         <div className="flex justify-center items-center gap-2 ">
-          <div className="">
+          {/*  <div className="">
             <AyudaIcon className="" />
           </div>
           <div className="">
@@ -43,15 +50,12 @@ export const Navigation = ({ set, state }) => {
           </div>
           <div className="">
             <BombillaIcon />
-          </div>
+          </div> */}
+
           <Menu>
             <MenuButton>
               <Flex alignItems={"center"} gap={"0.5rem"}>
                 <Avatar size={"sm"} />
-                {/* <Text fontSize={"sm"} letterSpacing={"tight"} color={"gray.500"}>
-                {user?.email}
-              </Text> */}
-                {/*  <ArrowDownIcon className="text-gray-500" /> */}
               </Flex>
             </MenuButton>
             <MenuList p={"0"} fontSize={"sm"} ml={"8"}>
@@ -67,12 +71,40 @@ export const Navigation = ({ set, state }) => {
             </MenuList>
           </Menu>
         </div>
-      </Flex>
+
+      </div>
+      {/*  </Flex> */}
     </Flex>
   );
 };
 
-export const SearchNavigation = () => {
+const MySearchBox = ({ currentRefinement, refine, }) => {
+  return (
+    <>
+      <ClickAwayListener onClickAway={() => refine("")}>
+        <div className={` transition-all  flex jistify-center items-center  w-full border-gray-200 border-2 rounded-md py-1 text-gray-600`}>
+          <div className="ml-2">
+            <SearchIcon />
+          </div>
+          <input
+            autoFocus
+            className="w-full h-full focus:outline-none text-sm pl-2"
+            placeholder="Buscar "
+            type="input"
+
+            value={currentRefinement}
+            onChange={(e) => refine(e.currentTarget.value)}
+          />
+          <button className={`justify-end pr-2 `} onClick={() => refine("")}><CloseIcon /></button>
+        </div>
+      </ClickAwayListener>
+    </>
+  );
+};
+
+export const SearchNavigation = ({ }) => {
+
+
 
 
   const conditionalQuery = {
@@ -100,75 +132,56 @@ export const SearchNavigation = () => {
   };
 
   return (
-    <div className="flex items-center w-full justify-between ">
+    <div className="flex items-center w-full justify-between relative ">
       <InstantSearch
         indexName="bodasdehoy"
         searchClient={conditionalQuery}
+        stalledSearchDelay={50}
       >
+
         <ConnectedSearchBox
           searchAsYouType={false}
 
         />
-        {/* <SearchBox searchAsYouType={false} /> */}
-        <div className="absolute z-50 top-80px inset-x-0  right-0 w-[45%] mx-auto  bg-white shadow max-h-60 overflow-auto  rounded-b-3xl">
+
+
+
+
+        <div className={`absolute z-50 top-80px inset-x-0 left-0  w-[90%] mx-auto  bg-white shadow max-h-60 overflow-auto  rounded-b-3xl `}>
           <Hits hitComponent={Hit} />
+
         </div>
+
+
       </InstantSearch>
     </div>
   );
 };
 
-const MySearchBox = ({
-  currentRefinement,
-  refine,
-}) => {
-
-
+export const Hit = ({ hit, }) => {
+  const { dispatch } = AuthContextProvider()
   return (
     <>
-      <div className="flex jistify-center  w-1/2  border-gray-200 border-2 rounded-md py-1 text-gray-600">
-        <div className="mt-0.5 ml-2">
-          <SearchIcon />
-        </div>
-        <input
-          autoFocus
-          className="w-full h-full focus:outline-none text-sm pl-2"
-          placeholder="Buscar "
-          type="input"
-          value={currentRefinement}
-          onChange={(e) => refine(e.currentTarget.value)}
+      <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center" onClick={() => { dispatch({ type: "VIEWW", payload: { _id: hit.objectID } }) }}>
+        <img
+          alt={hit?.title}
+          src={
+            hit?.image ? createURL(hit?.image ?? "") : "/placeholder/image.png"
+          }
+          className={"w-14 h-14 rounded-lg object-cover object-center"}
         />
+        <div className="col-span-3">
+          <h3 className="text-xs md:text-sm font-semibold text-gray-500">
+            {hit?.title}
+          </h3>
+          <span
+            className={` text-xs   rounded  text-gray-500`}
+          >
+            {hit?.type}
+          </span>
+        </div>
       </div>
     </>
-  );
-};
-
-export const Hit = ({ hit }) => {
-
-  console.log("hit", hit)
-  return (
-    /*  <Link passHref href={`/${hit.type}`}> */
-    <div className="gap-3 flex py-3 px-5  transition-all cursor-pointer items-center" onClick={() => setAction({ type: "VIEWW", payload: { _id: hit.objectID } })}>
-      <img
-        alt={hit?.title}
-        src={
-          hit?.image ? createURL(hit?.image ?? "") : "/placeholder/image.png"
-        }
-        className={"w-14 h-14 rounded-lg object-cover object-center"}
-      />
-      <div className="col-span-3">
-        <h3 className="text-xs md:text-sm font-semibold text-gray-500">
-          {hit?.title}
-        </h3>
-        <span
-          className={` text-xs   rounded  text-gray-500`}
-        >
-          {hit?.type}
-        </span>
-      </div>
-
-    </div>
-    /*   </Link> */
   );
 };
 

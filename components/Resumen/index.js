@@ -211,7 +211,6 @@ export const FormDinamicalNEW = ({ slug, setAction, state }) => {
                                 case "categoryBusiness":
                                     return (
                                         <div className="flex flex-col justify-center items-center gap-2">
-
                                             <CuadroTituloSlug
                                                 title={"Titulo y Slug de la categoria"}
                                                 info={"Este es el titulo visible para el usuario y la ruta de la categoria"}
@@ -226,8 +225,6 @@ export const FormDinamicalNEW = ({ slug, setAction, state }) => {
                                                 imgMiniatura={valuesEdit?.imgMiniatura}
                                                 imgIcon={valuesEdit?.icon}
                                             />
-
-
                                         </div>
                                     );
                                     break
@@ -401,7 +398,7 @@ export const FormDinamicalNEW = ({ slug, setAction, state }) => {
     );
 };
 
-const ButtonDeleteEntry = ({ values, options }) => {
+/* const ButtonDeleteEntry = ({ values, options }) => {
     const [data, isLoading, isError, setQuery] = useFetch(true);
 
     const handleRemove = () => {
@@ -426,4 +423,4 @@ const ButtonDeleteEntry = ({ values, options }) => {
             Eliminar entrada
         </Button>
     );
-};
+}; */

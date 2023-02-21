@@ -4,41 +4,13 @@ import dynamic from 'next/dynamic'
 const PanelEditAndCreate = dynamic(() => import('../components/PanelEditAndCreate').then(mod => mod.PanelEditAndCreate), { ssr: false })
 import { PagesWithAuth } from "../HOC/PageWithAuth";
 import { PanelViewTable } from "../components/PanelViewTable";
-import {FormDinamicalNEW} from "../components/Resumen"
-
-
-
-export class Action {
-  type;
-  data;
-  constructor(type, data) {
-    this.type = type;
-    this.data = data;
-  }
-}
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "VIEW":
-      return new Action("view", action.payload);
-    case "VIEWW":
-      return new Action("vieww", action.payload);
-    case "EDIT":
-      return new Action("edit", action.payload);
-    case "CREATE":
-      return new Action("create", action.payload);
-    case "DELETE":
-      return new Action("delete", action.payload);
-    default:
-      break;
-  }
-};
+import { FormDinamicalNEW } from "../components/Resumen"
+import { AuthContextProvider } from '../context/AuthContext'
 
 
 const Module = ({ slug }) => {
-  //console.log("slug-father", slug)
 
-  const [state, dispatch] = useReducer(reducer, new Action("view", {}));
+  const { state, dispatch } = AuthContextProvider()
 
   useEffect(() => {
     dispatch({ type: "VIEW", payload: {} });

@@ -57,30 +57,28 @@ export const Sidebar = ({ state }) => {
                   <Link key={idx} href={item.route}>
                     <MenuItem
                       key={idx}
-                      color={asPath === item.route ? "white" : "#637381"}
-                      bg={path === item.route ? "#30CB30" : null}
-                      _focus={{ bg: "#30CB30", textColor: "white", }}
+                      color={"#637381"}
                       padding={`${state ? "2" : ""}`}
                       marginLeft={"2"}
                       w={"95%"}
                       fontSize={"sm"}
-                      className={` flex  ${state ? "justify-star" : "justify-end"} items-center w-full rounded-md`}
+                      className={` flex  ${state ? "justify-star" : "justify-end"} items-center w-full rounded-md `}
                     >
-                      <Tooltip label={`${state?"": item.title}`}  ml="14" top="-10">
+                      <Tooltip label={`${state ? "" : item.title}`} ml="14" top="-10">
 
-                      <div className={`flex justify-estar ${state ? "" : `relative`}`}
-                        data-tip={`${item.title}`}
+                        <div className={`flex justify-estar ${state ? "" : `relative`}`}
+                          data-tip={`${item.title}`}
                         >
-                        <div className={` pr-2 `}>{item.icon}</div>
-                        <div className={
-                          `pt-0.5                         
+                          <div className={` pr-2 `}>{item.icon}</div>
+                          <div className={
+                            `pt-0.5                         
                           ${state ? "block" : `hidden`}
                           `}
-                        >
-                          {item.title}
+                          >
+                            {item.title}
+                          </div>
                         </div>
-                      </div>
-                    </Tooltip>
+                      </Tooltip>
 
                     </MenuItem>
                   </Link>

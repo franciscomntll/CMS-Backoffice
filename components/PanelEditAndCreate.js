@@ -30,8 +30,6 @@ export const PanelEditAndCreate = ({ slug, setAction, state }) => {
   const options = FindOption(slug);
   const {user} = AuthContextProvider();
 
-  console.log( "options",options)
-
   useEffect(() => {
     if (state.type === "edit") {
       setQueryValues({
